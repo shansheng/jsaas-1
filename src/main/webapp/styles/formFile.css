@@ -1,0 +1,193 @@
+/*表单设计页面  - bpmFormViewEdit.jsp*/
+    /*table公共样式*/
+.table-detail > tbody > tr > td {
+    border: 1px solid #eee;
+    /*text-align: left;*/
+    background-color: #fff;
+    white-space: normal;
+    word-break: break-all;
+    color: #999;
+    font-weight: normal;
+    padding: 6px;
+    height: 40px;
+    min-height: 40px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.table-detail > tbody > tr > td:nth-child(odd){
+    text-align: center;
+    max-width: 200px;
+    white-space: nowrap;
+    color: #555;
+}
+.table-detail>caption{
+    line-height: 40px;
+    color: #555;
+    text-align: center;
+    padding: 0 10px;
+}
+table tr.firstRow th{
+    height: 40px;
+    padding: 0 6px;
+}
+/*表格列数*/
+    /* 四列*/
+.column-four > tbody > tr > td:nth-child(odd) {
+    width: 15%;
+}
+.column-four > tbody > tr > td:nth-child(even) {
+    min-width:35%;
+}
+    /* 二列 */
+.column-two > tbody > tr > td:nth-child(odd) {
+    width: 20%;
+}
+.column-two > tbody > tr > td:nth-child(even) {
+    width:80%;
+}
+    /* 六列 */
+.column-six > tbody > tr > td:nth-child(odd) {
+    width: 10%;
+}
+.column-six > tbody > tr > td:nth-child(even) {
+    width:23.3%;
+}
+
+
+/*表格颜色*/
+    /*无色*/
+.table-detail.transparent>caption{
+    background: transparent;
+}
+.table-detail.transparent > tbody > tr > td:nth-child(odd){
+    background: transparent;
+}
+    /*浅蓝色*/
+.table-detail.blue>caption{
+    background: #a3e0ff;
+}
+.table-detail.blue > tbody > tr > td:nth-child(odd){
+    background: #d9edf7;
+}
+    /*淡绿色*/
+.table-detail.green>caption {
+    background: #a4e8a4;
+}
+.table-detail.green >tbody> tr >td:nth-child(odd) {
+    background: #E0EEE0;
+}
+    /*棕色*/
+.table-detail.brown>caption {
+    background: #e7bd9f;
+}
+.table-detail.brown >tbody> tr >td:nth-child(odd) {
+    background: #e7d4c6;
+}
+    /*银灰*/
+.table-detail.grey>caption {
+    background: #ececec;
+}
+.table-detail.grey>tbody> tr >td:nth-child(odd) {
+    background: #f0f0f0;
+}
+
+
+
+    /*清除边框*/
+.edui-default .edui-editor {
+    border: none !important;
+}
+
+    /*左边树折叠之后的颜色*/
+.mini-layout-proxy{
+    border-color: #66b1ff;
+    background-color: #dbedff;
+}
+    /*hover之后的颜色*/
+.mini-layout-proxy-hover
+{
+    background:#f1f8fd;
+}
+.mini-layout-region-body{
+    z-index: 99;
+}
+/*设计页面模板按钮*/
+.toobar_left {
+    padding-left: 6px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+.toobar_left>div>div {
+    padding-bottom: 5px;
+    padding-left: 10px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    height:20px;
+}
+ul.toobar_li_ul>li,
+.flex_ul>li {
+    display: inline-block;
+}
+ul.toobar_li_ul{
+    font-size: 0;
+}
+ul.toobar_li_ul>li {
+    width: 83px;
+    background: #f0f7ff;
+    font-size: 12px;
+    height: 26px;
+    line-height: 26px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+ul.toobar_li_ul>li:nth-child(even) {
+    margin-left: 8px;
+}
+.toobar_li_ul>li>a {
+    color: #333;
+}
+.toobar_li_ul>li>a>i {
+    padding-left: 6px;
+    padding-right: 2px;
+}
+.toobar_li_ul>li>a>i.iconfont:before {
+    color: #29A5BF;
+    font-size: 12px;
+}
+.clearfix:after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+}
+.mini-layout-region-center .mini-layout-region-body {
+    overflow: hidden;
+}
+/*设计页面模板按钮----end--*/
+.toggleColor label{
+    margin-right: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.toggleColor label input{
+    outline: none;
+    vertical-align: -2px;
+}
+
+
+
+/*-------------------------------------预览页面开始------------------------------------------------*/
+.divContainer{
+    min-height:40px;
+    line-height: 40px;
+    box-sizing: border-box;
+}
+
+
+
+/*-------------------------------------预览页面结束------------------------------------------------*/
+/*
+.mini-grid, .mini-datagrid{
+    display: block;
+}*/

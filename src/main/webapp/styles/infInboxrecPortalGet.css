@@ -1,0 +1,52 @@
+@charset "utf-8";
+/*-------------------------------------------------
+	--	infInboxrecPortalGet.jsp  我的消息 --
+-------------------------------------------------*/
+.auto{
+	width:60%;
+	margin:20px auto;
+	background:#fff;
+	overflow:hidden;
+	border-radius:8px;
+	position: relative;
+}
+.auto hr{
+	margin:0;
+}
+.auto .auto_heder{
+	text-align:center;
+	margin:10px;
+	font-size: 15px;
+}
+.auto .auto_heder em{
+	font-style: normal;
+	
+}
+.auto .auto_heder .span1{
+	color: green;
+}
+.auto .auto_heder .span2{
+	font-size: 12px;
+	color: red;
+}
+
+.auto .content{
+	color: #712704;
+	min-height:200px; 
+	background: #fefef2;
+	clear: both;
+	padding:10px 8px;
+}
+.auto .btn{
+	margin:10px 0;
+	text-align:center;
+}
+.auto .btn .btn2{
+	margin-left:18px;
+}
+
+#subject a{
+	color:red;
+}
+
+

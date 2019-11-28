@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.core.entity.SysInvokeScript">
+	<resultMap id="SysInvokeScript" type="com.redxun.sys.core.entity.SysInvokeScript">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="categroyId" column="CATEGROY_ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="alias" column="ALIAS_" jdbcType="VARCHAR"/>
+		<result property="content" column="CONTENT_" jdbcType="CLOB"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.core.entity.SysInvokeScript">
+		INSERT INTO SYS_INVOKE_SCRIPT
+		(ID_,CATEGROY_ID_,NAME_,ALIAS_,CONTENT_,TENANT_ID_,CREATE_BY_,UPDATE_BY_,UPDATE_TIME_,CREATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{categroyId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{content,jdbcType=CLOB}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="SysInvokeScript">
+		SELECT * FROM SYS_INVOKE_SCRIPT 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysInvokeScript">
+		SELECT * FROM SYS_INVOKE_SCRIPT
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.core.entity.SysInvokeScript">
+		UPDATE SYS_INVOKE_SCRIPT SET
+		CATEGROY_ID_=#{categroyId,jdbcType=VARCHAR},
+		NAME_=#{name,jdbcType=VARCHAR},
+		ALIAS_=#{alias,jdbcType=VARCHAR},
+		CONTENT_=#{content,jdbcType=CLOB},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<select id="getByAlias"   parameterType="java.lang.String" resultMap="SysInvokeScript">
+		SELECT * FROM SYS_INVOKE_SCRIPT 
+		WHERE  ALIAS_=#{alias,jdbcType=VARCHAR} and TENANT_ID_=#{tenantId,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM SYS_INVOKE_SCRIPT 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	
+</mapper>

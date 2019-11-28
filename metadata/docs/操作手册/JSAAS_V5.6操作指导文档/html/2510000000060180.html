@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>组织维度</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body>
+ <h1><span style="font-family:'微软雅黑','sans-serif'">功能描述</span></h1>
+ <p><span style="font-family:'微软雅黑','sans-serif'">用户组有不同的维度管理，基于不同的维度可以进行不同的用户组管理，如</span>A<span style="font-family:'微软雅黑','sans-serif'">公司可以按其业务需求，把用户组划分为角色、行政、项目、销售等，如下：</span></p>
+ <p><img src="../img/2400000000611097.png" title="image.png" alt=""> </p>
+ <p>如行政维度:</p>
+ <p><br></p>
+ <p><img src="../img/2400000000611098.png" title="image.png" alt=""> </p>
+ <p><br></p>
+ <h1>操作步骤</h1>
+ <p>菜单路径: &nbsp;组织管理--&gt;组织维度,如下:</p>
+ <p><img src="../img/2510000000340062.png" title="image.png" alt=""></p>
+ <p>进入维度管理界面,如下所示:</p>
+ <p>在系统中默认的三个维度，行政维度，角色，职务，可以根据需求来定义维度</p>
+ <p><img src="../img/2510000000340063.png" title="image.png" alt=""></p>
+ <p><br></p>
+ <h3>添加维度:&nbsp;</h3>
+ <p>在工具栏中,点击【添加】按钮，进入如下界面，填写信息。</p>
+ <p><img src="../img/2510000000340064.png" title="image.png" alt=""></p>
+ <p>【说明】</p>
+ <p><strong>是否参与授权：</strong>表示该维度下的用户组是否参与类似角色授权的操作。</p>
+ <p><strong>数据展示类型：</strong>表示该维度下的用户组是否为树形还是平铺型，如为树型，表示用户组下可以有多个层级，否则只是平铺展示一层用户组。</p>
+ <h3><strong>维度等级管理：</strong></h3>
+ <p><strong>维度等级管理具体在流程配置时选择审批人时用到，例如：需要某部门领导审批，那就可以选择部门以上的等级部门查找该领导</strong></p>
+ <p>如为行政维度下的用户提供等级的管理：</p>
+ <p><img src="../img/2510000000340066.png" title="image.png" alt=""></p>
+ <p><br></p>
+ <p>进入维度等级定义列表：</p>
+ <p>根据需求添加等级</p>
+ <p><img src="../img/2510000000340067.png" title="image.png" alt=""></p>
+ <p>添加的维度等级将提供维度下的用户组属性的定义中。</p>
+ <p><br></p>
+ <h3>维度关系定义</h3>
+ <p>为用户的维度增加关系定义，即该维度下的用户组与其他用户或维度下的用户组的关系定义。</p>
+ <p>【操作】点操作列中的【维度关系定义】按钮，如：</p>
+ <p><img src="../img/2510000000340068.png" title="image.png" alt=""></p>
+ <p>进入维度关系定义管理界面，如：</p>
+ <p><img src="../img/2510000000340070.png" title="image.png" alt=""></p>
+ <p><br></p>
+ <p>点【添加】按钮，则为该维度添加与该维度下的用户组的关系定义。</p>
+ <p>如我们可以定义该维度上的汇报关系，表示为该部门下与其他用户或组的关系。</p>
+ <p><img src="../img/2510000000340071.png" title="image.png" alt=""> </p>
+ <p>【说明】关系当前方，表示为当前维度所在的关系一方的名称，关联方表示另一方关系的名称，</p>
+ <p>当前方维度则表示当前维度，关联方维度表示是关系的另一方的维度，若为空则表示是关联个人的。</p>
+ <h3>维度授权</h3>
+ <p>为维度授权则表示该维度下的用户组由哪一些用户或角色来进行统一维护数据。</p>
+ <p>【操作】：</p>
+ <p><img src="../img/2510000000340072.png" title="image.png" alt=""></p>
+ <p>操作进入如下界面：</p>
+ <p><img src="../img/2510000000340073.png" title="image.png" alt=""></p>
+ <p>可选择对应的用户或用组，然后再点【保存】按钮则可。当以上用户进入部门角色时，则表示拥有该角色的才拥有该维度下的用户维护的权限。</p>
+ <p><br></p>
+ <p><br></p>
+</body></div>
+</body>
+</html>

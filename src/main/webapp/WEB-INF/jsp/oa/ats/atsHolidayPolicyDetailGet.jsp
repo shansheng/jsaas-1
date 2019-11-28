@@ -1,0 +1,205 @@
+
+<%-- 
+    Document   : [假期制度明细]明细页
+    Created on : 2018-03-21 16:05:40
+    Author     : mansan
+--%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>[假期制度明细]明细</title>
+        <%@include file="/commons/get.jsp" %>
+    </head>
+    <body>
+        <rx:toolbar toolbarId="toolbar1"/>
+        <div id="form1" class="form-outer">
+             <div style="padding:5px;">
+             	<table style="width:100%" class="table-detail" cellpadding="0" cellspacing="1">
+                	<caption>[假期制度明细]基本信息</caption>
+					<tr>
+						<th>假期制度ID：</th>
+						<td>
+							${atsHolidayPolicyDetail.holidayId}
+						</td>
+					</tr>
+					<tr>
+						<th>假期类型：</th>
+						<td>
+							${atsHolidayPolicyDetail.holidayType}
+						</td>
+					</tr>
+					<tr>
+						<th>假期单位：</th>
+						<td>
+							${atsHolidayPolicyDetail.holidayUnit}
+						</td>
+					</tr>
+					<tr>
+						<th>启动周期：</th>
+						<td>
+							${atsHolidayPolicyDetail.enablePeriod}
+						</td>
+					</tr>
+					<tr>
+						<th>周期长度：</th>
+						<td>
+							${atsHolidayPolicyDetail.periodLength}
+						</td>
+					</tr>
+					<tr>
+						<th>周期单位：</th>
+						<td>
+							${atsHolidayPolicyDetail.periodUnit}
+						</td>
+					</tr>
+					<tr>
+						<th>控制单位额度：</th>
+						<td>
+							${atsHolidayPolicyDetail.enableMinAmt}
+						</td>
+					</tr>
+					<tr>
+						<th>单位额度：</th>
+						<td>
+							${atsHolidayPolicyDetail.minAmt}
+						</td>
+					</tr>
+					<tr>
+						<th>是否允许补请假：</th>
+						<td>
+							${atsHolidayPolicyDetail.isFillHoliday}
+						</td>
+					</tr>
+					<tr>
+						<th>补请假期限：</th>
+						<td>
+							${atsHolidayPolicyDetail.fillHoliday}
+						</td>
+					</tr>
+					<tr>
+						<th>补请假期限单位：</th>
+						<td>
+							${atsHolidayPolicyDetail.fillHolidayUnit}
+						</td>
+					</tr>
+					<tr>
+						<th>是否允许销假：</th>
+						<td>
+							${atsHolidayPolicyDetail.isCancelLeave}
+						</td>
+					</tr>
+					<tr>
+						<th>销假期限：</th>
+						<td>
+							${atsHolidayPolicyDetail.cancelLeave}
+						</td>
+					</tr>
+					<tr>
+						<th>销假期限单位：</th>
+						<td>
+							${atsHolidayPolicyDetail.cancelLeaveUnit}
+						</td>
+					</tr>
+					<tr>
+						<th>是否控制假期额度：</th>
+						<td>
+							${atsHolidayPolicyDetail.isCtrlLimit}
+						</td>
+					</tr>
+					<tr>
+						<th>假期额度规则：</th>
+						<td>
+							${atsHolidayPolicyDetail.holidayRule}
+						</td>
+					</tr>
+					<tr>
+						<th>是否允许超额请假：</th>
+						<td>
+							${atsHolidayPolicyDetail.isOver}
+						</td>
+					</tr>
+					<tr>
+						<th>超出额度下期扣减：</th>
+						<td>
+							${atsHolidayPolicyDetail.isOverAutoSub}
+						</td>
+					</tr>
+					<tr>
+						<th>是否允许修改额度：</th>
+						<td>
+							${atsHolidayPolicyDetail.isCanModifyLimit}
+						</td>
+					</tr>
+					<tr>
+						<th>包括公休日：</th>
+						<td>
+							${atsHolidayPolicyDetail.isIncludeRest}
+						</td>
+					</tr>
+					<tr>
+						<th>包括法定假日：</th>
+						<td>
+							${atsHolidayPolicyDetail.isIncludeLegal}
+						</td>
+					</tr>
+					<tr>
+						<th>描述：</th>
+						<td>
+							${atsHolidayPolicyDetail.memo}
+						</td>
+					</tr>
+					<tr>
+						<th>租用机构ID：</th>
+						<td>
+							${atsHolidayPolicyDetail.tenantId}
+						</td>
+					</tr>
+					<tr>
+						<th>创建人ID：</th>
+						<td>
+							${atsHolidayPolicyDetail.createBy}
+						</td>
+					</tr>
+					<tr>
+						<th>创建时间：</th>
+						<td>
+							${atsHolidayPolicyDetail.createTime}
+						</td>
+					</tr>
+					<tr>
+						<th>更新人ID：</th>
+						<td>
+							${atsHolidayPolicyDetail.updateBy}
+						</td>
+					</tr>
+					<tr>
+						<th>更新时间：</th>
+						<td>
+							${atsHolidayPolicyDetail.updateTime}
+						</td>
+					</tr>
+				</table>
+             </div>
+    	</div>
+        <rx:detailScript baseUrl="oa/ats/atsHolidayPolicyDetail" 
+        entityName="com.redxun.oa.ats.entity.AtsHolidayPolicyDetail"
+        formId="form1"/>
+        
+        <script type="text/javascript">
+		mini.parse();
+		var form = new mini.Form("#form1");
+		var pkId = '${atsHolidayPolicyDetail.id}';
+		$(function(){
+			$.ajax({
+				type:'POST',
+				url:"${ctxPath}/oa/ats/atsHolidayPolicyDetail/getJson.do",
+				data:{ids:pkId},
+				success:function (json) {
+					form.setData(json);
+				}					
+			});
+		})
+		</script>
+    </body>
+</html>

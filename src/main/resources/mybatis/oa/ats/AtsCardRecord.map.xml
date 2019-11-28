@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.ats.entity.AtsCardRecord">
+	<resultMap id="AtsCardRecord" type="com.redxun.oa.ats.entity.AtsCardRecord">
+		<id property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="cardNumber" column="CARD_NUMBER" jdbcType="VARCHAR"/>
+		<result property="cardDate" column="CARD_DATE" jdbcType="TIMESTAMP"/>
+		<result property="cardSource" column="CARD_SOURCE" jdbcType="NUMERIC"/>
+		<result property="cardPlace" column="CARD_PLACE" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		
+		<result property="userId" column="userId" jdbcType="VARCHAR"/>
+		<result property="userName" column="userName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.oa.ats.entity.AtsCardRecord">
+		INSERT INTO ats_card_record
+		(ID,CARD_NUMBER,CARD_DATE,CARD_SOURCE,CARD_PLACE,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{cardNumber,jdbcType=VARCHAR}, #{cardDate,jdbcType=TIMESTAMP}, #{cardSource,jdbcType=NUMERIC}, #{cardPlace,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="AtsCardRecord">
+		SELECT * FROM ats_card_record 
+		WHERE 
+		ID=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="AtsCardRecord">
+		SELECT a.*,c.FULLNAME_ as userName
+		FROM ats_card_record a left join os_user c
+   		on a.CARD_NUMBER = c.USER_NO_
+   		<where>
+			<if test="@Ognl@isNotEmpty(CARD_NUMBER)">
+				AND CARD_NUMBER like '%${CARD_NUMBER}%'
+			</if>
+			<if test="@Ognl@isNotEmpty(CARD_DATE_START)">
+				AND CARD_DATE >= #{CARD_DATE_START}
+			</if>
+			<if test="@Ognl@isNotEmpty(CARD_DATE_END)">
+				AND CARD_DATE  <![CDATA[ <= ]]> #{CARD_DATE_END}
+			</if>
+			<if test="@Ognl@isNotEmpty(CARD_SOURCE)">
+				AND CARD_SOURCE like  #{CARD_SOURCE}
+			</if>
+			<if test="@Ognl@isNotEmpty(CARD_PLACE)">
+				AND CARD_PLACE like  #{CARD_PLACE}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.ats.entity.AtsCardRecord">
+		UPDATE ats_card_record SET
+		CARD_NUMBER=#{cardNumber,jdbcType=VARCHAR},
+		CARD_DATE=#{cardDate,jdbcType=TIMESTAMP},
+		CARD_SOURCE=#{cardSource,jdbcType=NUMERIC},
+		CARD_PLACE=#{cardPlace,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM ats_card_record 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<select id="getByCardNumberCardDate" parameterType="java.util.Map" resultMap="AtsCardRecord">
+		SELECT *
+		FROM ats_card_record a left join os_user c
+   		on a.CARD_NUMBER = c.USER_NO_
+   		WHERE
+		a.CARD_NUMBER=#{cardNumber}
+		AND a.CARD_DATE  >=#{startTime,jdbcType=TIMESTAMP}
+		AND a.CARD_DATE <![CDATA[ <=#{endTime,jdbcType=TIMESTAMP}]]> 
+		<!-- AND c.STATUS_ = 'IN_JOB' -->
+		order by a.CARD_DATE
+	</select>
+	
+	<select id="getByInvalidRecord" parameterType="String" resultMap="AtsCardRecord">
+		select a.* from ats_card_record a
+		where a.CARD_NUMBER not in
+		(select b.CARD_NUMBER from ats_attendance_file b union select USER_NO_ from os_user where STATUS_ != 'DEL_JOB')
+	
+	</select>
+	<select id="getByNotInvalidRecord" parameterType="String" resultMap="AtsCardRecord">
+		select a.* from ats_card_record a
+		where a.CARD_NUMBER in
+		(select b.CARD_NUMBER from ats_attendance_file b union select USER_NO_ from os_user where STATUS_ != 'DEL_JOB')
+	
+	</select>
+	<select id="getValildDate" parameterType="java.util.Map" resultMap="AtsCardRecord">
+		SELECT a.*
+		FROM ats_card_record a  left join os_user c
+   		on a.CARD_NUMBER = c.USER_NO_
+		WHERE
+		a.CARD_NUMBER=#{cardNumber}
+		AND a.CARD_DATE  = #{startTime}
+		AND c.STATUS_ = 'IN_JOB'
+		order by a.CARD_DATE
+	</select>
+	
+</mapper>

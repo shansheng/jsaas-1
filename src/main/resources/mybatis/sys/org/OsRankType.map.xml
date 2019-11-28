@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.org.entity.OsRankType">
+	<resultMap id="OsRankType" type="com.redxun.sys.org.entity.OsRankType">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="dimId" column="DIM_ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="key" column="KEY_" jdbcType="VARCHAR"/>
+		<result property="level" column="LEVEL_" jdbcType="NUMERIC"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+
+	<select id="getByMyDimIdTenantId" parameterType="java.util.Map" resultMap="OsRankType">
+		select * from os_rank_type where DIM_ID_=#{dimId} and TENANT_ID_=#{tenantId}
+		<if test="dimId==1 and userId!=1">
+			and LEVEL_ >=
+			(SELECT min(og.rank_level_)
+			FROM OS_GROUP og
+			JOIN OS_REL_INST ori
+			ON  ori.PARTY1_=og.GROUP_ID_
+			WHERE og.DIM_ID_=#{dimId} and ori.PARTY2_=#{userId})
+		</if>
+		order by LEVEL_ asc
+	</select>
+
+	<insert id="create" parameterType="com.redxun.sys.org.entity.OsRankType">
+		INSERT INTO os_rank_type
+		(ID_,DIM_ID_,NAME_,KEY_,LEVEL_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{dimId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{level,jdbcType=NUMERIC}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="OsRankType">
+		SELECT * FROM os_rank_type 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="OsRankType">
+		SELECT * FROM os_rank_type
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.org.entity.OsRankType">
+		UPDATE os_rank_type SET
+		DIM_ID_=#{dimId,jdbcType=VARCHAR},
+		NAME_=#{name,jdbcType=VARCHAR},
+		KEY_=#{key,jdbcType=VARCHAR},
+		LEVEL_=#{level,jdbcType=NUMERIC},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM os_rank_type 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getByDimId" parameterType="java.lang.String" resultMap="OsRankType">
+		select * from os_rank_type where DIM_ID_=#{dimId} order by LEVEL_ asc
+	</select>
+	
+	<select id="getByDimIdTenantId" parameterType="java.util.Map" resultMap="OsRankType">
+		select * from os_rank_type where DIM_ID_=#{dimId} and TENANT_ID_=#{tenantId} order by LEVEL_ asc
+	</select>
+	
+	<delete id="deleteByDimId" parameterType="java.lang.String">
+		delete from os_rank_type where DIM_ID_=#{dimId}
+	</delete>
+	
+	<select id="getbyKey" parameterType="java.util.Map" resultMap="OsRankType">
+		select * from os_rank_type where KEY_=#{key} and TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="getByDimIdRankLevelTenantId" parameterType="java.util.Map" resultMap="OsRankType">
+		select * from os_rank_type where DIM_ID_=#{dimId} and LEVEL_=#{rankLevel} and TENANT_ID_ in(1,#{tenantId}) order by LEVEL_ asc
+	</select>
+</mapper>

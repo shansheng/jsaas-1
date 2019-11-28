@@ -1,0 +1,517 @@
+@charset "utf-8";
+/*可以在这里添加你自己的css*/
+
+/* 编辑页面的展示样式  */
+*{
+	font-family: '微软雅黑';
+}
+*::-webkit-scrollbar {
+	width:8px;
+	height:8px;
+}
+*::-webkit-scrollbar-thumb {
+	border-radius:4px;
+	background:#d4d5d9;
+}
+*::-webkit-scrollbar-track {
+	background:#b3b3b3;
+	border-radius:4px;
+}
+*::-webkit-scrollbar-corner{
+	background:#fff;
+}
+a{
+	text-decoration: none;
+}
+input,textarea{
+	padding:5px !important;
+	border: 1px solid #ececec;
+	box-sizing: border-box;
+}
+input{
+    width: 100%;
+    max-width: 164px;
+    min-width: 80px;
+}
+textarea{
+	box-sizing: border-box;
+	padding: 3px !important;
+}
+
+.table-view {
+	margin:0 auto;
+}
+.table{
+    margin: 0;
+}
+.view {
+	padding: 4px 8px;
+	box-sizing: border-box;
+	margin: 0;
+}
+
+.mini-datepicker {
+	background:url("formeditor/calendar.jpg") no-repeat;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+}
+.mini-checkboxlist {
+	width:222px;
+	background:url("formeditor/radio-check-pic.png") 0 -19px no-repeat;
+	border:none;
+	outline:none;
+}
+.mini-radiobuttonlist {
+	background:url("formeditor/radio-check-pic.png") 0 0px no-repeat;
+	border:none;
+	outline:none;
+	width:150px;
+	height:15px;
+	margin-left:4px;
+    vertical-align: -1px;
+}
+.mini-month {
+	background:url("formeditor/calendar.jpg") no-repeat;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+}
+.mini-user {
+	background:url("formeditor/selectUser.jpg") no-repeat;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+}
+.mini-group {
+	background:url("formeditor/selectUserGroup.jpg") no-repeat;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+}
+.upload-panel {
+	background:url("formeditor/annex.jpg") no-repeat;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+}
+.mini-hidden {
+	background:url("formeditor/yincang.jpg") no-repeat;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+}
+.mini-buttonedit {
+	background:url("formeditor/zdy.jpg") no-repeat;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+	height:30px;
+}
+.mini-combobox {
+	background:url("formeditor/pullDown1.jpg") no-repeat;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+	height:30px;
+}
+
+.mini-office{
+	background:url("formeditor/icon-office.jpg") no-repeat left top;
+	background-size: 100% auto;
+}
+
+.mini-time {
+	border:none;
+	outline:none
+}
+.mini-dep {
+	background:url("formeditor/selectGroup.jpg") no-repeat;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+}
+.mini-ueditor {
+	background:url("formeditor/mini-ueditor.png") no-repeat left top;
+	border:none;
+	outline:none;
+}
+.mini-textboxlist {
+	background:url("formeditor/select.jpg") no-repeat;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+	height:30px;
+}
+.form-toolBox .button-d {
+	margin-right: 6px;
+}
+.form-toolBox .button-d:first-child{
+	margin-left: 10px;
+}
+.popup-window-d {
+	background:#f0f0f0;
+	width:100% !important;
+	border:1px solid #ccc;
+	box-sizing: border-box;
+}
+.popup-window-d .form {
+	background-color:#fff;
+	/*margin:0px 4px;*/
+}
+.popup-window-d .mini-toolbar {
+	background-color:#f0f0f0;
+}
+.table-def {
+	width:100% !important;
+	border:0px !important;
+}
+.rx-grid {
+	border:1px solid #fff;
+	overflow:auto;
+}
+.table-detail {
+	width:100%;
+}
+.table-detail thead {
+	width:100%;
+	text-align:right;
+}
+.table-detail .p35 {
+	width:35%;
+}
+.table-detail .p65 {
+	width:65%;
+}
+.table-detail .percent15 {
+	width:15%;
+}
+.table-detail .percent35 {
+	width:35%;
+}
+.form {
+	border:0px !important;
+}
+.header {
+	background-color:#f2f2f2;
+}
+.mini-button {
+	display: inline-block;
+	height: 34px;
+	line-height: 32px;
+	padding: 0 6px;
+	background: #409EFF;
+	font-size: 14px;
+	border-radius: 2px;
+	border: 1px solid #409EFF;
+	box-sizing: border-box;
+}
+
+.mini-viewword {
+	border:1px solid #66b1ff;
+	padding:2px 14px;
+	background:#66b1ff;
+	color:#fff;
+	border-radius:2px;
+	text-decoration:none;
+	width:40px;
+	text-align: center;
+}
+
+.mini-time {
+	background:url("formeditor/time.jpg") no-repeat ;
+    background-size: 100% 100%;
+	border:none;
+	outline:none;
+}
+.table-detail > tbody > tr > td {
+	border: 1px solid #eee;
+	/*text-align: left;*/
+	background-color: #fff;
+	white-space: normal;
+	word-break: break-all;
+	color: #999;
+	font-weight: normal;
+	padding:2px 6px;
+	height: 40px;
+	min-height: 40px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+.table-detail > tbody > tr > td:nth-child(odd){
+	text-align: center;
+	max-width: 200px;
+	white-space: nowrap;
+	color: #555;
+}
+.form-detail>caption,
+.table-detail>caption{
+	line-height: 50px;
+	color: #555;
+	text-align: center;
+	padding: 0 10px;
+}
+/*  -------------2\4\6列表格---------------  */
+.column-two > tbody > tr > td:nth-child(odd) {
+	width: 20%;
+}
+.column-two > tbody > tr > td{
+	width: 80%;
+}
+.column-four > tbody > tr > td:nth-child(odd){
+	width: 15%;
+}
+.column-four > tbody > tr > td {
+	width: 30%;
+}
+.column-six > tbody > tr > td:nth-child(odd) {
+	width: 12%;
+}
+.column-six > tbody > tr > td{
+	width: 21.3%;
+}
+
+/*表格颜色*/
+/*无色*/
+.table-detail.transparent>caption{
+	background: transparent;
+}
+.table-detail.transparent > tbody > tr > td:nth-child(odd){
+	background: transparent;
+}
+/*浅蓝色*/
+.table-detail.blue>caption{
+	background: #a3e0ff;
+}
+.table-detail.blue > tbody > tr > td:nth-child(odd){
+	background: #d9edf7;
+}
+/*淡绿色*/
+.table-detail.green>caption {
+	background: #a4e8a4;
+}
+.table-detail.green >tbody> tr >td:nth-child(odd) {
+	background: #E0EEE0;
+}
+/*棕色*/
+.table-detail.brown>caption {
+	background: #e7bd9f;
+}
+.table-detail.brown >tbody> tr >td:nth-child(odd) {
+	background: #e7d4c6;
+}
+/*银灰*/
+.table-detail.grey>caption {
+	background: #ececec;
+}
+.table-detail.grey>tbody> tr >td:nth-child(odd) {
+	background: #f0f0f0;
+}
+
+
+
+
+
+
+
+/*div容器*/
+div.divContainer {
+	border:1px solid #ddd;
+	min-height:40px;
+	line-height:40px;
+	min-width:200px;
+	box-sizing: border-box;
+}
+div.div-condition {
+	border:1px solid silver;
+	padding:4px;
+	min-height:25px;
+	line-height:25px;
+	min-width:200px;
+}
+.shadowBox {
+	background:#fff;
+	padding: 8px;
+	box-sizing:border-box;
+	width:100%;
+	margin:0 auto;
+	border-radius:8px;
+	box-shadow:0px 4px 20px 0px rgba(179,179,179,.35);
+	margin-bottom: 40px;
+}
+
+.form{
+	padding: 8px;
+	margin:0 auto;
+	margin-bottom: 10px;
+}
+
+.form >table {
+	width:100%;
+}
+
+
+
+.shadowBox >table {
+	width:100%;
+}
+
+.mini-iframe{
+	border: 1px solid gray;
+}
+.remark input,
+.remark rxc{
+	width:87%;
+}
+.remark .mini-textbox-border{
+	width:99%;
+}
+
+*{
+	font-family: "微软雅黑";
+	color: #666;
+}
+
+*::-webkit-scrollbar {width: 8px;height: 8px;}
+*::-webkit-scrollbar-thumb {border-radius: 4px;background: #d4d5d9;}
+*::-webkit-scrollbar-track {background: #b3b3b3;border-radius: 4px;}
+*::-webkit-scrollbar-corner {background:#fff;}
+
+div[property=columns]{
+	background-color: #fff;
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	height: 100px !important;
+	/*border: 1px dotted #ccc;*/
+
+	display: -moz-box;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex;
+
+}
+
+div[property=columns]>div[type=indexcolumn]:before{
+	content: "编号"
+}
+
+div[property=columns]>div[type=checkcolumn]:before{
+	content: "选择"
+}
+div[property=columns]>div{
+	display:inline-block;
+	background-color: #eee;
+	padding: 0 5px;
+	height: 30px !important;
+	line-height: 30px !important;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	text-align: center;
+	font-size: 12px;
+	-ms-flex:1;
+	flex: 1;
+	-webkit-box-flex:1;
+	-moz-box-flex:1;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.grid-container{
+	border: 1px solid #ccc;
+	padding: 5px 5px 5px 5px;
+}
+
+.mini-datagrid{
+	padding-top: 5px;
+	border: 1px dotted #ccc;
+}
+
+.search-form>ul>li{
+	list-style: none;
+	display: inline-block;
+}
+.grid-container>div>div{
+	font-size:0;
+}
+.grid-container>div>div>a{
+	font-size:14px;
+}
+
+/* 子表头部工具条 */
+.sonTable-topToolBox{
+	padding:4px 0;
+}
+
+
+/* 下拉树 控件*/
+.treeSelect{
+	background:url("formeditor/pullDown.jpg") 0px 0px no-repeat;
+    background-size: 100% 100%;
+	border:0;
+	height:30px;
+}
+
+
+/*子表头部btn*/
+.button-container{
+	min-height: 40px;
+	line-height: 40px;
+	text-align: left;
+}
+.button-container a.mini-button{
+	margin-right: 6px;
+	color: #fff;
+}
+
+table tr.firstRow th{
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+}
+
+
+/*表单设计---边框容器------编辑显示*/
+.fieldsetContainer{
+	border: 1px solid #ddd;
+}
+
+/**/
+.form-toolBox{
+	padding: 6px 0;
+	font-size: 0;
+	text-align: left;
+}
+.form-toolBox a{
+	color: #fff;
+	font-size: 14px;
+	margin-right: 6px;
+}
+.form-toolBox ul{
+	list-style: none;
+}
+.form-toolBox li{
+	font-size: 14px;
+	display: inline-block;
+}
+.form-toolBox .mini-combobox{
+	width: 166px;
+	display: inline-block;
+	vertical-align:middle;
+}
+.form-toolBox .list-paddingleft-2{
+	padding: 0;
+	width: 100%;
+	white-space: normal;
+}
+.form-toolBox .list-paddingleft-2 li{
+	white-space: nowrap;
+	margin-top: 4px;
+}
+.form-toolBox .list-paddingleft-2 .text{
+	padding-left: 4px ;
+}
+.form-toolBox .list-paddingleft-2 li:first-child .text{
+	padding-left: 0;
+}

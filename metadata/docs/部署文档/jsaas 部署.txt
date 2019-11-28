@@ -1,0 +1,54 @@
+1.编辑 app.properties 
+	 1.修改 machine.name 配置，保证每台机器不同。
+	 
+	 2. 编辑数据库配置
+	 
+	 	db.url=jdbc:mysql://www.redxun.cn:3306/jsaas_wuxianji?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+		db.username=root
+		db.password=root_red#121
+		db.jpaPlatform=org.hibernate.dialect.MySQLInnoDBDialect
+		db.type=mysql
+		
+		3.编辑JMS配置
+		
+		jms.ip=127.0.0.1
+		jms.port=62222
+		jms.dir=c\:\\temp
+		
+2.编辑 j2cache.properties
+
+	修改 redis 配置 ，按照实际情况更改
+	
+3.编辑 spring-base.xml
+
+	使用配置
+	<bean id="iCache" class="com.redxun.core.cache.J2CacheImpl" init-method="init" destroy-method="destroy"></bean>
+	
+4. 编辑 web.xml
+
+	开放 j2cache-session-filter session 同步
+
+5. 编辑 spring-jms.xml
+	注释下面的片段。
+	<amq:broker useJmx="false" persistent="true" dataDirectory="${jms.dir}/jms">
+    	<amq:managementContext>
+    	
+    	    <amq:managementContext createConnector="false" />
+    	</amq:managementContext>
+    	<amq:persistenceAdapter>
+    		<amq:kahaDB directory="${jms.dir}" >
+            </amq:kahaDB>
+        </amq:persistenceAdapter>
+         <amq:transportConnectors>
+			<amq:transportConnector uri="tcp://${jms.ip}:${jms.port}" />
+		</amq:transportConnectors>
+    </amq:broker>
+
+
+6. log4j2.xml 
+
+	修改 <property name="LOG_HOME">d:/logs</property> 为实际的地址。
+	
+	修改日志模式为 WARN
+	
+	 <root level="DEBUG"> -->  <root level="WARN">

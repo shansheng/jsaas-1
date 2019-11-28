@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.dashboard.entity.SysDashboardCustom">
+	<resultMap id="SysDashboardCustom" type="com.redxun.sys.dashboard.entity.SysDashboardCustom">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="name" 		column="NAME_" 			jdbcType="VARCHAR"/>
+		<result property="key" 			column="KEY_" 			jdbcType="VARCHAR"/>
+		<result property="treeId" 		column="TREE_ID_" 		jdbcType="VARCHAR"/>
+		<result property="layoutHtml" 	column="LAYOUT_HTML_" 	jdbcType="VARCHAR"/>
+		<result property="editHtml" 	column="EDIT_HTML_" 	jdbcType="VARCHAR"/>
+		<result property="queryFilterJsonStr" column="QUERYFILTER_JSONSTR_" jdbcType="VARCHAR"/>
+		<result property="tenantId" 	column="TENANT_ID_" 	jdbcType="VARCHAR"/>
+		<result property="createTime" 	column="CREATE_TIME_" 	jdbcType="TIMESTAMP"/>
+		<result property="createBy" 	column="CREATE_BY_" 	jdbcType="VARCHAR"/>
+		<result property="updateTime" 	column="UPDATE_TIME_" 	jdbcType="TIMESTAMP"/>
+		<result property="updateBy" 	column="UPDATE_BY_" 	jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.dashboard.entity.SysDashboardCustom">
+		INSERT INTO SYS_DASHBOARD_CUSTOM
+		(ID_,NAME_,KEY_,TREE_ID_,LAYOUT_HTML_,EDIT_HTML_,QUERYFILTER_JSONSTR_,TENANT_ID_,CREATE_TIME_,CREATE_BY_,UPDATE_TIME_,UPDATE_BY_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, 
+		#{treeId,jdbcType=VARCHAR}, #{layoutHtml,jdbcType=VARCHAR},#{editHtml,jdbcType=VARCHAR},
+		#{queryFilterJsonStr, jdbcType=VARCHAR},
+		#{tenantId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+		#{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get" parameterType="java.lang.String" resultMap="SysDashboardCustom">
+		SELECT * FROM SYS_DASHBOARD_CUSTOM 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysDashboardCustom">
+		SELECT * FROM SYS_DASHBOARD_CUSTOM
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.dashboard.entity.SysDashboardCustom">
+		UPDATE SYS_DASHBOARD_CUSTOM SET
+		NAME_=#{name,jdbcType=VARCHAR},
+		KEY_=#{key,jdbcType=VARCHAR},
+		TREE_ID_=#{treeId,jdbcType=VARCHAR},
+		LAYOUT_HTML_=#{layoutHtml,jdbcType=VARCHAR},
+		EDIT_HTML_=#{editHtml,jdbcType=VARCHAR},
+		QUERYFILTER_JSONSTR_=#{queryFilterJsonStr,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM SYS_DASHBOARD_CUSTOM 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getByTenantId" parameterType="java.lang.String" resultMap="SysDashboardCustom">
+		SELECT * FROM SYS_DASHBOARD_CUSTOM 
+		WHERE 
+		TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="getByAlias" parameterType="java.lang.String" resultMap="SysDashboardCustom">
+		SELECT * FROM SYS_DASHBOARD_CUSTOM WHERE KEY_=#{key} AND TENANT_ID_=#{tenantId}
+	</select>
+	
+	<!-- <select id="getKeyNotCurrent" parameterType="java.lang.String" resultMap="SysEchartsCustom">
+		SELECT * FROM SYS_ECHARTS_CUSTOM WHERE KEY_=#{key} 
+		<if test="id != null">
+			AND ID_!=#{id}
+		</if>
+		AND TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="getByTreeId" parameterType="java.lang.String" resultMap="SysEchartsCustom">
+		SELECT * FROM SYS_ECHARTS_CUSTOM WHERE TREE_ID_ = #{treeId}
+	</select> -->
+</mapper>

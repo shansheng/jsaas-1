@@ -1,0 +1,237 @@
+
+.bodys{
+    height: 100%;
+    padding-top: 4px;
+    box-sizing: border-box;
+}
+#container{
+    height: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #b0c5e0;
+}
+
+.mini-layout-region-header,
+.mini-layout-region{
+    border-color: #b0c5e0!important;
+}
+.mini-layout-region{
+    border-top: 0;
+}
+
+.mini-layout-region-title{
+    text-align: left;
+    padding:  0 20px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #007dc4;
+    background: #e6f2f9;
+}
+.mini-layout-region-header{
+    border-bottom:0 ;
+}
+.treeBox{
+    padding:  0 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.topTool{
+    margin-top: 24px;
+}
+.topTool li{
+    border-radius: 3px;
+    padding-left: 30px;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid transparent;
+}
+.topTool li.active{
+    border: 1px solid #f5ad50;
+    background: #ffb850;
+}
+.headers{
+    margin-top: 30px;
+}
+.headers p{
+    position: relative;
+    padding-left: 26px;
+    padding-bottom: 14px;
+    font-size: 16px;
+    color: #007dc4;
+    border-bottom: 1px dashed #d1d1d3;
+}
+.headers p:before{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: url(icons/yjlImg/yjl_icon.png) -1px -3px  no-repeat;
+}
+.saomiao{
+    margin-top: 16px;
+}
+.treeBox label{
+    display: inline-block;
+    padding: 6px 0;
+}
+.treeBox label input{
+    display: none;
+}
+.treeBox label span{
+    position: relative;
+    font-size: 14px;
+    padding-left: 30px;
+}
+.treeBox label span:before{
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 3px;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #333;
+    box-sizing: border-box;
+}
+
+.treeBox label input:checked + span:before{
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+
+    border: 4px solid #007dc4;
+    box-sizing: border-box;
+}
+
+
+.searchBoxs{
+    padding: 0px 0 10px;
+}
+.searchBoxs li{
+    margin-top: 10px;
+}
+.searchBoxs li p{
+    font-size: 14px;
+}
+.mini-datepicker .mini-buttonedit-trigger .mini-buttonedit-icon {
+    background: url(../styles/icons/yjlImg/yjl_icon.png) -92px -2px no-repeat;
+}
+
+
+.searchBtn{
+    padding-bottom: 40px;
+}
+.mini-calendar .mini-calendar-selected{
+    border-radius: 0;
+}
+.searchBtn{
+    margin-top: 10px;
+    font-size: 0;
+}
+.searchBtn span,
+.searchBtn a,
+.searchBtn em{
+    font-size: 14px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.searchBtn span{
+    display: inline-block;
+    font-size: 14px;
+    width: 64px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    background: -webkit-linear-gradient(#cff0ff, #b1e6ff); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#cff0ff, #b1e6ff); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#cff0ff, #b1e6ff); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#cff0ff, #b1e6ff); /* 标准的语法 */
+    border:1px solid #aedaef ;
+    border-radius: 3px;
+}
+.searchBtn a{
+    color: #33b1dc;
+    margin: 0 10px;
+}
+.searchBtn em{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: url(../styles/icons/yjlImg/yjl_icon.png) -26px 1px no-repeat;
+}
+
+
+.headerToolBar ul{
+    height: 40px;
+    font-size: 0;
+    background: #e6f2f9;
+    padding-left: 14px;
+}
+.headerToolBar ul li{
+    margin-top: 5px;
+    margin-right: 10px;
+    font-size: 14px;
+    display: inline-block;
+    height: 30px;
+    line-height: 28px;
+    padding: 0 10px;
+    border: 1px solid #97bbd0;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background: -webkit-linear-gradient(#f3fbff, #d4e9f8); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#f3fbff, #d4e9f8); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#f3fbff, #d4e9f8); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#f3fbff, #d4e9f8); /* 标准的语法 */
+
+    cursor: pointer;
+}
+
+dl,dd,dt{
+    padding: 0;
+    margin: 0;
+}
+.HeaderToolBtn{
+    padding: 10px 20px;
+    font-size: 0px;
+}
+.HeaderToolBtn .btnBox{
+    display: inline-block;
+    font-size: 14px;
+    width: 400px;
+}
+.btnBox dl{
+    font-size: 0;
+    white-space: nowrap;
+}
+.btnBox dd,
+.btnBox dt{
+    font-size: 14px;
+    display: inline-block;
+}
+.btnBox dt {
+    margin-right: 20px;
+    color: #333;
+}
+.btnBox dd{
+    padding:0 16px;
+    color: #0086b2;
+    cursor: pointer;
+}
+.btnBox dd.active{
+    color: #fd8c00;
+}
+.btnBox dd:last-child:after{
+    content: "";
+}
+.btnBox dd:after{
+    content: "|";
+    margin-left: 15px;
+    margin-top: -1px;
+    position: absolute;
+    display: inline-block;
+    color: #939393;
+}
+
+/*明细页面*/

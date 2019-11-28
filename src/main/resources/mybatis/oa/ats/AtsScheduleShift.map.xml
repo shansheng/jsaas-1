@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.ats.entity.AtsScheduleShift">
+	<resultMap id="AtsScheduleShift" type="com.redxun.oa.ats.entity.AtsScheduleShift">
+		<id property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="fileId" column="FILE_ID" jdbcType="VARCHAR"/>
+		<result property="attenceTime" column="ATTENCE_TIME" jdbcType="TIMESTAMP"/>
+		<result property="dateType" column="DATE_TYPE" jdbcType="NUMERIC"/>
+		<result property="shiftId" column="SHIFT_ID" jdbcType="VARCHAR"/>
+		<result property="title" column="TITLE" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		
+		<result property="fullName" column="fullName" jdbcType="VARCHAR"/>
+		<result property="orgName" column="orgName" jdbcType="VARCHAR"/>
+		<result property="dateTypeName" column="dateTypeName" jdbcType="VARCHAR"/>
+		<result property="shiftName" column="shiftName" jdbcType="VARCHAR"/>
+		<result property="cardNumber" column="cardNumber" jdbcType="VARCHAR"/>
+		<result property="attencePolicyName" column="attencePolicyName" jdbcType="VARCHAR"/>
+		<result property="cardRuleName" column="cardRuleName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	<insert id="create" parameterType="com.redxun.oa.ats.entity.AtsScheduleShift">
+		INSERT INTO ats_schedule_shift
+		(ID,FILE_ID,ATTENCE_TIME,DATE_TYPE,SHIFT_ID,TITLE,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{fileId,jdbcType=VARCHAR}, #{attenceTime,jdbcType=TIMESTAMP}, #{dateType,jdbcType=NUMERIC}, #{shiftId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="AtsScheduleShift">
+		SELECT a.*
+		FROM ATS_SCHEDULE_SHIFT a left join ats_attendance_file b
+   	 	on a.FILE_ID = b.ID left join os_user c
+    	on b.USER_ID = c.USER_ID_
+		WHERE 
+		a.ID=#{id} and c.STATUS_ = 'IN_JOB'
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="AtsScheduleShift">
+		select a.ID,a.ATTENCE_TIME,a.DATE_TYPE,a.TITLE,f.USER_NO_ as cardNumber,c.NAME as attencePolicyName,d.NAME as shiftName,e.NAME as cardRuleName,f.FULLNAME_ as fullName,h.NAME_ as orgName,i.NAME as dateTypeName
+		from ats_schedule_shift  a left join ats_attendance_file b
+		on a.FILE_ID = b.ID left join ats_attence_policy c
+		on b.ATTENCE_POLICY = c.ID left join ats_shift_info d
+		on a.SHIFT_ID = d.ID left join ats_card_rule e
+		on d.CARD_RULE = e.ID left join os_user f
+		on b.USER_ID=f.USER_ID_ left join os_rel_inst g
+		on f.USER_ID_ = g.PARTY2_ left join os_group h
+		on h.GROUP_ID_ = g.PARTY1_ left join ats_shift_type i
+		on a.DATE_TYPE = i.ID
+		<where>
+		    1=1
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				and ${whereSql}
+			</if>
+			and h.DIM_ID_=1 and f.STATUS_ = 'IN_JOB'
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY a.ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.ats.entity.AtsScheduleShift">
+		UPDATE ats_schedule_shift SET
+		FILE_ID=#{fileId,jdbcType=VARCHAR},
+		ATTENCE_TIME=#{attenceTime,jdbcType=TIMESTAMP},
+		DATE_TYPE=#{dateType,jdbcType=NUMERIC},
+		SHIFT_ID=#{shiftId,jdbcType=VARCHAR},
+		TITLE=#{title,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM ats_schedule_shift 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<delete id="delByFileId" parameterType="java.lang.String">
+		DELETE FROM ATS_SCHEDULE_SHIFT 
+		WHERE
+		FILE_ID=#{fileId}
+	</delete>
+	
+	<select id="getByFileIdStartEndTime" parameterType="java.util.Map" resultMap="AtsScheduleShift">
+		SELECT a.*
+		FROM ATS_SCHEDULE_SHIFT a left join ats_attendance_file b
+   	 	on a.FILE_ID = b.ID left join os_user c
+    	on b.USER_ID = c.USER_ID_
+		WHERE
+		a.FILE_ID  =#{fileId}
+		AND a.ATTENCE_TIME  >=#{startTime,jdbcType=TIMESTAMP} 
+		AND a.ATTENCE_TIME <![CDATA[ <=#{endTime,jdbcType=TIMESTAMP}]]>
+		AND c.STATUS_ = 'IN_JOB'
+	</select>
+	
+	<select id="getByFileIdAttenceTime" parameterType="java.util.Map" resultMap="AtsScheduleShift">
+		SELECT a.ID,a.FILE_ID,a.ATTENCE_TIME,a.DATE_TYPE,a.SHIFT_ID,a.TITLE
+		FROM ATS_SCHEDULE_SHIFT a left join ats_attendance_file b
+   	 	on a.FILE_ID = b.ID left join os_user c
+    	on b.USER_ID = c.USER_ID_
+		WHERE
+		 a.FILE_ID  =#{fileId} AND a.ATTENCE_TIME  = #{attenceTime,jdbcType=TIMESTAMP} AND c.STATUS_ = 'IN_JOB'
+	</select>
+	
+</mapper>

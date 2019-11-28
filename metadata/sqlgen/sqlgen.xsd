@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.redxun.cn/sqlgen"
+    targetNamespace="http://www.redxun.cn/sqlgen" elementFormDefault="qualified">
+    <xs:element name="resources">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resource" type="resource" minOccurs="1" maxOccurs="unbounded"></xs:element>
+            </xs:sequence>
+            <xs:attribute name="filePath" type="xs:string" use="required"> 
+	            <xs:annotation>
+	                <xs:documentation>生成文件路径.</xs:documentation>
+	            </xs:annotation>
+            </xs:attribute>
+                <xs:attribute name="isEndSql" type="xs:boolean" default="true"> 
+	            <xs:annotation>
+	                <xs:documentation>是否生成结束SQL【commit】.</xs:documentation>
+	            </xs:annotation>
+            </xs:attribute>
+            
+        </xs:complexType>
+        
+    </xs:element>
+
+    <xs:complexType name="resource">
+        <xs:all>
+            <xs:element name="sql" type="xs:string" >
+                <xs:annotation>
+                    <xs:documentation>SQL语句.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="template" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>生成SQL模版.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+      
+    </xs:complexType>
+</xs:schema>

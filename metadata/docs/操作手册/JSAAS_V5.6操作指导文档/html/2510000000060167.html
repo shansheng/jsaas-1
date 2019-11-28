@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>企业微信</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><strong>功能说明</strong></p> 
+ <p>企业微信是面向企业开发的一种服务。和公众号不同，他可以实现无限制给内部用户推送消息，有部分的办公应用和简单的审批功能，集成企业微信，我们可以实现给成员推送消息。整合平台的手机应用，而不用显示登录，作为企业办公的一个入口点。</p> 
+ <p>在平台中我们整合微信主要实现了：</p> 
+ <p>1企业微信用户同步。</p> 
+ <p>2.企业微信消息通知。</p> 
+ <p>3.微信手机端的打通，集成了企业微信的JSSDK功能,支持拍照定位等功能。</p> 
+ <p><br></p> 
+ <p><strong>操作步骤</strong></p> 
+ <p>1.注册企业微信<br></p> 
+ <p>在企业信息平台注册企业微信帐号，这个是必须做的，这个过程就不描述了。</p> 
+ <p>2.微信操作</p> 
+ <p>2.1&nbsp;获取CORPID</p> 
+ <p>corpId ：一个企业微信有一个corpId。<br></p> 
+ <p>进入我的企业。</p> 
+ <p><img src="../img/2400000000601009.png" title="image.png" alt=""> </p> 
+ <p>2.2&nbsp;获取通讯录密钥</p> 
+ <p><img src="../img/2400000000601008.png" title="image.png" alt=""> </p> 
+ <p>这个我们密钥需要使用到。另外我们需要做用户同步，即将平台租户的用户同步到企业微信。需要开启API同步接口。</p> 
+ <p>2.3&nbsp;增加一个应用</p> 
+ <p><img src="../img/2400000000601013.png" title="image.png" alt=""> </p> 
+ <p>点击创建应用。</p> 
+ <p><img src="../img/2400000000601015.png" title="image.png" alt=""> </p> 
+ <p>1.配置网页授权及JS-SDK，这里需要配置一个域名。</p> 
+ <p>2.工作台应用主页</p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;如果配置这个，那么在工作台点击这个应用，那么将直接跳转到配置的地址。<br></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;这个配置地址的方式可以使用如下地址。<br></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://m.redxun.cn/saweb/proxy/2400000000021001.do?url=http://m.redxun.cn/saweb/vuemobile/index.html" _src="http://m.redxun.cn/saweb/proxy/2400000000021001.do?url=http://m.redxun.cn/saweb/vuemobile/index.html">http://m.redxun.cn/saweb/proxy/2400000000021001.do?url=http://m.redxun.cn/saweb/vuemobile/index.html</a></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;这个 2400000000021001是平台增加的应用ID。url&nbsp;是需要跳转到的手机端应用地址。</p> 
+ <p><br></p> 
+ <p>2.4&nbsp;平台中配置企业微信</p> 
+ <p>点击“系统配置“-&gt;“企业微信“-&gt;“企业微信“</p> 
+ <p><img src="../img/2400000000601019.png" title="image.png" alt=""> </p> 
+ <p>一个租户只能配置一个企业微信。</p> 
+ <p>企业ID：是上面的提到的corpId</p> 
+ <p>通讯录密钥：这里配置上面的通讯录密钥。</p> 
+ <p><br></p> 
+ <p>2.6&nbsp;平台中可以配置一个或者多个应用。</p> 
+ <p><img src="../img/2400000000601021.png" title="image.png" alt=""> </p> 
+ <p>输入应用的密钥后点击加载按钮，会从企业微信加载应用信息。配置完成后点击保存。</p> 
+ <p><br></p> 
+ <p><img src="../img/2400000000601022.png" title="image.png" alt=""> </p> 
+ <p>保存后我们取得这个主键，重新填写微信应用配置的URL。</p> 
+ <p><a href="http://m.redxun.cn/saweb/proxy/2400000000021001.do?url=http://m.redxun.cn/saweb/vuemobile/index.html" _src="http://m.redxun.cn/saweb/proxy/2400000000021001.do?url=http://m.redxun.cn/saweb/vuemobile/index.html" style="white-space: normal;">http://m.redxun.cn/saweb/proxy/<span style="color: rgb(255, 255, 255); font-family: 微软雅黑; font-size: 14px; text-align: center; background-color: rgb(41, 180, 247);">2400000001371001</span>.do?url=http://m.redxun.cn/saweb/vuemobile/index.html</a></p> 
+ <p>这样企业微信就配置完了。</p> 
+ <p>2.7&nbsp;同步用户到企业微信</p> 
+ <p>配置了企业微信后，我们可以在用户管理处，看到同步按钮。点击同步就可以将租户的用户和行政组织同步到企业微信。</p> 
+ <p><img src="../img/2400000000601024.png" title="image.png" alt=""> </p> 
+ <p><br></p> 
+ <p><br></p> 
+ <p><br></p>  
+</body></div>
+</body>
+</html>

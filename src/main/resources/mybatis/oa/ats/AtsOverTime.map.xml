@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.ats.entity.AtsOverTime">
+	<resultMap id="AtsOverTime" type="com.redxun.oa.ats.entity.AtsOverTime">
+		<id property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="otType" column="OT_TYPE" jdbcType="VARCHAR"/>
+		<result property="startTime" column="START_TIME" jdbcType="TIMESTAMP"/>
+		<result property="endTime" column="END_TIME" jdbcType="TIMESTAMP"/>
+		<result property="otTime" column="OT_TIME" jdbcType="NUMERIC"/>
+		<result property="otCompens" column="OT_COMPENS" jdbcType="NUMERIC"/>
+		<result property="runId" column="RUN_ID" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.oa.ats.entity.AtsOverTime">
+		INSERT INTO ats_over_time
+		(ID,USER_ID,OT_TYPE,START_TIME,END_TIME,OT_TIME,OT_COMPENS,RUN_ID,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{otType,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{otTime,jdbcType=NUMERIC}, #{otCompens,jdbcType=NUMERIC}, #{runId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="AtsOverTime">
+		SELECT * FROM ats_over_time 
+		WHERE 
+		ID=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="AtsOverTime">
+		SELECT * FROM ats_over_time
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.ats.entity.AtsOverTime">
+		UPDATE ats_over_time SET
+		USER_ID=#{userId,jdbcType=VARCHAR},
+		OT_TYPE=#{otType,jdbcType=VARCHAR},
+		START_TIME=#{startTime,jdbcType=TIMESTAMP},
+		END_TIME=#{endTime,jdbcType=TIMESTAMP},
+		OT_TIME=#{otTime,jdbcType=NUMERIC},
+		OT_COMPENS=#{otCompens,jdbcType=NUMERIC},
+		RUN_ID=#{runId,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM ats_over_time 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	
+</mapper>

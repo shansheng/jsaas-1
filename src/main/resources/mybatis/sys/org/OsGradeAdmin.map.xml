@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.org.entity.OsGradeAdmin">
+	<resultMap id="OsGradeAdmin" type="com.redxun.sys.org.entity.OsGradeAdmin">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+		<result property="userId" column="USER_ID_" jdbcType="VARCHAR"/>
+		<result property="fullname" column="FULLNAME_" jdbcType="VARCHAR"/>
+		<result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR"/>
+		<result property="depth" column="DEPTH_" jdbcType="NUMERIC"/>
+		<result property="path" column="PATH_" jdbcType="VARCHAR"/>
+		<result property="sn" column="SN_" jdbcType="NUMERIC"/>
+		<result property="childs" column="CHILDS_" jdbcType="NUMERIC"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+
+	<select id="getAdminByUserIdAndTenantId" parameterType="java.util.Map" resultMap="OsGradeAdmin">
+		select * from os_grade_admin where USER_ID_=#{userId} and TENANT_ID_=#{tenantId}
+	</select>
+
+	<select id="getCountByGroupId" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select COUNT(*) from os_grade_admin t where t.GROUP_ID_=#{groupId}
+	</select>
+
+	<insert id="create" parameterType="com.redxun.sys.org.entity.OsGradeAdmin">
+		INSERT INTO OS_GRADE_ADMIN
+		(ID_,GROUP_ID_,USER_ID_,FULLNAME_,PARENT_ID_,DEPTH_,PATH_,SN_,CHILDS_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{fullname,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{depth,jdbcType=NUMERIC}, #{path,jdbcType=VARCHAR}, #{sn,jdbcType=NUMERIC}, #{childs,jdbcType=NUMERIC}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="OsGradeAdmin">
+		SELECT * FROM OS_GRADE_ADMIN 
+		WHERE 
+		ID_=#{id}
+	</select>
+
+
+	
+	<select id="query" parameterType="java.util.Map" resultMap="OsGradeAdmin">
+		SELECT * FROM OS_GRADE_ADMIN
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.org.entity.OsGradeAdmin">
+		UPDATE OS_GRADE_ADMIN SET
+		GROUP_ID_=#{groupId,jdbcType=VARCHAR},
+		USER_ID_=#{userId,jdbcType=VARCHAR},
+		FULLNAME_=#{fullname,jdbcType=VARCHAR},
+		PARENT_ID_=#{parentId,jdbcType=VARCHAR},
+		DEPTH_=#{depth,jdbcType=NUMERIC},
+		PATH_=#{path,jdbcType=VARCHAR},
+		SN_=#{sn,jdbcType=NUMERIC},
+		CHILDS_=#{childs,jdbcType=NUMERIC},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM OS_GRADE_ADMIN 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getByGroupId" parameterType="java.lang.String" resultMap="OsGradeAdmin">
+		select b.* from os_group a inner join os_grade_admin b 
+		on a.GROUP_ID_ = b.GROUP_ID_  left join os_user c 
+		on b.USER_ID_ = c.USER_ID_ where b.GROUP_ID_ = #{groupId}
+		ORDER BY b.SN_
+	</select>
+	
+	<select id="getByParentId" parameterType="java.lang.String" resultMap="OsGradeAdmin">
+		select b.* from os_group a inner join os_grade_admin b 
+		on a.GROUP_ID_ = b.GROUP_ID_  left join os_user c 
+		on b.USER_ID_ = c.USER_ID_ where b.PARENT_ID_ = #{parentId}
+		ORDER BY b.SN_
+	</select>
+	<select id="getCount" parameterType="java.util.Map" resultMap="OsGradeAdmin">
+		SELECT count(*)  FROM os_grade_admin 
+		where group_id_ = #{groupId} and user_id_ = #{userId}
+	</select>
+	
+</mapper>

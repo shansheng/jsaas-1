@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.bm.entity.BpmFormInst">
+	<resultMap id="BpmFormInst" type="com.redxun.bpm.bm.entity.BpmFormInst">
+		<id property="formInstId" column="FORM_INST_ID_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="actInstId" column="ACT_INST_ID_" jdbcType="VARCHAR"/>
+		<result property="actDefId" column="ACT_DEF_ID_" jdbcType="VARCHAR"/>
+		<result property="defId" column="DEF_ID_" jdbcType="VARCHAR"/>
+		<result property="solId" column="SOL_ID_" jdbcType="VARCHAR"/>
+		<result property="fmId" column="FM_ID_" jdbcType="VARCHAR"/>
+		<result property="fmViewId" column="FM_VIEW_ID_" jdbcType="VARCHAR"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="jsonData" column="JSON_DATA_" jdbcType="CLOB"/>
+		<result property="isPersist" column="IS_PERSIST_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.bm.entity.BpmFormInst">
+		INSERT INTO BPM_FORM_INST
+		(FORM_INST_ID_,SUBJECT_,INST_ID_,ACT_INST_ID_,ACT_DEF_ID_,DEF_ID_,SOL_ID_,FM_ID_,FM_VIEW_ID_,STATUS_,JSON_DATA_,IS_PERSIST_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{formInstId,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{instId,jdbcType=VARCHAR}, #{actInstId,jdbcType=VARCHAR}, #{actDefId,jdbcType=VARCHAR}, #{defId,jdbcType=VARCHAR}, #{solId,jdbcType=VARCHAR}, #{fmId,jdbcType=VARCHAR}, #{fmViewId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{jsonData,jdbcType=CLOB}, #{isPersist,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmFormInst">
+		SELECT * FROM BPM_FORM_INST 
+		WHERE 
+		FORM_INST_ID_=#{formInstId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmFormInst">
+		SELECT * FROM BPM_FORM_INST
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY FORM_INST_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.bm.entity.BpmFormInst">
+		UPDATE BPM_FORM_INST SET
+		SUBJECT_=#{subject,jdbcType=VARCHAR},
+		INST_ID_=#{instId,jdbcType=VARCHAR},
+		ACT_INST_ID_=#{actInstId,jdbcType=VARCHAR},
+		ACT_DEF_ID_=#{actDefId,jdbcType=VARCHAR},
+		DEF_ID_=#{defId,jdbcType=VARCHAR},
+		SOL_ID_=#{solId,jdbcType=VARCHAR},
+		FM_ID_=#{fmId,jdbcType=VARCHAR},
+		FM_VIEW_ID_=#{fmViewId,jdbcType=VARCHAR},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		JSON_DATA_=#{jsonData,jdbcType=CLOB},
+		IS_PERSIST_=#{isPersist,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		FORM_INST_ID_=#{formInstId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_FORM_INST 
+		WHERE
+		FORM_INST_ID_=#{formInstId}
+	</delete>
+	
+	<select id="getByBpmInstId" parameterType="java.util.Map" resultMap="BpmFormInst">
+	    select * from BPM_FORM_INST where INST_ID_=#{bpmInstId}
+	</select>
+	
+</mapper>

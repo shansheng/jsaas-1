@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>JSAAS操作手册</title>
+<style>
+/*icon图标引用*/
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1527051188652'); /* IE9*/
+  src: url('iconfont.eot?t=1527051188652#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAVAAAsAAAAAB8wAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADMAAABCsP6z7U9TLzIAAAE8AAAARAAAAFZW7kf5Y21hcAAAAYAAAABkAAABnM7EabpnbHlmAAAB5AAAAVMAAAF85S39BmhlYWQAAAM4AAAALwAAADYRdW1laGhlYQAAA2gAAAAcAAAAJAfeA4VobXR4AAADhAAAABAAAAAQD+kAAGxvY2EAAAOUAAAACgAAAAoBNACabWF4cAAAA6AAAAAfAAAAIAETAF1uYW1lAAADwAAAAUUAAAJtPlT+fXBvc3QAAAUIAAAAOAAAAFLRf8CMeJxjYGRgYOBikGPQYWB0cfMJYeBgYGGAAJAMY05meiJQDMoDyrGAaQ4gZoOIAgCKIwNPAHicY2Bk/sU4gYGVgYOpk+kMAwNDP4RmfM1gxMjBwMDEwMrMgBUEpLmmMDgwVDzjZW7438AQw9zA0AAUZgTJAQAk+Qx7eJzFkNENgCAMRO8ADTGyiZ/GgfxiBCbuGthWfpiAI4+2l4aSAtgAROVSEsAKwvSqS/cjDvcTHq2znqCxCaX0PmUmekf2LNjL3LFMXDd61un3PSrbdxvoF2Vge5Xyg/gBFlsPq3icZcy9TsJgFMbx93lrW4pQ2relX3y2CNVgSay1DkZYHNQ4mLjo6ASLBicWBxxMHBwYmY2Jt+DABXgJrkYvwCsottHNk5OTnOH/Izwhyw9uwVlEI+tkixyQU0IgdOHJtAbXj3q0i7LLl01d5vyW74otr8ftw/QE3QjjqGMKolCCjDq23TD2e9THTtSnewiNGmBXnDPWrjJuhrzl1++TY/qEcqNVLfWD5GhzoIdNLTcpMGYz9pgTeD5H6UpJxpVpSLyUF5JnvuSUF40N2kDB9p2Ti2Kzwi4fouta25SA6RRapSm/DFRHTffWMTRmi0oxZznF1pqOydeqpRVqnU+SDrLDvdE7ohDSRieKw9SIQ0MXIXh4T25UL2AYYsgCT02/3gwzNfCUZI6R4gVqMlb+nOUrB+4wc6Q07US70i8HQ6ffyTiLMErmWYSZgvP/NCE/MYI/6gB4nGNgZGBgAOL8K//b4vltvjJwszCAwHVtkS0I+v8OFgZmDyCXg4EJJAoANaYKHQB4nGNgZGBgbvjfwBDDwgACQJKRARWwAABHCgJtBAAAAAPpAAAEAAAABAAAAAAAAAAAdgCaAL4AAHicY2BkYGBgYQhkYGUAASYg5gJCBob/YD4DABESAXEAeJxlj01OwzAQhV/6B6QSqqhgh+QFYgEo/RGrblhUavdddN+mTpsqiSPHrdQDcB6OwAk4AtyAO/BIJ5s2lsffvHljTwDc4Acejt8t95E9XDI7cg0XuBeuU38QbpBfhJto41W4Rf1N2MczpsJtdGF5g9e4YvaEd2EPHXwI13CNT+E69S/hBvlbuIk7/Aq30PHqwj7mXle4jUcv9sdWL5xeqeVBxaHJIpM5v4KZXu+Sha3S6pxrW8QmU4OgX0lTnWlb3VPs10PnIhVZk6oJqzpJjMqt2erQBRvn8lGvF4kehCblWGP+tsYCjnEFhSUOjDFCGGSIyujoO1Vm9K+xQ8Jee1Y9zed0WxTU/3OFAQL0z1xTurLSeTpPgT1fG1J1dCtuy56UNJFezUkSskJe1rZUQuoBNmVXjhF6XNGJPyhnSP8ACVpuyAAAAHicY2BigAAuBuyAhZGJkZmRhZGVgbFCMDM5Py8+sagovzw+Kb+kJD9XAEmkKDM9o4SBAQAqhQ6U') format('woff'),
+  url('iconfont.ttf?t=1527051188652') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1527051188652#iconfont') format('svg'); /* iOS 4.1- */
+}
+.iconfont {
+  font-family:"iconfont" !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.up:before {
+	content: "\e601";
+	font-size:16px;
+	font-weight:bolder; 
+	}
+.down:before {
+	content: "\e60d";
+	font-size:16px;
+	font-weight:bolder; 
+};
+*{
+	color:#666;
+}
+input{
+	margin:0;
+	padding:0;
+}
+h1,h2,h3,h4,h5,h6{
+	font-weight:normal;
+	font-size:16px;
+}
+h1{
+	padding:0;
+	margin:0;
+}
+
+ul{
+	margin:0;
+	padding:0;
+}
+#nav ul li{
+	
+	white-space:nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+
+}
+
+html{
+	height:100%;
+	overflow:hidden;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+#header {
+	position: relative;
+	height:60px;
+    background-color:#333;
+    text-align:center;
+    overflow:hidden;
+}
+#header h1{
+	color: #fff;
+	font-size:20px;
+	text-align: center;
+	white-space:nowrap;
+	line-height:60px;
+}
+
+
+#center {
+	position: relative;
+    width:100%;
+	height:100%; 
+	float: left;
+}
+
+#section {	
+    background: #fff;
+    -webkit-overflow-scrolling:touch; 
+    overflow: scroll; 
+}
+
+
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+	bottom:0px; 
+	height:5%;
+}
+*{
+	font-family: "微软雅黑";
+}
+	
+
+
+#nav {
+	position: relative;
+    background:#F9F9F9;
+    float:left;
+    height:100%;
+    overflow:auto;
+    
+}
+
+#nav>ul{
+	line-height:32px;
+	list-style-type:none;
+}
+
+#nav li ul{
+	padding: 0 0 0 26px;	
+	line-height:30px;
+	list-style-type:none;
+}
+.artIndex{
+	cursor:pointer;
+	padding: 0 8px 0 4px;
+	outline: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+　　	-webkit-tap-highlight-color: transparent;
+}
+
+.artIndex:hover{
+	color:#B22222;
+}
+.redFont{
+	color:#B22222;
+}
+
+#header #btn-a{
+	position: absolute;
+	left:10px;
+	top:10px;
+	width:40px;
+	height:40px;
+	text-align: center;
+	line-height: 40px;
+	cursor:pointer;
+	outline: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+　　	-webkit-tap-highlight-color: transparent;
+}
+#header #btn-a .btn-menu{
+	width:30px;
+	height:3px;
+	background:#fff;
+	margin:5px auto;
+}
+#total{
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+}
+#total #left{
+	height:100%;
+	background:#F9F9F9;
+	float: left;
+	
+}
+#total #atuo{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top:0;
+}
+
+#total #left #left-top{
+	width:100%;
+	background:#fff;
+	height:70px;
+	line-height:70px;
+	padding-left:15px;
+}
+#total #left input{
+	height:70px;
+	border:0px;
+	width:85%;
+	padding-left:15px;
+	padding-right:15px;
+	outline: none;
+	font-size:16px;
+}
+
+@media only screen and (min-width: 100px) and (max-width: 790px) {
+	#header #btn-a{
+		top:10px;
+	}
+	#header{
+		padding:0px;
+	}
+	#header h1{
+		font-size:16px;
+	}
+	#total #left input{
+		height:60px;
+		-webkit-tap-highlight-color:rgba(0,0,0,0);
+	}
+	#total #left #left-top{
+		height:60px;
+		line-height:60px;
+	}
+	#section { 
+    	overflow-y:scroll;
+	}
+}
+
+</style>
+</head>
+<body >
+<div style="position:fixed;height:100%;width:100%;bottom: 0px;top:0px;">
+
+<div id="center">
+	<div id="total">
+		<div id="left">
+			<div id="left-top">在线预览文档</div>
+			<div id="nav">
+  <ul>
+  	<li><a class="artIndex iconfont up" id="2510000000060292" 
+  	 onclick="changeIframe('2510000000060292')"
+  	 >1 快速入门</a>
+  <ul>
+  	<li><a class="artIndex iconfont up" id="2510000000060296" 
+  	 >1.1 数据准备</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060297" 
+  	 >1.1.1 制作业务表单</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060298" 
+  	 >1.1.2 制作数据对话框</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060299" 
+  	 >1.1.3 制作数据列表</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060293" 
+  	 >1.2 极速配置简易流程</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060294" 
+  	 >1.2.1 画流程图</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060295" 
+  	 >1.2.2 综合案例（会议室申请）</a>
+  	</li>
+   </ul>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060142" 
+  	 >2 门户管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060143" 
+  	 onclick="changeIframe('2510000000060143')"
+  	 >2.1 自定义门户管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060145" 
+  	 onclick="changeIframe('2510000000060145')"
+  	 >2.2 消息管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060147" 
+  	 onclick="changeIframe('2510000000060147')"
+  	 >2.3 新闻公告管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060148" 
+  	 onclick="changeIframe('2510000000060148')"
+  	 >2.4 新闻公告评论</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060149" 
+  	 onclick="changeIframe('2510000000060149')"
+  	 >2.5 消息提示管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060144" 
+  	 onclick="changeIframe('2510000000060144')"
+  	 >2.6 自定义栏目管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060146" 
+  	 onclick="changeIframe('2510000000060146')"
+  	 >2.7 消息盒子管理</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060225" 
+  	 >3 工作台</a>
+  <ul>
+  	<li><a class="artIndex iconfont up" id="2510000000060231" 
+  	 >3.1 事项管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060232" 
+  	 onclick="changeIframe('2510000000060232')"
+  	 >3.1.1 我的附件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060233" 
+  	 onclick="changeIframe('2510000000060233')"
+  	 >3.1.2 草稿箱</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060234" 
+  	 onclick="changeIframe('2510000000060234')"
+  	 >3.1.3 新增申请</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060235" 
+  	 onclick="changeIframe('2510000000060235')"
+  	 >3.1.4 待办事项</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060236" 
+  	 onclick="changeIframe('2510000000060236')"
+  	 >3.1.5 待阅事项</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060237" 
+  	 onclick="changeIframe('2510000000060237')"
+  	 >3.1.6 事项通知</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060238" 
+  	 onclick="changeIframe('2510000000060238')"
+  	 >3.1.7 代理事项</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060239" 
+  	 onclick="changeIframe('2510000000060239')"
+  	 >3.1.8 转办事项</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060240" 
+  	 >3.2 文档管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060241" 
+  	 onclick="changeIframe('2510000000060241')"
+  	 >3.2.1 个人文档</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060243" 
+  	 onclick="changeIframe('2510000000060243')"
+  	 >3.2.2 公司文档</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060244" 
+  	 onclick="changeIframe('2510000000060244')"
+  	 >3.2.3 共享文档</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060242" 
+  	 onclick="changeIframe('2510000000060242')"
+  	 >3.2.4 公司文档管理</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060245" 
+  	 >3.3 日程任务</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060246" 
+  	 onclick="changeIframe('2510000000060246')"
+  	 >3.3.1 项目管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060247" 
+  	 onclick="changeIframe('2510000000060247')"
+  	 >3.3.2 我负责的项目</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060248" 
+  	 onclick="changeIframe('2510000000060248')"
+  	 >3.3.3 我参与的项目</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060249" 
+  	 onclick="changeIframe('2510000000060249')"
+  	 >3.3.4 我的计划任务</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060250" 
+  	 onclick="changeIframe('2510000000060250')"
+  	 >3.3.5 日程管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060251" 
+  	 onclick="changeIframe('2510000000060251')"
+  	 >3.3.6 我的日志</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060252" 
+  	 onclick="changeIframe('2510000000060252')"
+  	 >3.3.7 新增日志</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060253" 
+  	 onclick="changeIframe('2510000000060253')"
+  	 >3.3.8 新增计划任务</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000281782" 
+  	 >3.4 文档模板管理功能运用</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000281784" 
+  	 onclick="changeIframe('2510000000281784')"
+  	 >3.4.1 文档模板管理功能运用</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060226" 
+  	 >3.5 邮箱管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060227" 
+  	 onclick="changeIframe('2510000000060227')"
+  	 >3.5.1 外部邮箱配置</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060228" 
+  	 onclick="changeIframe('2510000000060228')"
+  	 >3.5.2 外部邮箱</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060229" 
+  	 onclick="changeIframe('2510000000060229')"
+  	 >3.5.3 内部邮箱</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060230" 
+  	 onclick="changeIframe('2510000000060230')"
+  	 >3.5.4 我的通讯录</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060265" 
+  	 onclick="changeIframe('2510000000060265')"
+  	 >3.6 知识仓库</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060266" 
+  	 onclick="changeIframe('2510000000060266')"
+  	 >3.7 知识问答</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060267" 
+  	 >4 个人设置</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060268" 
+  	 onclick="changeIframe('2510000000060268')"
+  	 >4.1 个人信息</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060269" 
+  	 onclick="changeIframe('2510000000060269')"
+  	 >4.2 常用意见</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060270" 
+  	 onclick="changeIframe('2510000000060270')"
+  	 >4.3 外出代理</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060271" 
+  	 >5 任务跟踪</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060272" 
+  	 onclick="changeIframe('2510000000060272')"
+  	 >5.1 我的申请</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060273" 
+  	 onclick="changeIframe('2510000000060273')"
+  	 >5.2 我的处理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060274" 
+  	 onclick="changeIframe('2510000000060274')"
+  	 >5.3 我的已阅</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060275" 
+  	 onclick="changeIframe('2510000000060275')"
+  	 >5.4 我的委托</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060276" 
+  	 onclick="changeIframe('2510000000060276')"
+  	 >5.5 全部流程</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060277" 
+  	 >6 知识管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060278" 
+  	 onclick="changeIframe('2510000000060278')"
+  	 >6.1 知识仓库后台</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060279" 
+  	 onclick="changeIframe('2510000000060279')"
+  	 >6.2 知识问答分类</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060280" 
+  	 onclick="changeIframe('2510000000060280')"
+  	 >6.3 专家列表</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060281" 
+  	 onclick="changeIframe('2510000000060281')"
+  	 >6.4 用户等级设置</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060282" 
+  	 onclick="changeIframe('2510000000060282')"
+  	 >7 公文管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont up" id="2510000000060283" 
+  	 >7.1 配置</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060284" 
+  	 onclick="changeIframe('2510000000060284')"
+  	 >7.1.1 撰写模板</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060285" 
+  	 onclick="changeIframe('2510000000060285')"
+  	 >7.1.2 部门收发文流程配置</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060286" 
+  	 onclick="changeIframe('2510000000060286')"
+  	 >7.1.3 收发文流程配置</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060288" 
+  	 >7.2 公文收发文</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060289" 
+  	 onclick="changeIframe('2510000000060289')"
+  	 >7.2.1 发文管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060290" 
+  	 onclick="changeIframe('2510000000060290')"
+  	 >7.2.2 收文管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060291" 
+  	 onclick="changeIframe('2510000000060291')"
+  	 >7.2.3 接收公文</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060287" 
+  	 onclick="changeIframe('2510000000060287')"
+  	 >7.3 公文实现操作方法</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060300" 
+  	 >8 考勤管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060301" 
+  	 onclick="changeIframe('2510000000060301')"
+  	 >8.1 基础数据</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060302" 
+  	 onclick="changeIframe('2510000000060302')"
+  	 >8.2 假期管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060303" 
+  	 >8.3 考勤业务设置</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060304" 
+  	 onclick="changeIframe('2510000000060304')"
+  	 >8.3.1 打卡规则</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060305" 
+  	 onclick="changeIframe('2510000000060305')"
+  	 >8.3.2 考勤制度</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060306" 
+  	 onclick="changeIframe('2510000000060306')"
+  	 >8.3.3 班次设置</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060307" 
+  	 onclick="changeIframe('2510000000060307')"
+  	 >8.3.4 轮班规则</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060308" 
+  	 >8.4 排班管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060309" 
+  	 onclick="changeIframe('2510000000060309')"
+  	 >8.4.1 考勤组</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060310" 
+  	 onclick="changeIframe('2510000000060310')"
+  	 >8.4.2 排班向导</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060311" 
+  	 onclick="changeIframe('2510000000060311')"
+  	 >8.4.3 排班列表</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060312" 
+  	 >8.5 日常管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060313" 
+  	 onclick="changeIframe('2510000000060313')"
+  	 >8.5.1 考勤档案</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060314" 
+  	 onclick="changeIframe('2510000000060314')"
+  	 >8.5.2 打卡记录</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060315" 
+  	 onclick="changeIframe('2510000000060315')"
+  	 >8.5.3 考勤计算</a>
+  	</li>
+   </ul>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060185" 
+  	 >9 敏捷开发</a>
+  <ul>
+  	<li><a class="artIndex iconfont up" id="2510000000060186" 
+  	 onclick="changeIframe('2510000000060186')"
+  	 >9.1 业务表单设计</a>
+  <ul>
+  	<li><a class="artIndex iconfont up" id="2510000000060187" 
+  	 onclick="changeIframe('2510000000060187')"
+  	 >9.1.1 新建业务表单</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060206" 
+  	 onclick="changeIframe('2510000000060206')"
+  	 >9.1.1.1 文本控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060188" 
+  	 onclick="changeIframe('2510000000060188')"
+  	 >9.1.1.2 多行文本框控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060189" 
+  	 onclick="changeIframe('2510000000060189')"
+  	 >9.1.1.3 复选框</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060190" 
+  	 onclick="changeIframe('2510000000060190')"
+  	 >9.1.1.4 单选按钮列表</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060191" 
+  	 onclick="changeIframe('2510000000060191')"
+  	 >9.1.1.5 复选按钮列表</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060192" 
+  	 onclick="changeIframe('2510000000060192')"
+  	 >9.1.1.6 下拉框控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060193" 
+  	 onclick="changeIframe('2510000000060193')"
+  	 >9.1.1.7 日期控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060194" 
+  	 onclick="changeIframe('2510000000060194')"
+  	 >9.1.1.8 月份控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060195" 
+  	 onclick="changeIframe('2510000000060195')"
+  	 >9.1.1.9 时间输入框</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060196" 
+  	 onclick="changeIframe('2510000000060196')"
+  	 >9.1.1.10 数据输入框</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060197" 
+  	 onclick="changeIframe('2510000000060197')"
+  	 >9.1.1.11 富文本输入框</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060198" 
+  	 onclick="changeIframe('2510000000060198')"
+  	 >9.1.1.12 用户选择框</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060199" 
+  	 onclick="changeIframe('2510000000060199')"
+  	 >9.1.1.13 用户组选择框</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060200" 
+  	 onclick="changeIframe('2510000000060200')"
+  	 >9.1.1.14 上传控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060201" 
+  	 onclick="changeIframe('2510000000060201')"
+  	 >9.1.1.15 隐藏域控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060202" 
+  	 onclick="changeIframe('2510000000060202')"
+  	 >9.1.1.16 编辑型按钮</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060203" 
+  	 onclick="changeIframe('2510000000060203')"
+  	 >9.1.1.17 部门选择器</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060204" 
+  	 onclick="changeIframe('2510000000060204')"
+  	 >9.1.1.18 子表控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060205" 
+  	 onclick="changeIframe('2510000000060205')"
+  	 >9.1.1.19 下拉树选择控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060207" 
+  	 onclick="changeIframe('2510000000060207')"
+  	 >9.1.1.20 自定义按钮</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060208" 
+  	 onclick="changeIframe('2510000000060208')"
+  	 >9.1.1.21 文本盒子</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060209" 
+  	 onclick="changeIframe('2510000000060209')"
+  	 >9.1.1.22 节点审批历史列表</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060210" 
+  	 onclick="changeIframe('2510000000060210')"
+  	 >9.1.1.23 审批意见控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060211" 
+  	 onclick="changeIframe('2510000000060211')"
+  	 >9.1.1.24 图片上传控件</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060212" 
+  	 onclick="changeIframe('2510000000060212')"
+  	 >9.1.1.25 自定义样式表单</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060213" 
+  	 onclick="changeIframe('2510000000060213')"
+  	 >9.1.1.26 边框</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060214" 
+  	 onclick="changeIframe('2510000000060214')"
+  	 >9.1.1.27 div容器和中文大写转换搭配使用</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060215" 
+  	 onclick="changeIframe('2510000000060215')"
+  	 >9.1.1.28 文本和日期计算组合</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060216" 
+  	 onclick="changeIframe('2510000000060216')"
+  	 >9.1.1.29 自定义查询</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060217" 
+  	 onclick="changeIframe('2510000000060217')"
+  	 >9.1.1.30 条件DIV容器</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060218" 
+  	 onclick="changeIframe('2510000000060218')"
+  	 >9.1.1.31 关联字段</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060219" 
+  	 onclick="changeIframe('2510000000060219')"
+  	 >9.1.1.32 关联流程</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060220" 
+  	 onclick="changeIframe('2510000000060220')"
+  	 >9.1.2 PDF模板设置</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060221" 
+  	 onclick="changeIframe('2510000000060221')"
+  	 >9.1.3 添加项目表单示例</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060222" 
+  	 onclick="changeIframe('2510000000060222')"
+  	 >9.1.4 平台中允许使用openoffice 转换文档</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060223" 
+  	 onclick="changeIframe('2510000000060223')"
+  	 >9.2 项目表单方案</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060224" 
+  	 onclick="changeIframe('2510000000060224')"
+  	 >9.3 单据数据列表</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060177" 
+  	 onclick="changeIframe('2510000000060177')"
+  	 >10 组织管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060178" 
+  	 onclick="changeIframe('2510000000060178')"
+  	 >10.1 机构类型管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060179" 
+  	 onclick="changeIframe('2510000000060179')"
+  	 >10.2 租户管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060180" 
+  	 onclick="changeIframe('2510000000060180')"
+  	 >10.3 组织维度</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060181" 
+  	 onclick="changeIframe('2510000000060181')"
+  	 >10.4 用户管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060182" 
+  	 onclick="changeIframe('2510000000060182')"
+  	 >10.5 用户账号</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060184" 
+  	 onclick="changeIframe('2510000000060184')"
+  	 >10.6 关系定义</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060183" 
+  	 onclick="changeIframe('2510000000060183')"
+  	 >10.7 组织部门管理</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060120" 
+  	 onclick="changeIframe('2510000000060120')"
+  	 >11 流程管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont up" id="2510000000060121" 
+  	 >11.1 流程设计</a>
+  <ul>
+  	<li><a class="artIndex iconfont up" id="2510000000060122" 
+  	 onclick="changeIframe('2510000000060122')"
+  	 >11.1.1 流程定义设计</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060123" 
+  	 onclick="changeIframe('2510000000060123')"
+  	 >11.1.1.1 新建流程定义</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060124" 
+  	 onclick="changeIframe('2510000000060124')"
+  	 >11.1.2 业务模型设计</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060125" 
+  	 onclick="changeIframe('2510000000060125')"
+  	 >11.2 业务流程方案</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060126" 
+  	 onclick="changeIframe('2510000000060126')"
+  	 >11.2.1 方案配置</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060127" 
+  	 onclick="changeIframe('2510000000060127')"
+  	 >11.2.2 流程定义</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060128" 
+  	 onclick="changeIframe('2510000000060128')"
+  	 >11.2.3 审批表单</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060129" 
+  	 onclick="changeIframe('2510000000060129')"
+  	 >11.2.4 变量配置</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060130" 
+  	 onclick="changeIframe('2510000000060130')"
+  	 >11.2.5 审批人员</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060131" 
+  	 onclick="changeIframe('2510000000060131')"
+  	 >11.2.6 节点配置</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060132" 
+  	 onclick="changeIframe('2510000000060132')"
+  	 >11.2.7 授权</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060133" 
+  	 onclick="changeIframe('2510000000060133')"
+  	 >11.2.8 发布业务流程方案</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060134" 
+  	 >11.3 流程监控</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060135" 
+  	 onclick="changeIframe('2510000000060135')"
+  	 >11.3.1 流程实例</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060136" 
+  	 onclick="changeIframe('2510000000060136')"
+  	 >11.3.2 待办任务</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060137" 
+  	 onclick="changeIframe('2510000000060137')"
+  	 >11.4 流程模块绑定</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060138" 
+  	 onclick="changeIframe('2510000000060138')"
+  	 >11.5 流程授权</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060139" 
+  	 onclick="changeIframe('2510000000060139')"
+  	 >11.6 手机表单</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060140" 
+  	 onclick="changeIframe('2510000000060140')"
+  	 >11.7 表单模板</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060141" 
+  	 onclick="changeIframe('2510000000060141')"
+  	 >11.8 手机表单的使用</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060150" 
+  	 >12 系统配置</a>
+  <ul>
+  	<li><a class="artIndex iconfont up" id="2510000000060151" 
+  	 >12.1 系统管理</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060153" 
+  	 onclick="changeIframe('2510000000060153')"
+  	 >12.1.1 单据单号</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060154" 
+  	 onclick="changeIframe('2510000000060154')"
+  	 >12.1.2 机构类型</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060155" 
+  	 onclick="changeIframe('2510000000060155')"
+  	 >12.1.3 子系统管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060156" 
+  	 onclick="changeIframe('2510000000060156')"
+  	 >12.1.4 菜单管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060157" 
+  	 onclick="changeIframe('2510000000060157')"
+  	 >12.1.5 数据源管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060158" 
+  	 onclick="changeIframe('2510000000060158')"
+  	 >12.1.6 分类类别管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060159" 
+  	 onclick="changeIframe('2510000000060159')"
+  	 >12.1.7 系统分类管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060160" 
+  	 onclick="changeIframe('2510000000060160')"
+  	 >12.1.8 数据字典管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060162" 
+  	 onclick="changeIframe('2510000000060162')"
+  	 >12.1.9 定时器管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060163" 
+  	 onclick="changeIframe('2510000000060163')"
+  	 >12.1.10 系统参数</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060164" 
+  	 onclick="changeIframe('2510000000060164')"
+  	 >12.1.11 工作日历</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060165" 
+  	 onclick="changeIframe('2510000000060165')"
+  	 >12.1.12 自定义表单的EXCEL导入导出</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060166" 
+  	 onclick="changeIframe('2510000000060166')"
+  	 >12.1.13 自定义属性操作</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060152" 
+  	 onclick="changeIframe('2510000000060152')"
+  	 >12.1.14 机构管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060161" 
+  	 onclick="changeIframe('2510000000060161')"
+  	 >12.1.15 自定义SQL查询</a>
+  	</li>
+   </ul>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060167" 
+  	 onclick="changeIframe('2510000000060167')"
+  	 >12.2 企业微信</a>
+  	</li>
+  	<li><a class="artIndex iconfont up" id="2510000000060168" 
+  	 >12.3 微信公众号</a>
+  <ul>
+  	<li><a class="artIndex iconfont " id="2510000000060169" 
+  	 onclick="changeIframe('2510000000060169')"
+  	 >12.3.1 公众号的配置</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060170" 
+  	 onclick="changeIframe('2510000000060170')"
+  	 >12.3.2 公众号面板</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060171" 
+  	 onclick="changeIframe('2510000000060171')"
+  	 >12.3.3 粉丝管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060172" 
+  	 onclick="changeIframe('2510000000060172')"
+  	 >12.3.4 素材管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060173" 
+  	 onclick="changeIframe('2510000000060173')"
+  	 >12.3.5 消息管理</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060174" 
+  	 onclick="changeIframe('2510000000060174')"
+  	 >12.3.6 网页授权</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060175" 
+  	 onclick="changeIframe('2510000000060175')"
+  	 >12.3.7 公众号其他配置</a>
+  	</li>
+  	<li><a class="artIndex iconfont " id="2510000000060176" 
+  	 onclick="changeIframe('2510000000060176')"
+  	 >12.3.8 卡券管理</a>
+  	</li>
+   </ul>
+  	</li>
+   </ul>
+  	</li>
+   </ul>
+			</div>
+		</div>
+		<div id="atuo">
+			<div id="header">
+				<h1>JSAAS操作手册</h1>
+				<div id="btn-a" onclick=btn()>
+					<div class="btn-menu" style="margin-top:10px;"></div>
+					<div class="btn-menu"></div>
+					<div class="btn-menu"></div>
+				</div>
+			</div>
+			<div id="section">
+			  <iframe id="contentFrame" frameborder="0" scrolling="1"   style="width: 100%;height:100%;" src="home.html"></iframe>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+
+
+</div>
+<script type="text/javascript">
+    function changeIframe(id) {
+			var EL = document.getElementById(id);
+			var iframeEL = document.getElementById("contentFrame");
+			iframeEL.setAttribute("src", "./html/" + id + ".html");
+			if (EL.nextElementSibling) {
+				if (EL.nextElementSibling.hidden) {
+					EL.nextElementSibling.hidden = false;
+					EL.classList.add("up");
+					EL.classList.remove("down");
+				} else {
+					EL.nextElementSibling.hidden = true;
+					EL.classList.add("down");
+					EL.classList.remove("up");
+				}
+			}
+			var redEL = document.getElementsByClassName("redFont");
+			if (redEL[0]) {
+				redEL[0].classList.remove("redFont");
+			}
+			EL.classList.add("redFont");
+			
+			if(window.innerWidth <= 790){
+				atuo.style.cssText += ";transition:left 0.3s;-webkit-transition:left 0.3s;-moz-transition:left 0.3s;-o-transition:left 0.3s;"
+				atuo.style.left = 0 + "px";
+			}
+		}
+		
+	var atuo = document.getElementById("atuo");
+	var nav = document.getElementById("nav");
+	var w = window.innerWidth;
+	var navWidth =nav.offsetWidth;
+	
+	function btn(){
+		if(w <=790){
+			if(atuo.offsetLeft != 0 ){
+				atuo.style.cssText += ";transition:left 0.5s;-webkit-transition:left 0.5s;-moz-transition:left 0.5s;-o-transition:left 0.5s;"
+				atuo.style.left = 0 + "px";
+				nav.style.width = w*0.6 +"px";
+			}else{
+				atuo.style.cssText += ";transition:left 0.5s;-webkit-transition:left 0.5s;-moz-transition:left 0.5s;-o-transition:left 0.5s;"
+				atuo.style.left = w*0.6 + "px";
+				nav.style.width = w*0.6 +"px";
+			}
+		}else{
+			if(atuo.offsetLeft != 0 ){
+				atuo.style.cssText += ";transition:all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-o-transition:all 0.5s;"
+				atuo.style.left = 0 + "px";
+				atuo.style.width = 100 +"%";
+			}else{
+				atuo.style.cssText += ";transition:all 0.5s;-webkit-transition:all 0.5s;-moz-transition:all 0.5s;-o-transition:all 0.5s;"
+				atuo.style.left = navWidth + "px";
+				atuo.style.width = w - navWidth + "px";
+				
+			}
+		}
+	}
+	section.style.height = window.innerHeight - 60 +"px"
+	if(window.innerWidth <= 790){
+		nav.style.width = w*0.6 +"px";
+		atuo.style.left = w*0.6 + "px";
+		
+	}else{
+		atuo.style.left = navWidth + "px";
+		
+		atuo.style.width = w - navWidth + "px";	
+	}
+	
+	
+	
+
+
+</script>
+</body>
+</html>

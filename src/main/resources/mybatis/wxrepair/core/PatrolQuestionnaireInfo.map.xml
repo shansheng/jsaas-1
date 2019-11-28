@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.airdrop.wxrepair.core.entity.PatrolQuestionnaireInfo">
+	<resultMap id="PatrolQuestionnaireInfo" type="com.airdrop.wxrepair.core.entity.PatrolQuestionnaireInfo">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="questionnaireName" column="F_QUESTIONNAIRE_NAME" jdbcType="VARCHAR"/>
+		<result property="questionnaireType" column="F_QUESTIONNAIRE_TYPE" jdbcType="VARCHAR"/>
+		<result property="questionnaireTypeName" column="F_QUESTIONNAIRE_TYPE_name" jdbcType="VARCHAR"/>
+		<result property="questionnaireTheme" column="F_QUESTIONNAIRE_THEME" jdbcType="VARCHAR"/>
+		<result property="startdate" column="F_STARTDATE" jdbcType="TIMESTAMP"/>
+		<result property="enddate" column="F_ENDDATE" jdbcType="TIMESTAMP"/>
+		<result property="creator" column="F_CREATOR" jdbcType="VARCHAR"/>
+		<result property="refId" column="REF_ID_" jdbcType="VARCHAR"/>
+		<result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR"/>
+		<result property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="instStatus" column="INST_STATUS_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+		<result property="status" column="F_STATUS" jdbcType="VARCHAR"/>
+		<result property="statusName" column="F_STATUS_name" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.airdrop.wxrepair.core.entity.PatrolQuestionnaireInfo">
+		INSERT INTO w_patrol_questionnaire_info
+		(F_QUESTIONNAIRE_NAME,F_QUESTIONNAIRE_TYPE,F_QUESTIONNAIRE_TYPE_name,F_QUESTIONNAIRE_THEME,F_STARTDATE,F_ENDDATE,F_CREATOR,ID_,REF_ID_,PARENT_ID_,INST_ID_,INST_STATUS_,TENANT_ID_,CREATE_TIME_,CREATE_BY_,UPDATE_BY_,UPDATE_TIME_,GROUP_ID_,F_STATUS,F_STATUS_name)
+		VALUES 
+		(#{questionnaireName,jdbcType=VARCHAR}, #{questionnaireType,jdbcType=VARCHAR}, #{questionnaireTypeName,jdbcType=VARCHAR}, #{questionnaireTheme,jdbcType=VARCHAR}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{refId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{instId,jdbcType=VARCHAR}, #{instStatus,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{groupId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{statusName,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="PatrolQuestionnaireInfo">
+		SELECT * FROM w_patrol_questionnaire_info 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="PatrolQuestionnaireInfo">
+		SELECT * FROM w_patrol_questionnaire_info
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.airdrop.wxrepair.core.entity.PatrolQuestionnaireInfo">
+		UPDATE w_patrol_questionnaire_info SET
+		F_QUESTIONNAIRE_NAME=#{questionnaireName,jdbcType=VARCHAR},
+		F_QUESTIONNAIRE_TYPE=#{questionnaireType,jdbcType=VARCHAR},
+		F_QUESTIONNAIRE_TYPE_name=#{questionnaireTypeName,jdbcType=VARCHAR},
+		F_QUESTIONNAIRE_THEME=#{questionnaireTheme,jdbcType=VARCHAR},
+		F_STARTDATE=#{startdate,jdbcType=TIMESTAMP},
+		F_ENDDATE=#{enddate,jdbcType=TIMESTAMP},
+		F_CREATOR=#{creator,jdbcType=VARCHAR},
+		REF_ID_=#{refId,jdbcType=VARCHAR},
+		PARENT_ID_=#{parentId,jdbcType=VARCHAR},
+		INST_ID_=#{instId,jdbcType=VARCHAR},
+		INST_STATUS_=#{instStatus,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		GROUP_ID_=#{groupId,jdbcType=VARCHAR},
+		F_STATUS=#{status,jdbcType=VARCHAR},
+		F_STATUS_name=#{statusName,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM w_patrol_questionnaire_info 
+		WHERE
+		ID_=#{id}
+	</delete>
+
+	<select id="getAllQuestionnaire" resultMap="PatrolQuestionnaireInfo">
+		SELECT * FROM w_patrol_questionnaire_info
+		WHERE
+		F_STATUS='1'
+	</select>
+</mapper>

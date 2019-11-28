@@ -1,0 +1,26 @@
+{
+	task:[
+		{id:"btnApprove",type:"approve", name:"审批",alias:"approve", iconCls:"icon-approve",script:"approve()"},
+		{id:"btnAddSign",type:"approve",name:"加签",alias:"addSign",iconCls:"icon-reject",script:"addSign()"},
+		{id:"btnReject",type:"approve",name:"驳回",alias:"reject",iconCls:"icon-reject",script:"reject()"},
+		{id:"btnTransfer",type:"approve",name:"转办",alias:"transfer",iconCls:"icon-goto",script:"doTransfer()"},
+		{id:"btnCommu",type:"approve",name:"沟通",alias:"commu",iconCls:"icon-commute",script:"communicate()"},
+		{id:"btnDiscard",type:"approve",name:"作废",alias:"discard",iconCls:"icon-discard",script:"discardInst()"},
+		{id:"btnReply",type:"reply",name:"回复沟通",alias:"replyCommu",iconCls:"icon-reply",script:"replyCommu()"},
+		{id:"btnCommu",type:"commute",name:"沟通",alias:"commu",iconCls:"icon-commute",script:"communicate()"},
+		{id:"btnRevoke",type:"commute",name:"撤销沟通",alias:"revoke",iconCls:"icon-revoke",script:"revokeCommunicate()"},
+		{id:"btnPrint",type:"commons",name:"打印",alias:"print",iconCls:"icon-print",script:"formPrint()"},
+		{id:"btnSave",type:"commons",name:"保存",alias:"save",iconCls:"icon-save",script:"doSaveData()"},
+		{id:"btnFlowImg",type:"commons",name:"流程图",alias:"flowImg",iconCls:"icon-flowimg",script:"openTaskFlowImg()"},
+		{id:"btnHistory",type:"commons",name:"审批历史",alias:"history",iconCls:"icon-table",script:"openBpmOpinions()"},
+		{id:"btnMessage",type:"commons",name:"留言",alias:"message",iconCls:"icon-edit",script:"openBpmMessage()"}
+	]
+	,
+	inst:[
+		{id:"btnStart", name:"提交",alias:"start", iconCls:"icon-start",script:"startProcess"},
+		{id:"btnReject",name:"保存",alias:"save",iconCls:"icon-save",script:"saveDraft"},
+		{id:"btnPrint",name:"打印",alias:"print",iconCls:"icon-print",script:"formPrint"},
+		{id:"btnFlowimg",name:"流程图",alias:"flowimg",iconCls:"icon-flowimg",script:"openFlowImg"}
+	]
+}
+

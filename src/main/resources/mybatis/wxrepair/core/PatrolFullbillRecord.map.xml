@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.airdrop.wxrepair.core.entity.PatrolFullbillRecord">
+	<resultMap id="PatrolFullbillRecord" type="com.airdrop.wxrepair.core.entity.PatrolFullbillRecord">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="staff" column="F_STAFF" jdbcType="VARCHAR"/>
+		<result property="staffName" column="F_STAFF_name" jdbcType="VARCHAR"/>
+		<result property="questionnaire" column="F_QUESTIONNAIRE" jdbcType="VARCHAR"/>
+		<result property="questionnaireName" column="F_QUESTIONNAIRE_name" jdbcType="VARCHAR"/>
+		<result property="fulldate" column="F_FULLDATE" jdbcType="TIMESTAMP"/>
+		<result property="status" column="F_STATUS" jdbcType="VARCHAR"/>
+		<result property="statusName" column="F_STATUS_name" jdbcType="VARCHAR"/>
+		<result property="refId" column="REF_ID_" jdbcType="VARCHAR"/>
+		<result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR"/>
+		<result property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="instStatus" column="INST_STATUS_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+		<result property="shop" column="F_SHOP" jdbcType="VARCHAR"/>
+		<result property="shopName" column="F_SHOP_name" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.airdrop.wxrepair.core.entity.PatrolFullbillRecord">
+		INSERT INTO w_patrol_fullbill_record
+		(F_STAFF,F_STAFF_name,F_QUESTIONNAIRE,F_QUESTIONNAIRE_name,F_FULLDATE,F_STATUS,F_STATUS_name,ID_,REF_ID_,PARENT_ID_,INST_ID_,INST_STATUS_,TENANT_ID_,CREATE_TIME_,CREATE_BY_,UPDATE_BY_,UPDATE_TIME_,GROUP_ID_,F_SHOP,F_SHOP_name)
+		VALUES 
+		(#{staff,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR}, #{questionnaire,jdbcType=VARCHAR}, #{questionnaireName,jdbcType=VARCHAR}, #{fulldate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{statusName,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{refId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{instId,jdbcType=VARCHAR}, #{instStatus,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{groupId,jdbcType=VARCHAR}, #{shop,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="PatrolFullbillRecord">
+		SELECT * FROM w_patrol_fullbill_record 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="PatrolFullbillRecord">
+		SELECT * FROM w_patrol_fullbill_record
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.airdrop.wxrepair.core.entity.PatrolFullbillRecord">
+		UPDATE w_patrol_fullbill_record SET
+		F_FULLDATE=#{fulldate,jdbcType=TIMESTAMP},
+		F_STATUS=#{status,jdbcType=VARCHAR},
+		F_STATUS_name=#{statusName,jdbcType=VARCHAR},
+		F_SHOP=#{shop,jdbcType=VARCHAR},
+		F_SHOP_name=#{shopName,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM w_patrol_fullbill_record 
+		WHERE
+		ID_=#{id}
+	</delete>
+
+	<select id="getRecordByStaff"   parameterType="java.util.Map" resultMap="PatrolFullbillRecord">
+		SELECT * FROM w_patrol_fullbill_record
+		WHERE
+		F_STAFF= '${staffId}'
+		ORDER BY F_FULLDATE DESC
+	</select>
+
+	<update id="updateRecord" parameterType="java.util.Map">
+		UPDATE w_patrol_fullbill_record SET
+		F_STATUS='${statusId}',
+		F_STATUS_name='${statusName}',
+		F_SHOP='${shopId}',
+		F_SHOP_name='${shopName}',
+		F_FULLDATE='${fulldate,jdbcType=TIMESTAMP}'
+		WHERE
+		ID_='${recordId}'
+	</update>
+</mapper>

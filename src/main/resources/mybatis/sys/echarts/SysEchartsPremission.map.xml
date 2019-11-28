@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.echarts.entity.SysEchartsPremission">
+	<resultMap id="SysEchartsPremission" type="com.redxun.sys.echarts.entity.SysEchartsPremission">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="treeId" column="TREE_ID_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="ownerId" column="OWNER_ID_" jdbcType="VARCHAR"/>
+		<result property="ownerName" column="OWNER_NAME_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.echarts.entity.SysEchartsPremission">
+		INSERT INTO SYS_ECHARTS_PREMISSION 
+		(ID_,TREE_ID_,TYPE_,OWNER_ID_,OWNER_NAME_,TENANT_ID_,CREATE_TIME_,CREATE_BY_,UPDATE_TIME_,UPDATE_BY_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{treeId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{ownerId,jdbcType=VARCHAR}, 
+		#{ownerName,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+		#{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get" parameterType="java.lang.String" resultMap="SysEchartsPremission">
+		SELECT * FROM SYS_ECHARTS_PREMISSION  
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysEchartsPremission">
+		SELECT * FROM SYS_ECHARTS_PREMISSION 
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.echarts.entity.SysEchartsPremission">
+		UPDATE SYS_ECHARTS_PREMISSION SET
+		TREE_ID_=#{treeId,jdbcType=VARCHAR},
+		TYPE_=#{type,jdbcType=VARCHAR},
+		OWNER_ID_=#{ownerId,jdbcType=VARCHAR},
+		OWNER_NAME_=#{ownerName,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM SYS_ECHARTS_PREMISSION  
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getByTenantId" parameterType="java.lang.String" resultMap="SysEchartsPremission">
+		SELECT * FROM SYS_ECHARTS_PREMISSION 
+		WHERE 
+		TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="getByPreId" parameterType="java.lang.String" resultMap="SysEchartsPremission">
+		SELECT * FROM SYS_ECHARTS_PREMISSION WHERE PRE_ID_=#{preId}
+	</select>
+	
+	<select id="delByTreeId" parameterType="java.lang.String">
+		DELETE FROM SYS_ECHARTS_PREMISSION 
+		WHERE 
+		TREE_ID_ = #{treeId}
+	</select>
+	
+	<select id="getUserTreeGrant" resultType="java.util.HashMap">
+		SELECT TREE_ID_ FROM SYS_ECHARTS_PREMISSION WHERE ID_ IN (
+			SELECT ID_ FROM SYS_ECHARTS_PREMISSION WHERE TYPE_ = 'user' AND OWNER_ID_ IN 
+				<foreach collection="userIds"  item="id" separator="," open="(" close=")">#{id}</foreach>
+			<if test="groupIds != null">
+			UNION ALL 
+			SELECT ID_ FROM SYS_ECHARTS_PREMISSION WHERE TYPE_ = 'group' AND OWNER_ID_ IN 
+				<foreach collection="groupIds"  item="gid" separator="," open="(" close=")">#{gid}</foreach>
+			</if>
+			<if test="subGroupIds != null">
+			UNION ALL 
+			SELECT ID_ FROM SYS_ECHARTS_PREMISSION WHERE TYPE_ = 'subGroup' AND OWNER_ID_ IN 
+				<foreach collection="subGroupIds"  item="sgid" separator="," open="(" close=")">#{sgid}</foreach>
+			</if>
+		) GROUP BY TREE_ID_
+	</select>
+	
+	<select id="getByTreeId" parameterType="java.lang.String" resultMap="SysEchartsPremission">
+		SELECT * FROM SYS_ECHARTS_PREMISSION WHERE TREE_ID_ = #{treeId}
+	</select>
+	
+</mapper>

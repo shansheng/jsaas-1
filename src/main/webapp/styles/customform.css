@@ -1,0 +1,455 @@
+@charset "utf-8";
+html,body{
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	width: 100%;
+	font-size: 12px;
+	font-family: "微软雅黑";
+	color:#444;
+}
+
+/*
+表单工具条
+*/
+
+div.topToolBar{
+	height: 46px;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+div.topToolBar>div{
+	width: 100%;
+	height: 46px;
+	z-index: 999;
+	position: fixed;
+	text-align: right;
+	background: #fff;
+	padding: 8px 20px 0 0;
+	box-sizing: border-box;
+}
+
+div.topToolBar>div>a{
+	margin-left: 5px;
+}
+
+.customform  .mini-panel-toolbar{border:0px; background:#fff;white-space: nowrap;}
+.customform .mini-grid-columns{  margin-left:0px !important;}
+.customform .mini-tabs{width:100% !important; overflow:hidden; margin:0 auto}
+.customform .mini-tabs-table{width:90% !important; overflow:hidden;}
+.customform .mini-grid-table{width:100% !important}
+.customform .mini-button-text {border-radius:5px;}
+
+
+
+.header {
+	list-style: none;
+	/* 	height: 20px; */
+	clear: both;
+	width: 100%;
+	float: right;
+	text-align: right;
+}
+
+.footer {
+	width: 100%;
+	/*position: fixed;*/
+	bottom: 0px;
+	text-align: left;
+	z-index:1000;
+}
+
+.topButton {
+	display: inline-block;
+	line-height: 50px;
+	height: 50px;
+	width: 70px;
+	background-color: #FF0000;
+	color: #FFFFFF;
+	text-align: center;
+	cursor: pointer;
+	font-size: 18px;
+	vertical-align: middle;
+	border: 1px solid #0492C1;
+	margin-right: 4px;
+}
+
+li.file{
+	list-style-type:none;
+}
+
+#opinion {
+	margin-top: 10px;
+	overflow: hidden;
+	width: 650px;
+	font-size: 10pt;
+	height: 54px;
+	line-height: 22px;
+	padding:2px;
+}
+
+.submitButton{
+	margin-top: 10px;
+	display: inline-block;
+	line-height: 40px;
+	height: 40px;
+	width: 80px;
+	background-color: #29b4f7;
+	color: #FFFFFF;
+	text-align: center;
+	cursor: pointer;
+	font-size: 18px;
+	border: 0px;
+	margin-right: 4px;
+	vertical-align: middle;
+	border-radius: 8px;
+}
+
+#opinion {
+	margin-top: 10px;
+	overflow: hidden;
+	width: 70%;
+	height: 50px;
+	line-height: 24px;
+	vertical-align: middle;
+}
+
+.checkusers{display: inline-block; float:left;}
+textarea{border:1px solid #ececec;}
+
+@media print {
+	.noPrint {display:none;}
+}
+.icon-attachAdd	{margin-right:4px;}
+.mini-button-icon-text	{text-indent:0px;}
+.mini-left-form{ margin-left:2px;}
+/*.form-outer	{ margin:5px 4px 0px 4px;}*/
+
+@media print {
+	.noPrint {display:none;}
+}
+.table-detail{margin-bottom:4px;width: 100%;table-layout: fixed;}/*弹框表格铺满，文字过多的时候不会随意撑宽th*/
+.table-def .thead{background-color: #f0f0f0;}
+.table-row td a{border:0px solid #ccc !important; }
+.table-row td a span{}
+.table-detail select{width:80%; height:28px; border-color:#ccc;}
+.border-right{border-right:1px solid #ccc;}
+.table-detail-padding>tbody>tr>td{padding:2px 0px;}
+.table-detail-padding>tbody>tr>td:nth-child(even){padding:2px 0px;}
+.form-width{width:1074px !important;}
+.table-view{
+	width:100%;
+	border-collapse:collapse;
+	border:none;
+	margin:0 auto;
+}
+
+.table-view .tab{
+	border:dotted 1px #ccc;
+}
+
+.table-view > tbody > tr > td{
+	border:solid #ececec 1px;
+	padding:4px;
+	font-size: 14px;
+}
+
+.table-view > tbody> tr > td:nth-child(odd),
+.table-view > tbody> tr > th{
+	border:solid #ececec 1px;
+	padding:4px;
+	white-space:nowrap;
+	font-size: 14px;
+}
+
+.table-view > thead > tr > td{
+	border:solid #ccc 1px;
+	padding:4px;
+	white-space:nowrap;
+}
+
+.table-view > thead > tr > td:nth-child(odd),
+.table-view > thead > tr > th{
+	border:solid #ccc 1px;
+	padding:4px;
+}
+
+a.button {
+	display:block;
+	height: 100%;
+	width: 100%;
+	line-height:16px;
+	text-align: center;
+	color: #fff;
+	font-size: 14px;
+	text-decoration: none;
+	cursor:pointer;
+	margin-top:4px;
+}
+
+.header-info{
+	color:#3a588d;
+	font-weight: bold;
+	height:35px;
+	width:100%;
+	clear:both;
+	font-size:16px;
+	padding:6px 0;
+	position: relative;
+	text-indent: 10px;
+	/* 	border-bottom: 1px solid #ececec; */
+}
+
+.header-info::after{
+	content: '';
+	display: block;
+	width: 6px;
+	height: 22px;
+	padding:6px 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background:#00a4ff;
+}
+
+
+/*以下是自定义2列或四列表单样式  */
+table tr.firstRow th,
+table tr.firstRow td:nth-child(odd){
+	border-top-width:1px !important;
+}
+
+caption{
+	border:0px !important;
+}
+.form-detail caption {
+	text-align: center;
+	height: 30px;
+	font-size: 18px;
+	padding: 10px 14px;
+}
+
+.column-two,
+.column-four{
+	width:100%;
+	height:100%;
+	margin: 0px auto;
+}
+.form-detail {
+	border-collapse: collapse;
+	border: solid 1px #ececec;
+	width:100%;
+	height:auto;
+	margin:0 auto
+}
+.form-detail>tbody> tr >td:nth-child(odd){
+	font-size:14px;
+	color:#666;
+	border: 1px solid #ececec;
+	padding:6px;
+}
+.form-detail>tbody> tr >td:nth-child(odd){
+	text-align:center;
+
+}
+.form-detail >tbody > tr > td{
+	border: 1px solid #ececec;
+	text-align: center;
+	padding: 8px 6px;
+}
+.form-detail >tbody > tr > td:nth-child(even){
+	font-size:14px;
+	color:#444;
+	border: 1px solid #ececec;
+	text-align: left;
+	height:30px;
+	padding:6px;
+	word-break:break-all;
+}
+.form-detail >tbody > tr > th{
+	border: 1px solid #ececec;
+	text-align:center;
+	padding:6px
+}
+.form-detail.column-two >tbody> tr >td:nth-child(odd),
+.form-detail.column-two>tbody > tr > th{
+	width:20%;
+}
+
+.form-detail.column-two>tbody > tr > td:nth-child(even) {
+	width:80%;
+}
+
+.form-detail.column-four>tbody> tr >td:nth-child(odd),
+.form-detail.column-four>tbody > tr > th{
+	width:15%;
+}
+.form-detail.column-four>tbody > tr > td:nth-child(even) {
+	width:35%;
+}
+
+.form-detail.column-six>tbody> tr >td:nth-child(odd),
+.form-detail.column-six>tbody > tr > th{
+	width:11%;
+}
+
+.form-detail.column-six>tbody > tr > td:nth-child(even) {
+	width:22%;
+}
+
+.form-detail.column-eight >tbody> tr >td:nth-child(odd),
+.form-detail.column-eight>tbody > tr > th{
+	width:8%;
+}
+
+.form-detail.column-eight>tbody > tr > td:nth-child(even) {
+	width:17%;
+}
+
+/*table-detail >tbody> tr >td:nth-child(odd){
+	height: 30px;
+}*/
+/*-------------------------------------------------*/
+/*transparent 透明 */
+/*
+table.transparent>caption{
+	text-align: center;
+	color: #666;
+}
+
+table.transparent >tbody> tr >td:nth-child(odd){
+	background: transparent;
+}
+table.transparent>tbody>tr>th{
+	background: transparent;
+}
+*/
+
+/*蓝色风格*/
+/*table.blue >tbody> tr >td:nth-child(odd){
+	background:#d9edf7;
+} 
+table.blue tr th{
+	background:#d9edf7;
+} 
+table.blue>caption{
+	text-align: center;
+	color: #666;
+	line-height:30px;
+	background:#a3e0ff;
+} */
+/*灰色*/
+/*table.grey caption{
+	background:#ececec;
+	text-align: center;
+	color: #666;	
+}
+table.grey>tbody> tr >td:nth-child(odd){
+	background:#f0f0f0;
+} 
+table.grey tr th{
+	background:#f0f0f0;
+} 
+.grey >tbody> tr >td:nth-child(odd) span{
+	background:#fff!important;
+}
+.grey>tbody>tr>th span{
+	background:#fff!important;
+}*/
+/* 褐色样式 */
+/*table.brown caption{
+	background: #e7bd9f;
+	text-align: center;
+}
+table.brown >tbody> tr >td:nth-child(odd){
+	background: #e7d4c6;
+}
+table.brown tr th{
+	background: #e7d4c6;
+}*/
+
+/*绿色样式 */
+/*table.green >tbody> tr >td:nth-child(odd){
+	background:#E0EEE0;
+} 
+table.green tr th{
+	background:#E0EEE0;
+} 
+table.green>caption{
+	background: #a4e8a4;
+	text-align: center;
+	color: black;
+}*/
+
+/*-------------*/
+/*.fieldsetContainer{
+	border: 1px solid silver;
+}*/
+
+/*
+.fieldsetContainer .title{
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.toggleButton{
+	margin: 10px;
+	display: inline;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+*/
+
+/*
+.toggleButton:before{
+	font-weight: bold;
+	font-size: 16px;
+	color: #000; 
+}
+
+
+.toggleButton.collapse:before{
+	content: "\e88c";
+}
+
+.toggleButton.expand:before{
+	content: "\e88f";
+}
+*/
+
+.removeFile{margin-right: 5px;}
+
+
+.mini-office .mini-panel-footer{
+	word-break:break-all !important;
+}
+
+.rxc{
+	/* 	max-width: 1024px; */
+}
+.mini-radiobuttonlist {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+.show-Img{
+	display: inline-block;
+	position: relative;
+}
+
+.showBigPic{
+	position: absolute;
+	overflow:visible;
+	bottom: 0px;
+	right: 0px;
+	background: rgb(255, 246, 217);
+	border-radius: 2px;
+	border: 1px solid rgb(220, 172, 108);
+	padding: 2px;
+	font-size: 10pt;
+	display: none;
+}
+
+
+/**/
+

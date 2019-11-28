@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.core.entity.SysExcelTemplate">
+	<resultMap id="SysExcelTemplate" type="com.redxun.sys.core.entity.SysExcelTemplate">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="templateName" column="TEMPLATE_NAME_" jdbcType="VARCHAR"/>
+		<result property="templateNameAlias" column="TEMPLATE_NAME_ALIAS_" jdbcType="VARCHAR"/>
+		<result property="templateType" column="TEMPLATE_TYPE_" jdbcType="VARCHAR"/>
+		<result property="templateComment" column="TEMPLATE_COMMENT_" jdbcType="VARCHAR"/>
+		<result property="templateConf" column="TEMPLATE_CONF_" jdbcType="CLOB"/>
+		<result property="excelTemplateFile" column="EXCEL_TEMPLATE_FILE_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.core.entity.SysExcelTemplate">
+		INSERT INTO SYS_EXCEL_TEMPLATE
+		(ID_,TEMPLATE_NAME_,TEMPLATE_NAME_ALIAS_,TEMPLATE_TYPE_,TEMPLATE_COMMENT_,TEMPLATE_CONF_,EXCEL_TEMPLATE_FILE_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{templateName,jdbcType=VARCHAR}, #{templateNameAlias,jdbcType=VARCHAR}, #{templateType,jdbcType=VARCHAR}, #{templateComment,jdbcType=VARCHAR}, #{templateConf,jdbcType=CLOB}, #{excelTemplateFile,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="SysExcelTemplate">
+		SELECT * FROM SYS_EXCEL_TEMPLATE 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysExcelTemplate">
+		SELECT * FROM SYS_EXCEL_TEMPLATE
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.core.entity.SysExcelTemplate">
+		UPDATE SYS_EXCEL_TEMPLATE SET
+		TEMPLATE_NAME_=#{templateName,jdbcType=VARCHAR},
+		TEMPLATE_NAME_ALIAS_=#{templateNameAlias,jdbcType=VARCHAR},
+		TEMPLATE_TYPE_=#{templateType,jdbcType=VARCHAR},
+		TEMPLATE_COMMENT_=#{templateComment,jdbcType=VARCHAR},
+		TEMPLATE_CONF_=#{templateConf,jdbcType=CLOB},
+		EXCEL_TEMPLATE_FILE_=#{excelTemplateFile,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM SYS_EXCEL_TEMPLATE 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getByAlias" parameterType="java.lang.String" resultMap="SysExcelTemplate">
+	    SELECT * FROM sys_excel_template WHERE TEMPLATE_NAME_ALIAS_ = #{alias}
+	</select>
+	
+	<select id="getCountByKey" resultType="java.lang.Integer">
+		select count(*) amount from SYS_EXCEL_TEMPLATE where TEMPLATE_NAME_ALIAS_=#{alias} and TENANT_ID_=#{tenantId}
+		<if test="@Ognl@isNotEmpty(id)">
+			and ID_!=#{id}
+		</if>
+	</select>
+	
+</mapper>

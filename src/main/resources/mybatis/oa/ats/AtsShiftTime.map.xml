@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.ats.entity.AtsShiftTime">
+	<resultMap id="AtsShiftTime" type="com.redxun.oa.ats.entity.AtsShiftTime">
+		<id property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="shiftId" column="SHIFT_ID" jdbcType="VARCHAR"/>
+		<result property="segment" column="SEGMENT" jdbcType="NUMERIC"/>
+		<result property="attendanceType" column="ATTENDANCE_TYPE" jdbcType="NUMERIC"/>
+		<result property="onTime" column="ON_TIME" jdbcType="TIMESTAMP"/>
+		<result property="onPunchCard" column="ON_PUNCH_CARD" jdbcType="NUMERIC"/>
+		<result property="onFloatAdjust" column="ON_FLOAT_ADJUST" jdbcType="NUMERIC"/>
+		<result property="segmentRest" column="SEGMENT_REST" jdbcType="NUMERIC"/>
+		<result property="offTime" column="OFF_TIME" jdbcType="TIMESTAMP"/>
+		<result property="offPunchCard" column="OFF_PUNCH_CARD" jdbcType="NUMERIC"/>
+		<result property="offFloatAdjust" column="OFF_FLOAT_ADJUST" jdbcType="NUMERIC"/>
+		<result property="onType" column="ON_TYPE" jdbcType="NUMERIC"/>
+		<result property="offType" column="OFF_TYPE" jdbcType="NUMERIC"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.oa.ats.entity.AtsShiftTime">
+		INSERT INTO ats_shift_time
+		(ID,SHIFT_ID,SEGMENT,ATTENDANCE_TYPE,ON_TIME,ON_PUNCH_CARD,ON_FLOAT_ADJUST,SEGMENT_REST,OFF_TIME,OFF_PUNCH_CARD,OFF_FLOAT_ADJUST,ON_TYPE,OFF_TYPE,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{shiftId,jdbcType=VARCHAR}, #{segment,jdbcType=NUMERIC}, #{attendanceType,jdbcType=NUMERIC}, #{onTime,jdbcType=TIMESTAMP}, #{onPunchCard,jdbcType=NUMERIC}, #{onFloatAdjust,jdbcType=NUMERIC}, #{segmentRest,jdbcType=NUMERIC}, #{offTime,jdbcType=TIMESTAMP}, #{offPunchCard,jdbcType=NUMERIC}, #{offFloatAdjust,jdbcType=NUMERIC}, #{onType,jdbcType=NUMERIC}, #{offType,jdbcType=NUMERIC}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="AtsShiftTime">
+		SELECT * FROM ats_shift_time 
+		WHERE 
+		ID=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="AtsShiftTime">
+		SELECT * FROM ats_shift_time
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.ats.entity.AtsShiftTime">
+		UPDATE ats_shift_time SET
+		SHIFT_ID=#{shiftId,jdbcType=VARCHAR},
+		SEGMENT=#{segment,jdbcType=NUMERIC},
+		ATTENDANCE_TYPE=#{attendanceType,jdbcType=NUMERIC},
+		ON_TIME=#{onTime,jdbcType=TIMESTAMP},
+		ON_PUNCH_CARD=#{onPunchCard,jdbcType=NUMERIC},
+		ON_FLOAT_ADJUST=#{onFloatAdjust,jdbcType=NUMERIC},
+		SEGMENT_REST=#{segmentRest,jdbcType=NUMERIC},
+		OFF_TIME=#{offTime,jdbcType=TIMESTAMP},
+		OFF_PUNCH_CARD=#{offPunchCard,jdbcType=NUMERIC},
+		OFF_FLOAT_ADJUST=#{offFloatAdjust,jdbcType=NUMERIC},
+		ON_TYPE=#{onType,jdbcType=NUMERIC},
+		OFF_TYPE=#{offType,jdbcType=NUMERIC},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM ats_shift_time 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<delete id="delByMainId">
+	    DELETE FROM ats_shift_time
+	    WHERE
+	    shift_id=#{shiftId}
+	</delete>    
+	
+	<select id="getAtsShiftTimeList" resultMap="AtsShiftTime">
+	    SELECT *
+	    FROM ats_shift_time 
+	    WHERE shift_id=#{shiftId}
+	</select>
+	
+</mapper>

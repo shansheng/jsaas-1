@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.core.entity.SysEsQuery">
+	<resultMap id="SysEsQuery" type="com.redxun.sys.core.entity.SysEsQuery">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="alias" column="ALIAS_" jdbcType="VARCHAR"/>
+		<result property="queryType" column="QUERY_TYPE_" jdbcType="NUMERIC"/>
+		<result property="esTable" column="ES_TABLE_" jdbcType="VARCHAR"/>
+		<result property="query" column="QUERY_" jdbcType="VARCHAR"/>
+		<result property="returnFields" column="RETURN_FIELDS_" jdbcType="CLOB"/>
+		<result property="conditionFields" column="CONDITION_FIELDS_" jdbcType="CLOB"/>
+		<result property="sortFields" column="SORT_FIELDS_" jdbcType="VARCHAR"/>
+		<result property="pageSize" column="PAGE_SIZE_" jdbcType="NUMERIC"/>
+		<result property="needPage" column="NEED_PAGE_" jdbcType="NUMERIC"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.core.entity.SysEsQuery">
+		INSERT INTO SYS_ES_QUERY
+		(ID_,NAME_,ALIAS_,QUERY_TYPE_,QUERY_,ES_TABLE_,RETURN_FIELDS_,CONDITION_FIELDS_,SORT_FIELDS_,NEED_PAGE_,PAGE_SIZE_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{queryType,jdbcType=NUMERIC},  #{query,jdbcType=VARCHAR}, #{esTable,jdbcType=VARCHAR}, #{returnFields,jdbcType=CLOB}, #{conditionFields,jdbcType=CLOB}, #{sortFields,jdbcType=VARCHAR}, #{needPage,jdbcType=NUMERIC},#{pageSize,jdbcType=NUMERIC}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="SysEsQuery">
+		SELECT * FROM SYS_ES_QUERY 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysEsQuery">
+		SELECT * FROM SYS_ES_QUERY
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.core.entity.SysEsQuery">
+		UPDATE SYS_ES_QUERY SET
+		NAME_=#{name,jdbcType=VARCHAR},
+		ALIAS_=#{alias,jdbcType=VARCHAR},
+		QUERY_TYPE_=#{queryType,jdbcType=NUMERIC},
+		ES_TABLE_=#{esTable,jdbcType=VARCHAR},
+		QUERY_=#{query,jdbcType=VARCHAR},
+		RETURN_FIELDS_=#{returnFields,jdbcType=CLOB},
+		CONDITION_FIELDS_=#{conditionFields,jdbcType=CLOB},
+		SORT_FIELDS_=#{sortFields,jdbcType=VARCHAR},
+		NEED_PAGE_=#{needPage,jdbcType=NUMERIC},
+		PAGE_SIZE_=#{pageSize,jdbcType=NUMERIC},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM SYS_ES_QUERY 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getCountByAlias" resultType="java.lang.Integer">
+		select count(*) from SYS_ES_QUERY where ALIAS_=#{alias,jdbcType=VARCHAR}
+		and TENANT_ID_=#{tenantId,jdbcType=VARCHAR} 
+		<if test="@Ognl@isNotEmpty(id)">
+			and ID_!=#{id} 
+		</if>
+	</select>
+	
+	
+	<select id="getByAlias" resultMap="SysEsQuery">
+		select * from SYS_ES_QUERY where ALIAS_=#{alias,jdbcType=VARCHAR}
+		and TENANT_ID_=#{tenantId,jdbcType=VARCHAR} 
+	</select>
+	
+</mapper>

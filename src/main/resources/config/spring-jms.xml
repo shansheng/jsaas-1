@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+  	<!--(嵌入配置)activeMq消息容器 生产环境最好独立部署-->
+    <amq:broker useJmx="false" persistent="true" dataDirectory="${jms.dir}/jms">
+    	<amq:managementContext>
+    	
+    	    <amq:managementContext createConnector="false" />
+    	</amq:managementContext>
+    	<amq:persistenceAdapter>
+    		<amq:kahaDB directory="${jms.dir}" >
+            </amq:kahaDB>
+        </amq:persistenceAdapter>
+         <amq:transportConnectors>
+			<amq:transportConnector uri="tcp://${jms.ip}:${jms.port}" />
+		</amq:transportConnectors>
+    </amq:broker>
+ 
+  	<bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://${jms.ip}:${jms.port}?jms.useAsyncSend=true" />
+		<property name="trustAllPackages" value="true"/>
+	</bean>
+ 	
+ 	<bean id="simpleJmsConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+	  	<constructor-arg ref="amqConnectionFactory"/>
+		<property name="sessionCacheSize" value="100" />
+		<property name="cacheConsumers" value="true"></property>
+		<property name="exceptionListener" ref="jmsExceptionListener"/>
+	</bean>
+	
+	<bean id="jmsExceptionListener" class="com.redxun.core.jms.JmsExceptionListener"></bean>
+
+    <!--  Message 转换器  -->
+    <bean id="activeMqMessageConverter" class="com.redxun.core.jms.ActiveMqMessageConverter"/>
+      
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="simpleJmsConnectionFactory" />
+        <property name="defaultDestinationName" value="messageQueue"/>
+        <property name="messageConverter" ref="activeMqMessageConverter"/>
+    </bean>
+    
+   <!-- 消息对象队列  -->
+    <amq:queue id="defaultQueue" name="defaultQueue" physicalName="defaultQueue" />
+    <!-- 日志消息对象队列  -->
+    <amq:queue id="logMessageQueue" name="logMessageQueue" physicalName="logMessageQueue" />
+    <!-- office转换pdf队列  -->
+    <amq:queue id="officeCoverPdfMessageQueue" name="officeCoverPdfMessageQueue" physicalName="officeCoverPdfMessageQueue" />
+    <!-- 启动流程队列  -->
+    <amq:queue id="startFlowMessageQueue" name="startFlowMessageQueue" physicalName="startFlowMessageQueue" />
+
+
+	<!--消息监听容器 -->
+	<bean id="messageListenerContainer"
+		  class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="simpleJmsConnectionFactory" />
+		<property name="destination" ref="defaultQueue" />
+		<property name="messageListener" ref="messageMsgListener" />
+	</bean>
+
+	<!--日志消息监听容器 -->
+	<bean id="logMessageListenerContainer"
+		  class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="simpleJmsConnectionFactory" />
+		<property name="destination" ref="logMessageQueue" />
+		<property name="messageListener" ref="messageMsgListener" />
+	</bean>
+
+	<!--office转换pdf监听容器 -->
+	<bean id="officeCoverMessageListenerContainer"
+		  class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="simpleJmsConnectionFactory" />
+		<property name="destination" ref="officeCoverPdfMessageQueue" />
+		<property name="messageListener" ref="messageMsgListener" />
+	</bean>
+	<!--启动流程监听容器 -->
+	<bean id="startFlowListenerContainer"
+		  class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="simpleJmsConnectionFactory" />
+		<property name="destination" ref="startFlowMessageQueue" />
+		<property name="messageListener" ref="messageMsgListener" />
+	</bean>
+	<!-- 消息消费监听器  -->
+	<bean id="messageMsgListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg>
+			<ref bean="messageConsumer"/>
+		</constructor-arg>
+		<property name="messageConverter" ref="activeMqMessageConverter" />
+		<property name="defaultListenerMethod" value="handleMessage" />
+	</bean>
+
+
+
+    
+	
+</beans>

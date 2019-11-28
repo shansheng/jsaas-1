@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.ats.entity.AtsWorkCalendar">
+	<resultMap id="AtsWorkCalendar" type="com.redxun.oa.ats.entity.AtsWorkCalendar">
+		<id property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="code" column="CODE" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME" jdbcType="VARCHAR"/>
+		<result property="startTime" column="START_TIME" jdbcType="TIMESTAMP"/>
+		<result property="endTime" column="END_TIME" jdbcType="TIMESTAMP"/>
+		<result property="calendarTempl" column="CALENDAR_TEMPL" jdbcType="VARCHAR"/>
+		<result property="legalHoliday" column="LEGAL_HOLIDAY" jdbcType="VARCHAR"/>
+		<result property="isDefault" column="IS_DEFAULT" jdbcType="NUMERIC"/>
+		<result property="memo" column="MEMO" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		
+		<result property="calendarTemplName" column="calendarTemplName" jdbcType="VARCHAR"/>
+		<result property="legalHolidayName" column="legalHolidayName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.oa.ats.entity.AtsWorkCalendar">
+		INSERT INTO ats_work_calendar
+		(ID,CODE,NAME,START_TIME,END_TIME,CALENDAR_TEMPL,LEGAL_HOLIDAY,IS_DEFAULT,MEMO,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{calendarTempl,jdbcType=VARCHAR}, #{legalHoliday,jdbcType=VARCHAR}, #{isDefault,jdbcType=NUMERIC}, #{memo,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="AtsWorkCalendar">
+		SELECT a.*,b.NAME as calendarTemplName,c.NAME as legalHolidayName 
+		FROM ats_work_calendar a left join ats_calendar_templ b
+		on a.CALENDAR_TEMPL = b.ID left join ats_legal_holiday c
+		on a.LEGAL_HOLIDAY = c.ID 
+		WHERE 
+		a.ID=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="AtsWorkCalendar">
+		SELECT a.*,b.NAME as calendarTemplName,c.NAME as legalHolidayName 
+		FROM ats_work_calendar a left join ats_calendar_templ b
+		on a.CALENDAR_TEMPL = b.ID left join ats_legal_holiday c
+		on a.LEGAL_HOLIDAY = c.ID
+		<where>
+			1=1
+			<if test="@Ognl@isNotEmpty(CODE)">
+				and a.code like '%${CODE}%'
+			</if>
+			<if test="@Ognl@isNotEmpty(NAME)">
+				and a.NAME like '%${NAME}%'
+			</if>
+			<!-- <if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if> -->
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.ats.entity.AtsWorkCalendar">
+		UPDATE ats_work_calendar SET
+		CODE=#{code,jdbcType=VARCHAR},
+		NAME=#{name,jdbcType=VARCHAR},
+		START_TIME=#{startTime,jdbcType=TIMESTAMP},
+		END_TIME=#{endTime,jdbcType=TIMESTAMP},
+		CALENDAR_TEMPL=#{calendarTempl,jdbcType=VARCHAR},
+		LEGAL_HOLIDAY=#{legalHoliday,jdbcType=VARCHAR},
+		IS_DEFAULT=#{isDefault,jdbcType=NUMERIC},
+		MEMO=#{memo,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM ats_work_calendar 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	
+</mapper>

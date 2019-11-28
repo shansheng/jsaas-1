@@ -1,0 +1,192 @@
+* {
+	 margin: 0;
+	 padding: 0;
+   }
+html, body {
+	        height: 100%;
+	        width: 100%;
+	        overflow: hidden;
+	      }
+#canvas {
+	      display: block;
+	      background: url(images/img-login-01/bgg.jpg);
+	      background-size:cover ;
+	    }
+	    
+
+.logo{
+	width: 198px;
+	height: 64px;
+	text-align: center;
+	position: absolute;
+	top: 30px;
+	left: 50%;
+	margin-left: -99px;
+}
+.logo>span{
+	display: inline-block;
+	width: 50px;
+	height: 42px;
+	background: url(images/logo.png) no-repeat;
+}
+.logo .textName{
+	font-size: 16px;
+}
+
+.login-box{
+	background: #fff;
+    width: 360px;
+    min-height: 200px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    border-radius: 3px;
+}	
+.content_login{
+	margin-top: 110px;
+	
+}
+
+.content_login .firmName,
+.content_login .loginId,
+.content_login .loginPassword,
+#u1,
+#p1{
+
+    border: 1px solid #ddd;
+    height: 36px;
+    line-height: 36px;
+    width: 240px;
+    padding-left: 35px;
+    margin: 10px 40px;
+    border-radius: 3px;
+} 
+.Myinput{
+	position: relative;
+}
+.Myinput .span1,
+.Myinput .span2{
+	display: inline-block;
+	width:36px;
+	height:36px;
+	position:absolute;
+	top:10px;
+	left:42px;
+}
+.Myinput .span1{
+	background: url(images/img-login-01/user.png) 8px 10px no-repeat;
+} 
+.Myinput .span2{
+	background: url(images/img-login-01/key.png) 8px 10px no-repeat;
+} 
+#rememberMe{
+	margin-left: 40px;
+} 
+.rember-me,.forget-key{
+	display: inline-block;
+	font-size: 12px;
+} 
+.forget-key{
+	float: right;
+	margin-right: 40px;
+}  
+.forget-key a{
+	text-decoration: none;
+	color: #349cf2;
+}
+.forget-key a:hover{
+	cursor: pointer;
+	color: #0b7edc;
+}
+.login-btn{
+	width: 277px;
+	height: 36px;
+    line-height: 36px;
+    background: #349cf2;
+    color: #fff;
+    font-size: 14px;
+    border:antiquewhite;
+    border-radius: 3px;
+    margin: 30px 0 20px 0px;
+}
+.login-btn:hover{
+	cursor: pointer;
+	background: #0b7edc;
+}
+h4{
+	line-height:40px;
+	font-weight:normal;
+	text-align:center;
+}
+h4 a{
+	color:#0b7edc;
+}
+
+
+/*新用户注册*/
+.registerBox{
+	width:600px;
+	height:280px;
+	position:absolute;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	margin:auto;
+	box-sizing:border-box;
+	z-index:99;
+	background:#fff;
+	border-radius:6px;
+}
+
+.loadingBox{
+	display:none;
+	position:absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.4);
+	background:#fff \9;
+	z-index: 99;
+}
+
+.mini-mask-loading{
+	color: #666;
+	background:#fff url(../scripts/mini/miniui/themes/default/images/grid/loading2.gif) no-repeat center center;
+	z-index: 3;
+	width: 360px;
+	height:200px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -150px 0 0 -180px;
+	border-radius: 12px;
+}
+
+.mini-mask-loading span{
+	font-size: 16px;
+	position: absolute;
+	top: 50%;
+	margin-top: -10px;
+	width: 100%;
+	line-height: 20px;
+	white-space:nowrap;
+	text-align: center;
+}
+
+
+	    /*清除谷歌浏览器默认黄底*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+box-shadow:0 0 0 60px #fff inset!important;
+-webkit-text-fill-color: #333!important;
+}
+
+
+

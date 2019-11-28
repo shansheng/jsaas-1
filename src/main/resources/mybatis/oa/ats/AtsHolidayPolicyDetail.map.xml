@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.ats.entity.AtsHolidayPolicyDetail">
+	<resultMap id="AtsHolidayPolicyDetail" type="com.redxun.oa.ats.entity.AtsHolidayPolicyDetail">
+		<id property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="holidayId" column="HOLIDAY_ID" jdbcType="VARCHAR"/>
+		<result property="holidayType" column="HOLIDAY_TYPE" jdbcType="VARCHAR"/>
+		<result property="holidayUnit" column="HOLIDAY_UNIT" jdbcType="NUMERIC"/>
+		<result property="enablePeriod" column="ENABLE_PERIOD" jdbcType="NUMERIC"/>
+		<result property="periodLength" column="PERIOD_LENGTH" jdbcType="NUMERIC"/>
+		<result property="periodUnit" column="PERIOD_UNIT" jdbcType="NUMERIC"/>
+		<result property="enableMinAmt" column="ENABLE_MIN_AMT" jdbcType="NUMERIC"/>
+		<result property="minAmt" column="MIN_AMT" jdbcType="NUMERIC"/>
+		<result property="isFillHoliday" column="IS_FILL_HOLIDAY" jdbcType="NUMERIC"/>
+		<result property="fillHoliday" column="FILL_HOLIDAY" jdbcType="NUMERIC"/>
+		<result property="fillHolidayUnit" column="FILL_HOLIDAY_UNIT" jdbcType="NUMERIC"/>
+		<result property="isCancelLeave" column="IS_CANCEL_LEAVE" jdbcType="NUMERIC"/>
+		<result property="cancelLeave" column="CANCEL_LEAVE" jdbcType="NUMERIC"/>
+		<result property="cancelLeaveUnit" column="CANCEL_LEAVE_UNIT" jdbcType="NUMERIC"/>
+		<result property="isCtrlLimit" column="IS_CTRL_LIMIT" jdbcType="NUMERIC"/>
+		<result property="holidayRule" column="HOLIDAY_RULE" jdbcType="VARCHAR"/>
+		<result property="isOver" column="IS_OVER" jdbcType="NUMERIC"/>
+		<result property="isOverAutoSub" column="IS_OVER_AUTO_SUB" jdbcType="NUMERIC"/>
+		<result property="isCanModifyLimit" column="IS_CAN_MODIFY_LIMIT" jdbcType="NUMERIC"/>
+		<result property="isIncludeRest" column="IS_INCLUDE_REST" jdbcType="NUMERIC"/>
+		<result property="isIncludeLegal" column="IS_INCLUDE_LEGAL" jdbcType="NUMERIC"/>
+		<result property="memo" column="MEMO" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.oa.ats.entity.AtsHolidayPolicyDetail">
+		INSERT INTO ats_holiday_policy_detail
+		(ID,HOLIDAY_ID,HOLIDAY_TYPE,HOLIDAY_UNIT,ENABLE_PERIOD,PERIOD_LENGTH,PERIOD_UNIT,ENABLE_MIN_AMT,MIN_AMT,IS_FILL_HOLIDAY,FILL_HOLIDAY,FILL_HOLIDAY_UNIT,IS_CANCEL_LEAVE,CANCEL_LEAVE,CANCEL_LEAVE_UNIT,IS_CTRL_LIMIT,HOLIDAY_RULE,IS_OVER,IS_OVER_AUTO_SUB,IS_CAN_MODIFY_LIMIT,IS_INCLUDE_REST,IS_INCLUDE_LEGAL,MEMO,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{holidayId,jdbcType=VARCHAR}, #{holidayType,jdbcType=VARCHAR}, #{holidayUnit,jdbcType=NUMERIC}, #{enablePeriod,jdbcType=NUMERIC}, #{periodLength,jdbcType=NUMERIC}, #{periodUnit,jdbcType=NUMERIC}, #{enableMinAmt,jdbcType=NUMERIC}, #{minAmt,jdbcType=NUMERIC}, #{isFillHoliday,jdbcType=NUMERIC}, #{fillHoliday,jdbcType=NUMERIC}, #{fillHolidayUnit,jdbcType=NUMERIC}, #{isCancelLeave,jdbcType=NUMERIC}, #{cancelLeave,jdbcType=NUMERIC}, #{cancelLeaveUnit,jdbcType=NUMERIC}, #{isCtrlLimit,jdbcType=NUMERIC}, #{holidayRule,jdbcType=VARCHAR}, #{isOver,jdbcType=NUMERIC}, #{isOverAutoSub,jdbcType=NUMERIC}, #{isCanModifyLimit,jdbcType=NUMERIC}, #{isIncludeRest,jdbcType=NUMERIC}, #{isIncludeLegal,jdbcType=NUMERIC}, #{memo,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="AtsHolidayPolicyDetail">
+		SELECT * FROM ats_holiday_policy_detail 
+		WHERE 
+		ID=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="AtsHolidayPolicyDetail">
+		SELECT * FROM ats_holiday_policy_detail
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.ats.entity.AtsHolidayPolicyDetail">
+		UPDATE ats_holiday_policy_detail SET
+		HOLIDAY_ID=#{holidayId,jdbcType=VARCHAR},
+		HOLIDAY_TYPE=#{holidayType,jdbcType=VARCHAR},
+		HOLIDAY_UNIT=#{holidayUnit,jdbcType=NUMERIC},
+		ENABLE_PERIOD=#{enablePeriod,jdbcType=NUMERIC},
+		PERIOD_LENGTH=#{periodLength,jdbcType=NUMERIC},
+		PERIOD_UNIT=#{periodUnit,jdbcType=NUMERIC},
+		ENABLE_MIN_AMT=#{enableMinAmt,jdbcType=NUMERIC},
+		MIN_AMT=#{minAmt,jdbcType=NUMERIC},
+		IS_FILL_HOLIDAY=#{isFillHoliday,jdbcType=NUMERIC},
+		FILL_HOLIDAY=#{fillHoliday,jdbcType=NUMERIC},
+		FILL_HOLIDAY_UNIT=#{fillHolidayUnit,jdbcType=NUMERIC},
+		IS_CANCEL_LEAVE=#{isCancelLeave,jdbcType=NUMERIC},
+		CANCEL_LEAVE=#{cancelLeave,jdbcType=NUMERIC},
+		CANCEL_LEAVE_UNIT=#{cancelLeaveUnit,jdbcType=NUMERIC},
+		IS_CTRL_LIMIT=#{isCtrlLimit,jdbcType=NUMERIC},
+		HOLIDAY_RULE=#{holidayRule,jdbcType=VARCHAR},
+		IS_OVER=#{isOver,jdbcType=NUMERIC},
+		IS_OVER_AUTO_SUB=#{isOverAutoSub,jdbcType=NUMERIC},
+		IS_CAN_MODIFY_LIMIT=#{isCanModifyLimit,jdbcType=NUMERIC},
+		IS_INCLUDE_REST=#{isIncludeRest,jdbcType=NUMERIC},
+		IS_INCLUDE_LEGAL=#{isIncludeLegal,jdbcType=NUMERIC},
+		MEMO=#{memo,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM ats_holiday_policy_detail 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<delete id="delByMainId">
+	    DELETE FROM ats_holiday_policy_detail
+	    WHERE
+	    holiday_id=#{holidayId}
+	</delete>    
+	
+	<select id="getAtsHolidayPolicyDetailList" resultMap="AtsHolidayPolicyDetail">
+	    SELECT *
+	    FROM ats_holiday_policy_detail 
+	    WHERE holiday_id=#{holidayId}
+	</select>
+	
+</mapper>

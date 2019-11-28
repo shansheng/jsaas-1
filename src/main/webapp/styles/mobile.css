@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* 修改 */
+@font-face {
+	font-family: 'mobilefont';
+	src: url('font/mobile.ttf') format('truetype');
+}
+
+
+
+[class*=" icon-"]:before,[class^=icon-]:before {
+    font-family: "mobilefont" !important;
+    font-size: inherit;
+    font-weight: normal;
+}
+
+.icon-product:before {
+	content: "\e609";color:#6b0eb1;
+}
+
+.icon-in-stock:before {
+	content: "\e657";color:#6b0eb1;
+}
+
+.icon-out-stock:before {
+	content: "\e65b";color:#6b0eb1;
+}
+
+

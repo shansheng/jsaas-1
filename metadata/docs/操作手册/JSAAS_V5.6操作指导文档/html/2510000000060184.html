@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>关系定义</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><span style="font-family:'微软雅黑','sans-serif'">平台把组织架构及人员的管理划分为两种实体，一是用户组，一是用户。我们通过用户组与用户的相互关系的定义可以实现灵活的人员查找。操作进入，如下所示：</span></p> 
+ <p><img src="/doc/sys/core/file/previewFile.do?fileId=2400000000611132" title="image.png" alt=""> </p> 
+ <p><br></p> 
+ <p><span style="font-family:'微软雅黑','sans-serif'">若定义用户组与用户的关系，当前维度选择用户组所在的维度，关联方维度不用选择。</span></p> 
+ <p><span style="font-family:'微软雅黑','sans-serif'">其可以定义以下的关系：</span></p> 
+ <p class="MsoListParagraph" style="margin-left:28px"><span style="font-family:Wingdings">l<span style="font-variant-numeric: normal;font-stretch: normal;font-size: 9px;line-height: normal;font-family: 'Times New Roman'">&nbsp; </span></span><span style="font-family:'微软雅黑','sans-serif'">用户与用户的关系：如用户间的上下级关系，汇报关系</span></p> 
+ <p class="MsoListParagraph" style="margin-left:28px"><span style="font-family:Wingdings">l<span style="font-variant-numeric: normal;font-stretch: normal;font-size: 9px;line-height: normal;font-family: 'Times New Roman'">&nbsp; </span></span><span style="font-family:'微软雅黑','sans-serif'">用户组与用户的关系：如从属关系，负责人关系</span></p> 
+ <p class="MsoListParagraph" style="margin-left:28px"><span style="font-family:Wingdings">l<span style="font-variant-numeric: normal;font-stretch: normal;font-size: 9px;line-height: normal;font-family: 'Times New Roman'">&nbsp; </span></span><span style="font-family:'微软雅黑','sans-serif'">用户组与用户组的关系：如部门的职务关系（岗位）</span></p> 
+ <p class="MsoListParagraph" style="margin-left:28px"><span style="font-family:'微软雅黑','sans-serif'"><img src="/doc/sys/core/file/previewFile.do?fileId=2400000000611133" title="image.png" alt=""> </span></p> 
+ <h3>用户组与用户的关系管理</h3> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'">平台提供用户与组的关系管理，在平台是通过以下界面进行维护管理的，</span><span style="font-family: 微软雅黑, sans-serif;">其中组内用户、组负责人为平台的默认关系，其作用为：</span></p> 
+ <p class="MsoListParagraph" style="margin-left:28px"><span style="font-family:Wingdings">l<span style="font-variant-numeric: normal;font-stretch: normal;font-size: 9px;line-height: normal;font-family: 'Times New Roman'">&nbsp; </span></span><span style="font-family:'微软雅黑','sans-serif'">组内用户：</span></p> 
+ <p class="MsoListParagraph" style="margin-left:28px;text-indent:0"><span style="font-family:'微软雅黑','sans-serif'">组内用户表示为某个用户挂在某个部门下，平台允许一个用户挂在多个部门下，但只有一个主部门。</span></p> 
+ <p class="MsoListParagraph" style="margin-left:28px"><span style="font-family:Wingdings">l<span style="font-variant-numeric: normal;font-stretch: normal;font-size: 9px;line-height: normal;font-family: 'Times New Roman'">&nbsp; </span></span><span style="font-family:'微软雅黑','sans-serif'">组负责人：</span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这是用户在某个用户组的另一种关系，可以理解为如部门的负责人的这种关系。</span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'"><img src="/doc/sys/core/file/previewFile.do?fileId=2400000000611134" title="image.png" alt=""> </span><br></p> 
+ <p style="margin-left:25px"><br></p> 
+ <h3>用户间的关系管理</h3> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'">直接定义用户与用户的关系，当知道一个人，通过这个关系，即可以找到与该用户有该关系的其他用户。如我们若定义了张三的上级为李四，即通过张三，就可以找到其上级李四。如下，我们先定义这个用户与用户的上下级关系，如：</span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'"><img src="/doc/sys/core/file/previewFile.do?fileId=2400000000611135" title="image.png" alt="" style="font-family: 微软雅黑, sans-serif; white-space: normal;"> </span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'">进入用户间的关系维护：</span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'"><img src="/doc/sys/core/file/previewFile.do?fileId=2400000000611138" title="image.png" alt=""> </span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'">也可以点关系实例图进行查看并操作：</span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'"><img src="/doc/sys/core/file/previewFile.do?fileId=2400000000611139" title="image.png" alt=""> </span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'"><br></span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'">【操作】在在图上选择一节点，然后点击【添加下级】则可。同样，若删除，则只需要选择节点，点击【删除】按钮则可。</span></p> 
+ <h3>用户组间的关系管理</h3> 
+ <p><span style="font-family:'微软雅黑','sans-serif'">在公司组织架构的管理中，人员会分在不同的用户组下，如一个人既是项目经理的角色，又是某个特定项目的负责人，而在平台管理中，我们经常需要通过特定的项目来找到特定角色的人员时，这时可以通过定义用户组与用户组的关系来维护这种关系。如下图所示：</span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'"><br></span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'"><img src="/doc/sys/core/file/previewFile.do?fileId=2400000000611141" title="image.png" alt=""> </span></p> 
+ <p><span style="font-size:16px;font-family:'微软雅黑','sans-serif'"><br></span></p>  
+</body></div>
+</body>
+</html>

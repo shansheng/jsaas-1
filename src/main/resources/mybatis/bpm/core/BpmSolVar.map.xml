@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.BpmSolVar">
+	<resultMap id="BpmSolVar" type="com.redxun.bpm.core.entity.BpmSolVar">
+		<id property="varId" column="VAR_ID_" jdbcType="VARCHAR"/>
+		<result property="solId" column="SOL_ID_" jdbcType="VARCHAR"/>
+		<result property="actDefId" column="ACT_DEF_ID_" jdbcType="VARCHAR"/>
+		<result property="key" column="KEY_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="scope" column="SCOPE_" jdbcType="VARCHAR"/>
+		<result property="nodeName" column="NODE_NAME_" jdbcType="VARCHAR"/>
+		<result property="defVal" column="DEF_VAL_" jdbcType="VARCHAR"/>
+		<result property="express" column="EXPRESS_" jdbcType="VARCHAR"/>
+		<result property="isReq" column="IS_REQ_" jdbcType="VARCHAR"/>
+		<result property="sn" column="SN_" jdbcType="NUMERIC"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="formField" column="FORM_FIELD_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.BpmSolVar">
+		INSERT INTO BPM_SOL_VAR
+		(VAR_ID_,SOL_ID_,ACT_DEF_ID_,KEY_,NAME_,TYPE_,SCOPE_,NODE_NAME_,DEF_VAL_,EXPRESS_,IS_REQ_,SN_,TENANT_ID_,UPDATE_BY_,CREATE_BY_,CREATE_TIME_,UPDATE_TIME_,FORM_FIELD_)
+		VALUES 
+		(#{varId,jdbcType=VARCHAR}, #{solId,jdbcType=VARCHAR}, #{actDefId,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{scope,jdbcType=VARCHAR}, #{nodeName,jdbcType=VARCHAR}, #{defVal,jdbcType=VARCHAR}, #{express,jdbcType=VARCHAR}, #{isReq,jdbcType=VARCHAR}, #{sn,jdbcType=NUMERIC}, #{tenantId,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{formField,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmSolVar">
+		SELECT * FROM BPM_SOL_VAR 
+		WHERE 
+		VAR_ID_=#{varId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmSolVar">
+		SELECT * FROM BPM_SOL_VAR
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY VAR_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.BpmSolVar">
+		UPDATE BPM_SOL_VAR SET
+		SOL_ID_=#{solId,jdbcType=VARCHAR},
+		ACT_DEF_ID_=#{actDefId,jdbcType=VARCHAR},
+		KEY_=#{key,jdbcType=VARCHAR},
+		NAME_=#{name,jdbcType=VARCHAR},
+		TYPE_=#{type,jdbcType=VARCHAR},
+		SCOPE_=#{scope,jdbcType=VARCHAR},
+		NODE_NAME_=#{nodeName,jdbcType=VARCHAR},
+		DEF_VAL_=#{defVal,jdbcType=VARCHAR},
+		EXPRESS_=#{express,jdbcType=VARCHAR},
+		IS_REQ_=#{isReq,jdbcType=VARCHAR},
+		SN_=#{sn,jdbcType=NUMERIC},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		FORM_FIELD_=#{formField,jdbcType=VARCHAR}
+		WHERE
+		VAR_ID_=#{varId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_SOL_VAR 
+		WHERE
+		VAR_ID_=#{varId}
+	</delete>
+	
+	<select id="getBySolIdActDefIdScope"   parameterType="java.lang.String" resultMap="BpmSolVar">
+		SELECT * FROM BPM_SOL_VAR 
+		WHERE  SOL_ID_=#{solId} and ACT_DEF_ID_=#{actDefId} and SCOPE_=#{scope}
+	</select>
+	
+	<select id="getBySolIdActDefId"   parameterType="java.lang.String" resultMap="BpmSolVar">
+		SELECT * FROM BPM_SOL_VAR 
+		WHERE  SOL_ID_=#{solId} and ACT_DEF_ID_=#{actDefId} 
+	</select>
+	
+	<delete id="delBySolId"  >
+		DELETE FROM BPM_SOL_VAR 
+		WHERE SOL_ID_=#{solId}
+	</delete>
+	
+	<delete id="delBySolIdActDefId"  >
+		DELETE FROM BPM_SOL_VAR 
+		WHERE SOL_ID_=#{solId} and ACT_DEF_ID_=#{actDefId} 
+	</delete>
+	
+	
+	
+</mapper>

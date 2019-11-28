@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.core.entity.SysFormulaMapping">
+	<resultMap id="SysFormulaMapping" type="com.redxun.sys.core.entity.SysFormulaMapping">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="formSolId" column="FORM_SOL_ID_" jdbcType="VARCHAR"/>
+		<result property="formulaName" column="FORMULA_NAME_" jdbcType="VARCHAR"/>
+		<result property="formulaId" column="FORMULA_ID_" jdbcType="VARCHAR"/>
+		<result property="boDefId" column="BO_DEF_ID_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.core.entity.SysFormulaMapping">
+		INSERT INTO SYS_FORMULA_MAPPING
+		(ID_,FORM_SOL_ID_,FORMULA_NAME_,FORMULA_ID_,BO_DEF_ID_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{formSolId,jdbcType=VARCHAR}, #{formulaName,jdbcType=VARCHAR}, #{formulaId,jdbcType=VARCHAR}, #{boDefId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="SysFormulaMapping">
+		SELECT * FROM SYS_FORMULA_MAPPING 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysFormulaMapping">
+		SELECT * FROM SYS_FORMULA_MAPPING
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.core.entity.SysFormulaMapping">
+		UPDATE SYS_FORMULA_MAPPING SET
+		FORM_SOL_ID_=#{formSolId,jdbcType=VARCHAR},
+		FORMULA_NAME_=#{formulaName,jdbcType=VARCHAR},
+		FORMULA_ID_=#{formulaId,jdbcType=VARCHAR},
+		BO_DEF_ID_=#{boDefId,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM SYS_FORMULA_MAPPING 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<delete id="removeByFormulaId" parameterType="java.lang.String">
+		DELETE FROM SYS_FORMULA_MAPPING 
+		WHERE
+		FORMULA_ID_=#{formulaId}
+	</delete>
+	
+	<delete id="removeBySolId" parameterType="java.lang.String">
+		DELETE FROM SYS_FORMULA_MAPPING 
+		WHERE
+		FORM_SOL_ID_=#{formSolId}
+	</delete>
+	
+	<select id="getByFormSolId" parameterType="java.util.Map" resultMap="SysFormulaMapping">
+		SELECT * FROM SYS_FORMULA_MAPPING WHERE FORM_SOL_ID_ = #{formSolId}
+	</select>
+</mapper>

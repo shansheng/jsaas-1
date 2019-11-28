@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.wx.portal.entity.WxMobilePortalButton">
+	<resultMap id="WxMobilePortalButton" type="com.redxun.wx.portal.entity.WxMobilePortalButton">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="key" column="KEY_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="appId" column="APP_ID_" jdbcType="VARCHAR"/>
+		<result property="icon" column="ICON_" jdbcType="VARCHAR"/>
+		<result property="url" column="URL_" jdbcType="VARCHAR"/>
+		<result property="typeId" column="TYPE_ID_" jdbcType="VARCHAR"/>
+		<result property="sn" column="SN_" jdbcType="INTEGER"/>
+		<result property="appType" column="APP_TYPE_" jdbcType="VARCHAR"/>
+		<result property="portAlias" column="PORT_ALIAS_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<insert id="create" parameterType="com.redxun.wx.portal.entity.WxMobilePortalButton">
+		INSERT INTO wx_mobile_portal_button
+		(ID_,KEY_,NAME_,APP_ID_,ICON_,URL_,TYPE_ID_,SN_,APP_TYPE_,PORT_ALIAS_,TENANT_ID_,CREATE_TIME_,CREATE_BY_,UPDATE_TIME_,UPDATE_BY_)
+		VALUES
+		(#{id,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{appId, jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR},#{sn,jdbcType=INTEGER},#{appType,jdbcType=VARCHAR},#{portAlias,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="get" parameterType="java.lang.String" resultMap="WxMobilePortalButton">
+		SELECT * FROM wx_mobile_portal_button
+		WHERE
+		ID_=#{id}
+	</select>
+
+	<select id="query" parameterType="java.util.Map" resultMap="WxMobilePortalButton">
+		SELECT * FROM wx_mobile_portal_button
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+
+	<update id="update" parameterType="com.redxun.wx.portal.entity.WxMobilePortalButton">
+		UPDATE wx_mobile_portal_button SET
+		KEY_=#{key,jdbcType=VARCHAR},
+		NAME_=#{name,jdbcType=VARCHAR},
+		APP_ID_=#{appId,jdbcType=VARCHAR},
+		ICON_=#{icon,jdbcType=VARCHAR},
+		URL_=#{url,jdbcType=VARCHAR},
+		TYPE_ID_=#{typeId,jdbcType=VARCHAR},
+		SN_=#{sn,jdbcType=INTEGER},
+		APP_TYPE_=#{appType,jdbcType=VARCHAR},
+		PORT_ALIAS_=#{portAlias,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+
+	<select id="getByTenantId" parameterType="java.lang.String" resultMap="WxMobilePortalButton">
+		SELECT * FROM wx_mobile_portal_button
+		WHERE TENANT_ID_=#{tenantId}
+	</select>
+
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM wx_mobile_portal_button
+		WHERE
+		ID_=#{id}
+	</delete>
+
+	<select id="getByType" parameterType="java.lang.String" resultMap="WxMobilePortalButton">
+		SELECT * FROM wx_mobile_portal_button
+		WHERE
+		TYPE_ID_ LIKE CONCAT('%', #{typeId}, '%')
+	</select>
+
+	<select id="getMobileApp" parameterType="java.util.Map" resultMap="WxMobilePortalButton">
+		select * from wx_mobile_portal_button app where ID_ IN (
+		SELECT OBJECT_ID_ from    SYS_OBJECT_AUTH s
+		where s.TENANT_ID_=#{tenantId}
+		and s.TYPE_='everyone'
+		union all
+		<foreach collection="profileMap" index="key"  item="ent" separator="union all">
+			SELECT  OBJECT_ID_  FROM SYS_OBJECT_AUTH s
+			where s.TENANT_ID_=#{tenantId}
+			and s.TYPE_=#{key}
+			and s.AUTH_ID_ in
+			<foreach collection="ent"  item="id" separator="," open="(" close=")">#{id}</foreach>
+		</foreach> )
+		and app.TYPE_ID_ =#{typeId}
+		ORDER BY SN_ ASC
+	</select>
+</mapper>

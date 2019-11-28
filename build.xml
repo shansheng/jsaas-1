@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jsaas-ent-build" default="war-mysql" basedir=".">
+	<property file="build.properties"/>
+	<!--将web的文件copy到这个目录-->
+	<property name="war.dir" location="src\main\webapp" />
+	<property name="source.dir" location="metadata/build-dev/sources/" />
+	<path id="yuiClasspath">  
+            <fileset dir="${basedir}">  
+                <include name="metadata/tools/yui/yuicompressor-2.4.2.jar" />  
+                <include name="metadata/tools/yui/YUIAnt-zh_CN.jar" />  
+            </fileset>  
+	 </path>  
+	
+	
+	
+	<target name="war-mysql">
+		<tstamp prefix="my">
+			<format property="day" pattern="yyyy-MM-dd"/>
+		</tstamp>
+		
+		<delete dir="metadata/out"></delete>
+		<mkdir dir="metadata/out"/> 
+		<copy todir="metadata/out/jsaas-mysql">
+			<fileset dir="${war.dir}">
+				<include name="*/**"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="metadata/out/script">
+			<fileset dir="metadata/scripts/v5.9/mysql">
+				<include name="*/**"/>
+			</fileset>
+		</copy>
+		
+		<copy file="metadata/build-dev/miniui/miniui.js" todir="metadata/out/jsaas-mysql/scripts/miniui/"></copy>
+		<copy todir="metadata/out/doc" overwrite="true">
+			<fileset dir="metadata/docs/操作手册" >
+				<include name="**/**"/>
+			</fileset>
+			<fileset dir="metadata/docs/部署文档" >
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		
+		
+		<war destfile="metadata/out/jsaas.war" webxml="metadata/out/jsaas-mysql/WEB-INF/web.xml" encoding="UTF-8">
+			<fileset dir="metadata/out/jsaas-mysql"/>
+		</war>
+		<!--
+		<zip destfile="metadata/out/jsaas_${my.day}.rar">
+			<fileset dir="metadata/out"></fileset>
+		</zip>-->
+		
+	</target>
+	
+	
+
+	
+	<target name="war_run">
+		<copy todir="metadata/out/jsaas-mysql" overwrite="true">
+			<fileset dir="${war.dir}">
+				<include name="*/**"/>
+			</fileset>
+		</copy>
+		<war destfile="metadata/out/jsaas.rar" webxml="metadata/out/jsaas-mysql/WEB-INF/web.xml" encoding="UTF-8">
+			<fileset dir="metadata/out/jsaas-mysql"/>
+		</war>
+	</target>
+	
+	<target name="war-oracle">
+		<war destfile="metadata/out/jsaas-oracle.rar" webxml="${war.dir}/WEB-INF/web.xml" encoding="UTF-8">
+			<fileset dir="${war.dir}"/>
+		</war>
+	</target>
+	
+	<target name="copy-project-settings">
+		<mkdir dir="${source.dir}"/>
+		<copy todir="${source.dir}">
+			<fileset dir="metadata/build-dev/project-setting"/>
+		</copy>
+	</target>
+
+	<target name="jar-core" >
+		<jar destfile="metadata/build-dev/jsaas-core-5.7.jar">
+			<fileset dir="src/main/webapp/WEB-INF/classes/">
+				<include name="com/redxun/core/**"/>
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="jar-bpm" >
+			<delete file="metadata/build-dev/jsaas-bpm-5.7.6.2.jar"></delete>
+			<jar destfile="metadata/build-dev/jsaas-bpm-5.7.6.2.jar">
+			<fileset dir="src/main/webapp/WEB-INF/classes/">
+				<include name="com/redxun/bpm/**"/>
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="jar-saweb" >
+			<jar destfile="metadata/build-dev/jsaas-saweb.5.7.jar">
+			<fileset dir="src/main/webapp/WEB-INF/classes/">
+				<include name="com/redxun/saweb/**"/>
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="jar-sys" >
+			<jar destfile="metadata/build-dev/jsaas-sys.5.6.jar">
+			<fileset dir="src/main/webapp/WEB-INF/classes/">
+				<include name="com/redxun/sys/**"/>
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="clean-sources">
+		<delete dir="metadata/build-dev/sources">
+		</delete>
+	</target>
+	
+	<target name="clearDir">
+		<delete dir="metadata/build-dev/sources/metadata/scripts"></delete>
+		<delete dir="metadata/build-dev/sources"></delete>
+		<delete dir="metadata/build-dev" includes="*.jar"></delete>
+	</target>
+	
+	<target name="build-maven-all">
+		
+		<delete dir="metadata/build-dev/mvn/"></delete>
+		
+		<!--代码生成-->
+		<copy todir="metadata/build-dev/mvn/metadata/codegen" overwrite="true">
+			<fileset dir="metadata/codegen" >
+			  	<include name="**/**"/>
+			</fileset>
+		</copy>
+		<!--脚本-->
+		<copy todir="metadata/build-dev/mvn/metadata/scripts/" overwrite="true">
+			<fileset dir="metadata/scripts/v5.7" >
+			  	<include name="**"/>
+			</fileset>
+		</copy>
+		
+		<!--文档-->
+		<copy todir="metadata/build-dev/mvn/metadata/docs/" overwrite="true">
+			<fileset dir="metadata/docs" >
+			  	<include name="**/**"/>
+			</fileset>
+			
+		</copy>
+		
+		<copy todir="metadata/build-dev/mvn/metadata/pdm" overwrite="true">
+			<fileset dir="metadata/pdm/v5.7">
+				<include name="*.*"/> 
+			</fileset>
+		</copy>	
+		
+		<copy todir="metadata/build-dev/mvn/src" overwrite="true">
+			<fileset dir="src">
+				<exclude name="main/java/com/redxun/core/**" unless="${core}"/>
+				<exclude name="main/java/com/redxun/bpm/**"  unless="${bpm}"/>
+				<exclude name="main/java/com/redxun/sys/**" unless="${sys}"/>
+				<exclude name="main/java/com/redxun/saweb/**" unless="${saweb}"/>
+				
+			</fileset>
+		</copy>	
+	
+		<copy todir="metadata/build-dev/mvn/" overwrite="true">
+			<fileset dir=".">
+				<include name="pom.xml"/> 
+			</fileset>
+		</copy>	
+	
+		<!--delete dir="metadata/build-dev/mvn/src/main/java/com/redxun/bpm"></delete-->
+		<!--delete dir="metadata/build-dev/mvn/src/main/java/com/redxun/core"></delete-->
+		
+		<zip destfile="metadata/build-dev/jsaas-mvn.zip">
+			<fileset dir="metadata/build-dev/mvn">
+				<include name="**/**"/>
+			</fileset>
+		</zip>
+	</target>
+	
+	<target name="build-dev-source" depends="clearDir,jar-core,jar-bpm,jar-sys,jar-saweb,copy-project-settings">
+		
+		<mkdir dir="metadata/build-dev/sources"/>
+		<mkdir dir="metadata/build-dev/sources/src"/>
+		<mkdir dir="metadata/build-dev/sources/resources"/>
+		<mkdir dir="metadata/build-dev/sources/webapp"/>
+		<mkdir dir="metadata/build-dev/sources/metadata/scripts/"/>
+		<mkdir dir="metadata/build-dev/sources/metadata/codegen"/>
+		<copy todir="metadata/build-dev/sources/src">
+			<fileset dir="src\main\java">
+				<exclude name="com/redxun/core/**" unless="${core}"/>
+				<exclude name="com/redxun/bpm/**"  unless="${bpm}"/>
+				<exclude name="com/redxun/sys/**" unless="${sys}"/>
+				<exclude name="com/redxun/saweb/**" unless="${saweb}"/>
+			</fileset>
+		</copy>
+		<copy todir="metadata/build-dev/sources/webapp">
+			<fileset dir="src/main/webapp" >
+			    <exclude name="src/main/webapp/scripts/miniui/**"/>
+			</fileset>
+		</copy>
+		<copy todir="metadata/build-dev/sources/metadata/scripts/" overwrite="true">
+			<fileset dir="metadata/scripts/v5.6/mysql" >
+			  	<include name="**/**"/>
+			</fileset>
+		</copy>
+		<!--复制试用的miniui-->
+		<copy todir="metadata/build-dev/sources/webapp/scripts/miniui" overwrite="true">
+			<fileset dir="metadata/build-dev/miniui" >
+			  	<include name="**/**"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="metadata/build-dev/sources/metadata/codegen" overwrite="true">
+			<fileset dir="metadata/codegen" >
+			  	<include name="**/**"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="metadata/build-dev/sources/resources">
+				<fileset dir="src\main\resources">
+					<include name="**"/>
+				</fileset>
+		</copy>
+		
+		<!--
+		<copy todir="metadata/build-dev/sources/">
+			<fileset dir=".">
+				<include name="pom.xml"/>
+			</fileset>
+		</copy>
+		-->
+		
+		<copy todir="metadata/build-dev/sources/metadata/docs/" overwrite="true" >
+    		<fileset dir="metadata/docs" >
+    			<include name="**/**" if="${doc_dev}"/>
+    		</fileset>
+    	</copy>
+		
+		
+		<copy file="metadata/build-dev/jsaas-core-5.6.jar" todir="metadata/build-dev/sources/webapp/WEB-INF/lib"  />
+		<copy file="metadata/build-dev/jsaas-bpm-5.6.jar" todir="metadata/build-dev/sources/webapp/WEB-INF/lib"/>
+		<copy file="metadata/build-dev/jsaas-sys.5.6.jar" todir="metadata/build-dev/sources/webapp/WEB-INF/lib"/>
+		<copy file="metadata/build-dev/jsaas-saweb.5.6.jar" todir="metadata/build-dev/sources/webapp/WEB-INF/lib"/>
+		<zip  destfile="metadata/build-dev/jsaas-5.6.zip">
+			<fileset dir="metadata/build-dev/sources">
+				<include name="**/**"/>
+			</fileset>
+		</zip>
+		
+		<antcall target="clearDir" ></antcall>
+		
+	</target>
+	
+	<target name="addClassToJar">
+		<jar destfile="src/main/webapp/WEB-INF/lib/activiti-engine-5.18.0.jar" update="true">
+            <fileset dir="src/main/webapp/WEB-INF/classes" includes="org/activiti/engine/impl/variable/VariableType.class">
+            </fileset>
+		 </jar>
+	</target>
+	
+	
+</project>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-kafka="http://www.springframework.org/schema/integration/kafka"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/integration/kafka http://www.springframework.org/schema/integration/kafka/spring-integration-kafka.xsd
+        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!-- 定义consumer的参数 -->
+    <bean id="consumerProperties" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <!-- 配置kafka的broke -->
+                <entry key="bootstrap.servers" value="${kafka.brokerurl}"/>
+                <!-- 配置组-->
+                <entry key="group.id" value="group1"/>
+                <entry key="enable.auto.commit" value="true"/>
+                <entry key="auto.commit.interval.ms" value="1000"/>
+                <entry key="session.timeout.ms" value="30000"/>
+                <entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
+                <entry key="value.deserializer" value="com.redxun.jms.ObjectDeSerializer"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <!-- 创建consumerFactory bean -->
+    <bean id="consumerFactory" class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+        <constructor-arg>
+            <ref bean="consumerProperties"/>
+        </constructor-arg>
+    </bean>
+
+    <!-- 实际执行消息消费的类 -->
+    <bean id="messageListernerConsumerService" class="com.redxun.jms.KafkaConsumerListener"/>
+    
+    <!-- 消费者容器配置信息 -->
+    <bean id="defalutProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
+        <!-- 重要！配置topic -->
+        <constructor-arg value="defaultQueue"/>
+        <property name="messageListener" ref="messageListernerConsumerService"/>
+    </bean>
+
+    <bean id="defalutListenerContainer" class="org.springframework.kafka.listener.KafkaMessageListenerContainer" init-method="doStart">
+        <constructor-arg ref="consumerFactory"/>
+        <constructor-arg ref="defalutProperties"/>
+    </bean>
+    <!-- 日志处理 -->
+    <bean id="logMessageProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
+        <!-- 重要！配置topic -->
+        <constructor-arg value="logMessageQueue"/>
+        <property name="messageListener" ref="messageListernerConsumerService"/>
+    </bean>
+    <bean id="logListenerContainer" class="org.springframework.kafka.listener.KafkaMessageListenerContainer" init-method="doStart">
+        <constructor-arg ref="consumerFactory"/>
+        <constructor-arg ref="logMessageProperties"/>
+    </bean>
+    
+    <!-- office 消息处理 -->
+    <bean id="officeMessageProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
+        <!-- 重要！配置topic -->
+        <constructor-arg value="officeCoverPdfMessageQueue"/>
+        <property name="messageListener" ref="messageListernerConsumerService"/>
+    </bean>
+    <bean id="officeListenerContainer" class="org.springframework.kafka.listener.KafkaMessageListenerContainer" init-method="doStart">
+        <constructor-arg ref="consumerFactory"/>
+        <constructor-arg ref="officeMessageProperties"/>
+    </bean>
+    
+    <!-- 启动流程队列 -->
+    <bean id="startFlowMessageProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
+        <!-- 重要！配置topic -->
+        <constructor-arg value="startFlowMessageQueue"/>
+        <property name="messageListener" ref="messageListernerConsumerService"/>
+    </bean>
+    <bean id="startFlowListenerContainer" class="org.springframework.kafka.listener.KafkaMessageListenerContainer" init-method="doStart">
+        <constructor-arg ref="consumerFactory"/>
+        <constructor-arg ref="startFlowMessageProperties"/>
+    </bean>
+    
+</beans>

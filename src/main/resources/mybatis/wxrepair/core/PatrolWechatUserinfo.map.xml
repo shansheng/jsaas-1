@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.airdrop.wxrepair.core.entity.PatrolWechatUserinfo">
+	<resultMap id="PatrolWechatUserinfo" type="com.airdrop.wxrepair.core.entity.PatrolWechatUserinfo">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="openid" column="F_OPENID" jdbcType="VARCHAR"/>
+		<result property="nickname" column="F_NICKNAME" jdbcType="VARCHAR"/>
+		<result property="fullname" column="F_FULLNAME" jdbcType="VARCHAR"/>
+		<result property="gender" column="F_GENDER" jdbcType="VARCHAR"/>
+		<result property="genderName" column="F_GENDER_name" jdbcType="VARCHAR"/>
+		<result property="phone" column="F_PHONE" jdbcType="VARCHAR"/>
+		<result property="address" column="F_ADDRESS" jdbcType="VARCHAR"/>
+		<result property="avatarurl" column="F_AVATARURL" jdbcType="VARCHAR"/>
+		<result property="unionid" column="F_UNIONID" jdbcType="VARCHAR"/>
+		<result property="refId" column="REF_ID_" jdbcType="VARCHAR"/>
+		<result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR"/>
+		<result property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="instStatus" column="INST_STATUS_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.airdrop.wxrepair.core.entity.PatrolWechatUserinfo">
+		INSERT INTO w_patrol_wechat_userinfo
+		(F_OPENID,F_NICKNAME,F_FULLNAME,F_GENDER,F_GENDER_name,F_PHONE,F_ADDRESS,F_AVATARURL,F_UNIONID,ID_,REF_ID_,PARENT_ID_,INST_ID_,INST_STATUS_,TENANT_ID_,CREATE_TIME_,CREATE_BY_,UPDATE_BY_,UPDATE_TIME_,GROUP_ID_)
+		VALUES 
+		(#{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{fullname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{genderName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{refId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{instId,jdbcType=VARCHAR}, #{instStatus,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{groupId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="PatrolWechatUserinfo">
+		SELECT * FROM w_patrol_wechat_userinfo 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="PatrolWechatUserinfo">
+		SELECT * FROM w_patrol_wechat_userinfo
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.airdrop.wxrepair.core.entity.PatrolWechatUserinfo">
+		UPDATE w_patrol_wechat_userinfo SET
+		F_OPENID=#{openid,jdbcType=VARCHAR},
+		F_NICKNAME=#{nickname,jdbcType=VARCHAR},
+		F_FULLNAME=#{fullname,jdbcType=VARCHAR},
+		F_GENDER=#{gender,jdbcType=VARCHAR},
+		F_GENDER_name=#{genderName,jdbcType=VARCHAR},
+		F_PHONE=#{phone,jdbcType=VARCHAR},
+		F_ADDRESS=#{address,jdbcType=VARCHAR},
+		F_AVATARURL=#{avatarurl,jdbcType=VARCHAR},
+		F_UNIONID=#{unionid,jdbcType=VARCHAR},
+		REF_ID_=#{refId,jdbcType=VARCHAR},
+		PARENT_ID_=#{parentId,jdbcType=VARCHAR},
+		INST_ID_=#{instId,jdbcType=VARCHAR},
+		INST_STATUS_=#{instStatus,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		GROUP_ID_=#{groupId,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM w_patrol_wechat_userinfo 
+		WHERE
+		ID_=#{id}
+	</delete>
+
+	<select id="getUserByOpenId"   parameterType="java.lang.String" resultMap="PatrolWechatUserinfo">
+		SELECT * FROM w_patrol_wechat_userinfo
+		WHERE
+		F_OPENID=#{openId}
+	</select>
+
+	<select id="getUserShop" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT g.GROUP_ID_,g.NAME_ FROM `os_rel_inst` rl left join os_group g on rl.PARTY1_=g.GROUP_ID_ where rl.PARTY2_ = '${USERID}' and g.DIM_ID_ = 1 and g.RANK_LEVEL_ = 3
+	</select>
+
+	<select id="getUserRole" parameterType="java.util.Map" resultType="java.util.Map">
+		select * from `os_rel_inst` rl where rl.PARTY1_ = '2610000000310064' and rl.PARTY2_ = '${USERID}'
+	</select>
+
+	<select id="getAllShop" resultType="java.util.Map">
+		select g.GROUP_ID_,g.NAME_ from os_group g where g.DIM_ID_ = 1 and g.RANK_LEVEL_ = 3
+	</select>
+</mapper>

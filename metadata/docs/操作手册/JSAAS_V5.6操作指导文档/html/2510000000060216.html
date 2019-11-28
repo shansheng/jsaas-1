@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>自定义查询</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <h5 style="white-space: normal;">【业务场景】</h5> 
+ <p>在表单中,用户希望通过在文本中写入一个条件通过自定义查询获取相应的数据回填到表单中,例如输入一个用户ID,返回用户的基本信息,还可以使用下拉框控件,用户选择框等控件去实现。</p> 
+ <h5>【自定义查询描述】</h5> 
+ <p>自定义查询用于表单通过文本,下拉框,用户框等控件传入条件查询出相应数据使用的控件。</p> 
+ <h5>【使用方法】</h5> 
+ <p>从表格编辑器的工具栏中，选择【文本】控件,在点击选择【自定义查询】控件，如下图所示:</p> 
+ <p><img src="/doc/sys/core/file/previewFile.do?fileId=2400000000531117" title="image.png" alt="" style="white-space: normal;"> </p> 
+ <p><br></p> 
+ <p>在自定义查询控件中的弹出属性窗口中，选择自定义查询,选择需要返回的字段：</p> 
+ <p><img src="/doc/sys/core/file/previewFile.do?fileId=2400000000531118" title="image.png" alt=""> </p> 
+ <h5 style="white-space: normal;">【控件属性说明】</h5> 
+ <p style="white-space: normal;"><strong>1.名称:</strong>自定义查询描述</p> 
+ <p style="white-space: normal;"><strong>2.事件:</strong>值触发事件</p> 
+ <p style="white-space: normal;"><strong>3.自定义查询:</strong>选取自定义SQL</p> 
+ <p style="white-space: normal;"><strong>4.输入条件:</strong>绑定其他控件传入条件</p> 
+ <p style="white-space: normal;"><strong>5.返回值绑定:</strong>根据自定义SQL返回字段</p> 
+ <p style="white-space: normal;"><br></p>  
+</body></div>
+</body>
+</html>

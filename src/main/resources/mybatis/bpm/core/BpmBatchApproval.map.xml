@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.BpmBatchApproval">
+	<resultMap id="BpmBatchApproval" type="com.redxun.bpm.core.entity.BpmBatchApproval">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="solId" column="SOL_ID_" jdbcType="VARCHAR"/>
+		<result property="actDefId" column="ACT_DEF_ID_" jdbcType="VARCHAR"/>
+		<result property="nodeId" column="NODE_ID_" jdbcType="VARCHAR"/>
+		<result property="tableName" column="TABLE_NAME_" jdbcType="VARCHAR"/>
+		<result property="fieldJson" column="FIELD_JSON_" jdbcType="VARCHAR"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="solName" column="SOL_NAME_" jdbcType="VARCHAR"/>
+		<result property="taskName" column="TASK_NAME_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.BpmBatchApproval">
+		INSERT INTO bpm_batch_approval
+		(ID_,SOL_ID_,ACT_DEF_ID_,NODE_ID_,TABLE_NAME_,FIELD_JSON_,STATUS_,SOL_NAME_,TASK_NAME_,
+		TENANT_ID_,CREATE_TIME_,CREATE_BY_,UPDATE_TIME_,UPDATE_BY_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{solId,jdbcType=VARCHAR},#{actDefId,jdbcType=VARCHAR},  #{nodeId,jdbcType=VARCHAR}, 
+		#{tableName,jdbcType=VARCHAR}, #{fieldJson,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+		#{solName,jdbcType=VARCHAR}, #{taskName,jdbcType=VARCHAR},#{tenantId,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},#{createBy,jdbcType=VARCHAR},#{updateTime,jdbcType=TIMESTAMP},#{updateBy,jdbcType=VARCHAR})
+	</insert>
+	
+	
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmBatchApproval">
+		SELECT * from bpm_batch_approval WHERE  ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmBatchApproval">
+		SELECT * from bpm_batch_approval
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.BpmBatchApproval">
+		UPDATE bpm_batch_approval SET
+		SOL_ID_=#{solId,jdbcType=VARCHAR},
+		ACT_DEF_ID_=#{actDefId,jdbcType=VARCHAR},
+		NODE_ID_=#{nodeId,jdbcType=VARCHAR},
+		TABLE_NAME_=#{tableName,jdbcType=VARCHAR},
+		FIELD_JSON_=#{fieldJson,jdbcType=VARCHAR},
+		SOL_NAME_=#{solName,jdbcType=VARCHAR},
+		TASK_NAME_=#{taskName,jdbcType=VARCHAR},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM bpm_batch_approval 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getInvailAll" parameterType="java.lang.String" resultMap="BpmBatchApproval">
+		SELECT ID_,SOL_ID_,NODE_ID_,TABLE_NAME_,STATUS_,SOL_NAME_,TASK_NAME_ 
+		FROM bpm_batch_approval 
+		where STATUS_ = #{status}
+        <if test="tenantId!=null">
+            and TENANT_ID_ = #{tenantId}
+        </if>
+	</select>
+	
+	<select id="getCountBySolNodeId"   resultType="java.lang.Integer">
+		SELECT count(*) from bpm_batch_approval WHERE  SOL_ID_=#{solId,jdbcType=VARCHAR}
+		and NODE_ID_=#{nodeId,jdbcType=VARCHAR}
+		<if test="@Ognl@isNotEmpty(id)">
+			and ID_!=#{id}
+		</if>
+	</select>
+	
+	
+	<select id="getTaskByUser"   resultType="java.util.HashMap">
+			SELECT V.ID_,V.DESCRIPTION_ DESCRIPTION_ ,${fields}  FROM ( 
+				SELECT T.ID_,T.DESCRIPTION_,T.TASK_DEF_KEY_,T.INST_ID_ FROM	ACT_RU_TASK T 
+				WHERE T.ASSIGNEE_=#{userId}  and  PROC_DEF_ID_=#{actDefId} and T.TASK_DEF_KEY_ = #{nodeId} 
+				UNION 
+				SELECT T.ID_,T.DESCRIPTION_,T.TASK_DEF_KEY_,T.INST_ID_ FROM ACT_RU_TASK T ,	 ACT_RU_IDENTITYLINK I 
+				where T.ID_=I.TASK_ID_   and T.PROC_DEF_ID_=#{actDefId} and T.TASK_DEF_KEY_ = #{nodeId}  
+				and I.USER_ID_=#{userId} AND I.TYPE_='candidate' AND T.ASSIGNEE_ IS NULL 
+			) V , ${tableName} a where V.INST_ID_ = a.INST_ID_  
+	</select>
+</mapper>

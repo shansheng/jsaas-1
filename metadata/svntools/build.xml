@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<project name="svntools" default="获取变更代码" basedir=".">
+	<property file="bulid.properties"/>
+	<path id="refLib">
+			<fileset dir="lib" includes="*.jar" /> 
+	</path>
+		
+	<taskdef name="getChangeCodeTask" classname="com.redxun.svn.SvnClient" >
+	    <classpath refid="refLib" />
+	</taskdef>
+	<target   name="获取变更代码" description="获取变更代码">
+		<getChangeCodeTask url="${url}" author="${author}" dumpDir="${dumpDir}" 
+			password="${password}" user="${user}" projectDir="${projectDir}" beginTime="${beginTime}" endTime="${endTime}"/>
+	</target>
+</project>

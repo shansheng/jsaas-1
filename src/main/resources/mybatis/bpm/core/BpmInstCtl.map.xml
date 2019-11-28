@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.BpmInstCtl">
+	<resultMap id="BpmInstCtl" type="com.redxun.bpm.core.entity.BpmInstCtl">
+		<id property="ctlId" column="CTL_ID" jdbcType="VARCHAR"/>
+		<result property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="right" column="RIGHT_" jdbcType="VARCHAR"/>
+		<result property="allowAttend" column="ALLOW_ATTEND_" jdbcType="VARCHAR"/>
+		<result property="allowStartor" column="ALLOW_STARTOR_" jdbcType="VARCHAR"/>
+		<result property="groupIds" column="GROUP_IDS_" jdbcType="CLOB"/>
+		<result property="userIds" column="USER_IDS_" jdbcType="CLOB"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.BpmInstCtl">
+		INSERT INTO BPM_INST_CTL
+		(CTL_ID,INST_ID_,TYPE_,RIGHT_,ALLOW_ATTEND_,ALLOW_STARTOR_,GROUP_IDS_,USER_IDS_,UPDATE_TIME_,UPDATE_BY_,CREATE_TIME_,CREATE_BY_,TENANT_ID_)
+		VALUES 
+		(#{ctlId,jdbcType=VARCHAR}, #{instId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{right,jdbcType=VARCHAR}, #{allowAttend,jdbcType=VARCHAR}, #{allowStartor,jdbcType=VARCHAR}, #{groupIds,jdbcType=CLOB}, #{userIds,jdbcType=CLOB}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmInstCtl">
+		SELECT * FROM BPM_INST_CTL 
+		WHERE 
+		CTL_ID=#{ctlId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmInstCtl">
+		SELECT * FROM BPM_INST_CTL
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY CTL_ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.BpmInstCtl">
+		UPDATE BPM_INST_CTL SET
+		INST_ID_=#{instId,jdbcType=VARCHAR},
+		TYPE_=#{type,jdbcType=VARCHAR},
+		RIGHT_=#{right,jdbcType=VARCHAR},
+		ALLOW_ATTEND_=#{allowAttend,jdbcType=VARCHAR},
+		ALLOW_STARTOR_=#{allowStartor,jdbcType=VARCHAR},
+		GROUP_IDS_=#{groupIds,jdbcType=CLOB},
+		USER_IDS_=#{userIds,jdbcType=CLOB},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR}
+		WHERE
+		CTL_ID=#{ctlId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_INST_CTL 
+		WHERE
+		CTL_ID=#{ctlId}
+	</delete>
+
+
+	<select id="getBySolIdAndType"   parameterType="java.util.Map" resultMap="BpmInstCtl">
+		SELECT * FROM BPM_INST_CTL
+		WHERE
+		INST_ID_=#{instId} and TYPE_=#{type}
+	</select>
+
+	<select id="getBySolAndTypeAndRight"   parameterType="java.util.Map" resultMap="BpmInstCtl">
+		SELECT * FROM BPM_INST_CTL
+		WHERE
+		INST_ID_=#{instId,jdbcType=VARCHAR} and TYPE_=#{type,jdbcType=VARCHAR} and RIGHT_=#{right,jdbcType=VARCHAR}
+	</select>
+	
+	
+</mapper>

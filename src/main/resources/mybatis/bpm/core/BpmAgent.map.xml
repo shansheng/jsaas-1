@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.BpmAgent">
+	<resultMap id="BpmAgent" type="com.redxun.bpm.core.entity.BpmAgent">
+		<id property="agentId" column="AGENT_ID_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="toUserId" column="TO_USER_ID_" jdbcType="VARCHAR"/>
+		<result property="agentUserId" column="AGENT_USER_ID_" jdbcType="VARCHAR"/>
+		<result property="startTime" column="START_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="endTime" column="END_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="descp" column="DESCP_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.BpmAgent">
+		INSERT INTO BPM_AGENT
+		(AGENT_ID_,SUBJECT_,TO_USER_ID_,AGENT_USER_ID_,START_TIME_,END_TIME_,TYPE_,STATUS_,DESCP_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{agentId,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{toUserId,jdbcType=VARCHAR}, #{agentUserId,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{descp,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmAgent">
+		SELECT * FROM BPM_AGENT 
+		WHERE 
+		AGENT_ID_=#{agentId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmAgent">
+		SELECT * FROM BPM_AGENT
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY AGENT_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.BpmAgent">
+		UPDATE BPM_AGENT SET
+		SUBJECT_=#{subject,jdbcType=VARCHAR},
+		TO_USER_ID_=#{toUserId,jdbcType=VARCHAR},
+		AGENT_USER_ID_=#{agentUserId,jdbcType=VARCHAR},
+		START_TIME_=#{startTime,jdbcType=TIMESTAMP},
+		END_TIME_=#{endTime,jdbcType=TIMESTAMP},
+		TYPE_=#{type,jdbcType=VARCHAR},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		DESCP_=#{descp,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		AGENT_ID_=#{agentId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_AGENT 
+		WHERE
+		AGENT_ID_=#{agentId}
+	</delete>
+	
+	<select id="getValidAgents"     resultMap="BpmAgent">
+		SELECT * FROM BPM_AGENT 
+		WHERE  	AGENT_USER_ID_=#{agentUserId}
+		and START_TIME_ &lt; #{startTime}
+		and END_TIME_ &gt; #{endTime}
+		and STATUS_='ENABLED'
+		and TYPE_=#{type} order by END_TIME_ desc
+	</select>
+	
+	<select id="getValidAgentSol" resultMap="BpmAgent">
+		SELECT B.* FROM BPM_AGENT_SOL A,BPM_AGENT B 
+		WHERE   A.AGENT_ID_=B.AGENT_ID_ 
+		AND B.AGENT_USER_ID_=#{agentUserId}
+		AND B.STATUS_='ENABLED'
+		AND A.SOL_ID_=#{solId}
+		and B.START_TIME_ &lt; #{startTime}
+		and B.END_TIME_ &gt; #{endTime}
+		order by B.END_TIME_ desc
+	</select>
+	
+	
+	
+</mapper>

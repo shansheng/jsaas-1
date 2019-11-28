@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.org.entity.OsRelInst">
+	<resultMap id="OsRelInst" type="com.redxun.sys.org.entity.OsRelInst">
+		<id property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="relTypeId" column="REL_TYPE_ID_" jdbcType="VARCHAR"/>
+		<result property="relTypeKey" column="REL_TYPE_KEY_" jdbcType="VARCHAR"/>
+		<result property="relType" column="REL_TYPE_" jdbcType="VARCHAR"/>
+		<result property="party1" column="PARTY1_" jdbcType="VARCHAR"/>
+		<result property="party2" column="PARTY2_" jdbcType="VARCHAR"/>
+		<result property="dim1" column="DIM1_" jdbcType="VARCHAR"/>
+		<result property="dim2" column="DIM2_" jdbcType="VARCHAR"/>
+		<result property="isMain" column="IS_MAIN_" jdbcType="VARCHAR"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="alias" column="ALIAS_" jdbcType="VARCHAR"/>
+		
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="path" column="path_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.org.entity.OsRelInst">
+		INSERT INTO OS_REL_INST
+		(INST_ID_,REL_TYPE_ID_,REL_TYPE_KEY_,REL_TYPE_,PARTY1_,PARTY2_,DIM1_,DIM2_,IS_MAIN_,STATUS_,ALIAS_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_,TENANT_ID_,path_)
+		VALUES 
+		(#{instId,jdbcType=VARCHAR}, #{relTypeId,jdbcType=VARCHAR}, #{relTypeKey,jdbcType=VARCHAR}, #{relType,jdbcType=VARCHAR}, #{party1,jdbcType=VARCHAR}, #{party2,jdbcType=VARCHAR}, #{dim1,jdbcType=VARCHAR}, #{dim2,jdbcType=VARCHAR}, #{isMain,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{tenantId,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="OsRelInst">
+		SELECT * FROM OS_REL_INST 
+		WHERE 
+		INST_ID_=#{instId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="OsRelInst">
+		SELECT * FROM OS_REL_INST
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY INST_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.org.entity.OsRelInst">
+		UPDATE OS_REL_INST SET
+		REL_TYPE_ID_=#{relTypeId,jdbcType=VARCHAR},
+		REL_TYPE_KEY_=#{relTypeKey,jdbcType=VARCHAR},
+		REL_TYPE_=#{relType,jdbcType=VARCHAR},
+		PARTY1_=#{party1,jdbcType=VARCHAR},
+		PARTY2_=#{party2,jdbcType=VARCHAR},
+		DIM1_=#{dim1,jdbcType=VARCHAR},
+		DIM2_=#{dim2,jdbcType=VARCHAR},
+		IS_MAIN_=#{isMain,jdbcType=VARCHAR},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		ALIAS_=#{alias,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		path_=#{path,jdbcType=VARCHAR}
+		WHERE
+		INST_ID_=#{instId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM OS_REL_INST 
+		WHERE
+		INST_ID_=#{instId}
+	</delete>
+	
+	<select id="getByGroupIdRelTypeId"   parameterType="java.util.Map" resultMap="OsRelInst">
+		SELECT oi.*,ou.NAME_ GROUP_NAME_,ou.KEY_ GROUP_KEY_ FROM OS_GROUP ou RIGHT JOIN OS_REL_INST oi on ou.GROUP_ID_=oi.PARTY2_ WHERE oi.REL_TYPE_ID_=#{relTypeId} and oi.PARTY1_=#{groupId}
+		<if test="whereSql!=null">
+			${whereSql}
+		</if>
+		<if test="orderByClause!=null">
+			ORDER BY ${orderByClause}
+		</if>
+	</select>
+
+
+	<delete id="delByParty2AndTenantId" parameterType="java.lang.String">
+		DELETE FROM OS_REL_INST
+		WHERE
+		    PARTY2_=#{party2}
+		and
+		    TENANT_ID_ = #{tenantId}
+	</delete>
+	
+	<delete id="deleteByRelTypeId" parameterType="java.lang.String">
+		DELETE FROM OS_REL_INST 
+		WHERE
+		REL_TYPE_ID_=#{relTypeId}
+	</delete>
+	
+	<delete id="delByParty2" parameterType="java.lang.String">
+		DELETE FROM OS_REL_INST 
+		WHERE
+		PARTY2_=#{party2}
+	</delete>
+
+	<select id="getByPathRelTypeId"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_ID_ = #{relTypeId} and path_ like #{path}
+	</select>
+	
+	<select id="getByParty1RelTypeId"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_ID_ = #{relTypeId} and PARTY1_ = #{party1}
+	</select>
+	
+	<select id="getByParty2RelTypeId"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_ID_ = #{relTypeId} and PARTY2_ = #{party2}
+	</select>
+	
+	<delete id="delByGroupId" parameterType="java.util.Map">
+		delete from os_rel_inst
+		<where>
+			<if test="party1!=null">
+				and PARTY1_=#{party1}
+			</if>
+			<if test="party2!=null">
+				and PARTY2_=#{party2}
+			</if>
+			and REL_TYPE_ = #{relType}
+		</where>
+	</delete>
+	
+	<delete id="delByGroupIdUserIdRelTypeId" parameterType="java.util.Map">
+		delete from os_rel_inst
+		where PARTY1_=#{party1} and PARTY2_=#{party2} and REL_TYPE_ID_=#{relTypeId}
+	</delete>
+	
+	<select id="getByRootInstByTypeId"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_ID_ = #{relTypeId} and PARTY1_ = #{party1}
+	</select>
+	
+	<select id="getByRelTypeIdTenantId"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_ID_ = #{relTypeId} and TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="isPartyExistInRelation"   parameterType="java.util.Map" resultType="java.lang.Long">
+		select count(*) from os_rel_inst where (PARTY1_=#{party1} or PARTY2_=#{party2}) and REL_TYPE_ID_=#{relTypeId}
+	</select>
+	
+	<select id="getByParty1Party2RelTypeId"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where PARTY1_=#{party1} and PARTY2_=#{party2} and REL_TYPE_ID_=#{relTypeId}
+	</select>
+	
+	<select id="getByParty1Party2RelTypeIdTenantId"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where PARTY1_=#{party1} and PARTY2_=#{party2} and REL_TYPE_ID_=#{relTypeId} and DIM1_='1'
+			<if test="isMain!=null">
+				and IS_MAIN_=#{isMain}
+			</if>
+			<if test="tenantId!=null">
+				and TENANT_ID_=#{tenantId}
+			</if>
+	</select>
+	
+	<select id="getByParty2RelTypeIdTenantId"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where PARTY2_=#{party2} and REL_TYPE_ID_=#{relTypeId} and DIM1_='1'
+			<if test="isMain!=null">
+				and IS_MAIN_=#{isMain}
+			</if>
+			<if test="tenantId!=null">
+				and TENANT_ID_=#{tenantId}
+			</if>
+	</select>
+	
+	
+	<select id="getBelongGroupsByUserId"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_KEY_=#{relTypeKey} and PARTY2_=#{party2} and TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="getByRelTypeIdParty1"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_ID_ = #{relTypeId} and PARTY1_=#{party1} and TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="getByRelTypeIdParty2"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_ID_ = #{relTypeId} and PARTY2_=#{party2}
+		<if test="tenantId!=null">
+		 and TENANT_ID_=#{tenantId}
+		</if>
+	</select>
+	
+	<select id="getUserOtherRelInsts"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where PARTY2_=#{party2} and (REL_TYPE_ = #{relType1} or REL_TYPE_ = #{relType2}) and REL_TYPE_KEY_!=#{relTypeKey}
+	</select>
+	
+	<select id="getByParty1RelTypeIsMain"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where PARTY1_=#{party1} and REL_TYPE_KEY_=#{relTypeKey} and IS_MAIN_=#{isMain}
+	</select>
+	
+	<select id="getByTypePart1"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_KEY_=#{relTypeKey} and PARTY1_ in (${party1})
+	</select>
+	
+	<select id="getByTypePart1Part2"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_ = #{relType} and PARTY1_=#{party1} and PARTY2_=#{party2}
+	</select>
+	
+	<select id="getByRelTypeIdParty2Dim1"   parameterType="java.util.Map" resultMap="OsRelInst">
+		select * from os_rel_inst where REL_TYPE_ID_ = #{relTypeId} and PARTY2_=#{party2} and DIM1_=#{dim1}
+	</select>
+</mapper>

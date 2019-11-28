@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.BpmAgentSol">
+	<resultMap id="BpmAgentSol" type="com.redxun.bpm.core.entity.BpmAgentSol">
+		<id property="asId" column="AS_ID_" jdbcType="VARCHAR"/>
+		<result property="agentId" column="AGENT_ID_" jdbcType="VARCHAR"/>
+		<result property="solId" column="SOL_ID_" jdbcType="VARCHAR"/>
+		<result property="solName" column="SOL_NAME_" jdbcType="VARCHAR"/>
+		<result property="agentType" column="AGENT_TYPE_" jdbcType="VARCHAR"/>
+		<result property="condition" column="CONDITION_" jdbcType="CLOB"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.BpmAgentSol">
+		INSERT INTO BPM_AGENT_SOL
+		(AS_ID_,AGENT_ID_,SOL_ID_,SOL_NAME_,AGENT_TYPE_,CONDITION_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{asId,jdbcType=VARCHAR}, #{agentId,jdbcType=VARCHAR}, #{solId,jdbcType=VARCHAR}, #{solName,jdbcType=VARCHAR}, #{agentType,jdbcType=VARCHAR}, #{condition,jdbcType=CLOB}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmAgentSol">
+		SELECT * FROM BPM_AGENT_SOL 
+		WHERE 
+		AS_ID_=#{asId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmAgentSol">
+		SELECT * FROM BPM_AGENT_SOL
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY AS_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.BpmAgentSol">
+		UPDATE BPM_AGENT_SOL SET
+		AGENT_ID_=#{agentId,jdbcType=VARCHAR},
+		SOL_ID_=#{solId,jdbcType=VARCHAR},
+		SOL_NAME_=#{solName,jdbcType=VARCHAR},
+		AGENT_TYPE_=#{agentType,jdbcType=VARCHAR},
+		CONDITION_=#{condition,jdbcType=CLOB},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		AS_ID_=#{asId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_AGENT_SOL 
+		WHERE
+		AS_ID_=#{asId}
+	</delete>
+	
+	<select id="getByAgentId"   parameterType="java.lang.String" resultMap="BpmAgentSol">
+		SELECT * FROM BPM_AGENT_SOL 
+		WHERE 
+		AGENT_ID_=#{agentId}
+	</select>
+	
+	<select id="getValidAgentSol" resultMap="BpmAgentSol">
+		SELECT A.* FROM BPM_AGENT_SOL A,BPM_AGENT B 
+		WHERE   A.AGENT_ID_=B.AGENT_ID_ 
+		AND B.AGENT_USER_ID_=#{agentUserId}
+		AND B.STATUS_=#{status}
+		AND A.SOL_ID_=#{solId}
+		and B.START_TIME_ &lt; #{startTime}
+		and B.END_TIME_ &gt; #{endTime}
+		order by B.END_TIME_ desc
+	</select>
+	
+	<delete id="delByAgentId">
+		DELETE FROM BPM_AGENT_SOL 
+		WHERE
+		AGENT_ID_=#{agentId}
+	</delete>
+	
+	
+	
+	
+</mapper>

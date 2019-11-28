@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="codegen.xsd">
+<!--	<variables>-->
+<!--		<variable name="developer" value="ray" />-->
+<!--		<variable name="company" value="广州红迅软件" />-->
+<!--		<variable name="system" value="stock"/>-->
+<!--		<variable name="domain" value="com.redxun"/>-->
+<!--		<variable name="email" value="ray@redxun.com"/>-->
+<!--	</variables>-->
+
+	<variables>
+		<variable name="developer" value="zpf" />
+		<variable name="company" value="麦希影业" />
+		<variable name="system" value="wxrepair" />
+		<variable name="domain" value="com.airdrop" />
+		<variable name="email" value="1014485786@qq.com" />
+	</variables>
+
+	<templates>
+		<template id="dao" path="dao.ftl"/>
+		<template id="queryDao" path="queryDao.ftl"/>
+		<template id="manager"  path="manager.ftl"/>
+		<template id="mapping"  path="mapping.ftl"/>
+		<template id="entity"  path="entity.ftl"/>
+		<template id="controller" path="controller.ftl" />
+		<template id="formController" path="FormController.ftl" />
+		<template id="edit" path="edit.ftl" />
+		<template id="list" path="list.ftl" />
+		<template id="get" path="get.ftl" />
+		<template id="editform" path="editform.ftl" />
+		<template id="doc" path="dbdoc.xml"/>
+		<template id="db" path="db.ftl"/>
+		<template id="column" path="column.ftl"/>
+	</templates>
+
+	<files baseDir="D:\jsaas-ent" >
+		<file refTemplate="mapping" filename="{class}.map.xml" dir="src\main\resources\mybatis\{system}\{package}"  sub="true"  override="true"/>
+		<file refTemplate="queryDao" filename="{class}Dao.java" dir="src\main\java\com\airdrop\{system}\{package}\dao" sub="true"  override="true"/>
+		<file refTemplate="entity" filename="{class}.java" dir="src\main\java\com\airdrop\{system}\{package}\entity" sub="true"  override="true"/>
+		<file refTemplate="manager" filename="{class}Manager.java" dir="src\main\java\com\airdrop\{system}\{package}\manager" sub="false"  override="true"/>
+		<file refTemplate="controller" filename="{class}Controller.java" dir="src\main\java\com\airdrop\{system}\{package}\controller" sub="false"  override="true"/>
+		<file refTemplate="list" override="true" filename="{classVar}List.jsp" dir="src/main/webapp/WEB-INF/jsp/{system}/{package}"/>
+		<file refTemplate="edit" override="true" filename="{classVar}Edit.jsp" dir="src/main/webapp/WEB-INF/jsp/{system}/{package}"/>
+		<file refTemplate="get" override="true" filename="{classVar}Get.jsp" dir="src/main/webapp/WEB-INF/jsp/{system}/{package}"/>
+	</files>
+
+	<table tableName="w_patrol_questionnaire_type">
+		<variable name="class" value="PatrolQuestionnaireType" />
+		<variable name="package" value="core" />
+	</table>
+
+
+<!--	<files baseDir="D:\jsaas-ent" >-->
+<!--		<file refTemplate="mapping" filename="{class}.map.xml" dir="src\main\resources\mybatis\{system}\{package}"  sub="true"  override="true"/>-->
+<!--		<file refTemplate="queryDao" filename="{class}Dao.java" dir="src\main\java\com\redxun\{system}\{package}\dao" sub="true"  override="true"/>-->
+<!--		<file refTemplate="entity" filename="{class}.java" dir="src\main\java\com\redxun\{system}\{package}\entity" sub="true"  override="true"/>-->
+<!--		<file refTemplate="manager" filename="{class}Manager.java" dir="src\main\java\com\redxun\{system}\{package}\manager" sub="false"  override="true"/>-->
+<!--		<file refTemplate="controller" filename="{class}Controller.java" dir="src\main\java\com\redxun\{system}\{package}\controller" sub="false"  override="true"/>-->
+<!--		<file refTemplate="list" override="true" filename="{classVar}List.jsp" dir="src/main/webapp/WEB-INF/jsp/{system}/{package}"/>-->
+<!--		<file refTemplate="edit" override="true" filename="{classVar}Edit.jsp" dir="src/main/webapp/WEB-INF/jsp/{system}/{package}"/>-->
+<!--		<file refTemplate="get" override="true" filename="{classVar}Get.jsp" dir="src/main/webapp/WEB-INF/jsp/{system}/{package}"/>-->
+<!--	</files>-->
+
+
+<!--	<genAll>-->
+<!--		<file refTemplate="column" dir="d:" genMode="SingleFile" filename="column.json"></file>-->
+<!--	</genAll>-->
+
+</config>

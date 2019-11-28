@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.org.entity.OsInstUsers">
+	<resultMap id="OsInstUsers" type="com.redxun.sys.org.entity.OsInstUsers">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="userId" column="USER_ID_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="domain" column="DOMAIN_" jdbcType="VARCHAR"/>
+		<result property="approveUser" column="APPROVE_USER_" jdbcType="VARCHAR"/>
+		<result property="isAdmin" column="IS_ADMIN_" jdbcType="NUMERIC"/>
+		<result property="createType" column="CREATE_TYPE_" jdbcType="VARCHAR"/>
+		<result property="applyStatus" column="APPLY_STATUS_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.org.entity.OsInstUsers">
+		INSERT INTO os_inst_users
+		(ID_,USER_ID_,TENANT_ID_,STATUS_,DOMAIN_,APPROVE_USER_,IS_ADMIN_,CREATE_TYPE_,APPLY_STATUS_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+		 #{domain,jdbcType=VARCHAR}, #{approveUser,jdbcType=VARCHAR},#{isAdmin,jdbcType=NUMERIC}, #{createType,jdbcType=VARCHAR}, #{applyStatus,jdbcType=VARCHAR})
+	</insert>
+
+
+	<select id="getByDomain"   parameterType="java.lang.String" resultMap="OsInstUsers">
+
+		SELECT
+		      oiu.*,ou.fullname_ as usFullName
+		FROM
+		      os_inst_users  oiu,os_user ou
+		WHERE
+		            oiu.DOMAIN_=#{domain}
+				and oiu.STATUS_='OUT_JOB'
+				and oiu.APPLY_STATUS_='APPLY'
+				and oiu.CREATE_TYPE_='APPLY'
+				and oiu.USER_ID_=ou.USER_ID_
+	</select>
+
+	<select id="getByUserIdAndTenantId"   parameterType="java.util.Map" resultMap="OsInstUsers">
+		SELECT * FROM os_inst_users
+		WHERE
+		USER_ID_=#{userId}
+		and  TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="OsInstUsers">
+		SELECT * FROM os_inst_users 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="OsInstUsers">
+		SELECT * FROM os_inst_users
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.org.entity.OsInstUsers">
+		UPDATE os_inst_users SET
+		USER_ID_=#{userId,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		DOMAIN_=#{domain,jdbcType=VARCHAR},
+		APPROVE_USER_=#{approveUser,jdbcType=VARCHAR},
+		IS_ADMIN_=#{isAdmin,jdbcType=VARCHAR}
+		
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	
+	<update id="updateIsAdmin" parameterType="com.redxun.sys.org.entity.OsInstUsers">
+		UPDATE os_inst_users SET
+		IS_ADMIN_=#{isAdmin}
+		WHERE USER_ID_=#{userId} and TENANT_ID_=#{tenantId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM os_inst_users 
+		WHERE
+		ID_=#{id}
+	</delete>
+
+	<delete id="removeByUserId" parameterType="java.util.Map">
+			DELETE FROM os_inst_users WHERE USER_ID_ =#{userId} AND TENANT_ID_ = #{tenantId}
+	</delete>
+
+
+	<update id="agreeOrRefuse" parameterType="java.util.Map">
+		UPDATE os_inst_users ou
+          SET ou.STATUS_ = #{status},
+              ou.APPLY_STATUS_ = #{applyStatus},
+              ou.APPROVE_USER_=#{approveUser}
+         WHERE
+	       ID_ = #{id}
+	</update>
+	
+	<update id="updDomain" >
+		UPDATE os_inst_users SET
+		DOMAIN_=#{domain}
+		WHERE TENANT_ID_=#{tenantId}
+	</update>
+
+</mapper>

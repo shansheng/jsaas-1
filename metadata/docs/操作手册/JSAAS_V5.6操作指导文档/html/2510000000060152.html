@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>机构管理</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><strong>名词解释</strong></p> 
+ <p><br></p> 
+ <p>机构在平台中就是租户，注册租户后，用户登录该租户就可以拥有自己独立的应用，租户可以在平台中定制自己的应用，而不会相互干扰。</p> 
+ <p>租户的数据隔离模式，可以使用租户id进行标识，也可以使用定义独立的数据源，使用数据源级别的隔离。</p> 
+ <p><br></p> 
+ <p><strong>功能介绍</strong></p> 
+ <p>该模块主要完成租户的注册管理。</p> 
+ <ol class=" list-paddingleft-2" style="list-style-type: decimal;"> 
+  <li><p>租户注册</p></li> 
+  <li><p>后台进行机构注册</p></li> 
+  <li><p>租户的管理（包括更新，删除，禁止，启用等)</p></li> 
+ </ol> 
+ <p><br></p> 
+ <p><strong>操作步骤</strong></p> 
+ <ol class=" list-paddingleft-2" style="list-style-type: decimal;"> 
+  <li><p>租户注册</p></li> 
+ </ol> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;</p> 
+ <p><img src="../img/2400000000541153.png" title="image.png" alt="" width="328" height="397" style="width: 328px; height: 397px;"> </p> 
+ <p>2.填写必填的注册信息</p> 
+ <p><img src="../img/2400000000541159.png" title="image.png" alt="image.png" width="800" height="792" border="0" vspace="0" style="width: 800px; height: 792px;"> </p> 
+ <p>这里需要注意的是需要填写正式的邮箱，系统会往这个邮箱中发一封注册成功的邮件，点击邮件进行激活。</p> 
+ <p><br></p> 
+ <p><strong>名词解释</strong></p> 
+ <p><br></p> 
+ <p>机构在平台中就是租户，注册租户后，用户登录该租户就可以拥有自己独立的应用，租户可以在平台中定制自己的应用，而不会相互干扰。</p> 
+ <p>租户的数据隔离模式，可以使用租户id进行标识，也可以使用定义独立的数据源，使用数据源级别的隔离。</p> 
+ <p><br></p> 
+ <p><strong>功能介绍</strong></p> 
+ <p>该模块主要完成租户的注册管理。</p> 
+ <ol class=" list-paddingleft-2" style="list-style-type: decimal;"> 
+  <li><p>前台租户注册</p></li> 
+  <li><p>后台进行机构注册</p></li> 
+  <li><p>租户的管理（包括更新，删除，禁止，启用等)</p></li> 
+ </ol> 
+ <p><br></p> 
+ <p><strong>操作步骤</strong></p> 
+ <ol class=" list-paddingleft-2" style="list-style-type: decimal;"> 
+  <li><p>前台租户注册</p></li> 
+ </ol> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;</p> 
+ <p><img src="../img/2400000000541153.png" title="image.png" alt="" width="328" height="397" style="width: 328px; height: 397px;"> </p> 
+ <p>填写必填的注册信息</p> 
+ <p><img src="../img/2400000000541159.png" title="image.png" alt="image.png" width="800" height="792" border="0" vspace="0" style="width: 800px; height: 792px;"> </p> 
+ <p><br></p> 
+ <p>这里需要注意的是，需要填写正确的邮箱和电话等联系方式，系统会给指定的邮箱发一封包含随机密码激活邮件，点击邮件激活连接，</p> 
+ <p>租户就申请成功了。</p> 
+ <p><br></p> 
+ <p>2.租户管理</p> 
+ <p>我们可以对租户进行添加，查询，删除，禁用等操作。</p> 
+ <p><img src="../img/2400000000561003.png" title="image.png" alt="image.png" width="800" height="181" border="0" vspace="0" style="width: 800px; height: 181px;"> </p> 
+ <p>3.租户信息属性解释</p> 
+ <p>机构类型：参考机构类型管理<br></p> 
+ <p>数据源:&nbsp;如果不填，那么租户的数据就是使用租户ID在平台中进行数据隔离，如果填写那么租户的数据存放到指定的数据源代表的数据库中。&nbsp;</p> 
+ <p><br></p> 
+ <p>4.租户登录</p> 
+ <p>创建租户，通过审批后，租户管理员可以使用 admin@域名进行登录，登录后可以对组织，用户进行管理。</p> 
+ <p><br></p> 
+ <p><br></p> 
+ <p><br></p> 
+ <p><br></p> 
+ <p><strong><br></strong></p>  
+</body></div>
+</body>
+</html>

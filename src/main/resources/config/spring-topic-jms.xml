@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+  	
+
+    
+    
+    <!-- topic 连接工厂 -->
+    <bean id="providerConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="failover:(tcp://${jms.ip}:${jms.port})" />
+        <property name="useAsyncSend" value="true" />
+        <property name="clientID" value="providerClienctConnect" />
+    </bean>
+    
+    <bean id="topicDestination"  class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="userOrgTopic"/>
+    </bean>
+
+    <!-- 消息发送者客户端 -->
+    <bean id="topicJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="providerConnectionFactory" />
+        <property name="defaultDestination" ref="topicDestination" />
+        <!-- 开启订阅模式 -->
+        <property name="pubSubDomain" value="true"/>
+        <property name="receiveTimeout" value="10000" />
+        <!-- deliveryMode, priority, timeToLive 的开关要生效，必须配置为true，默认false-->
+        <property name="explicitQosEnabled" value="true"/>
+        <!-- 发送模式
+             DeliveryMode.NON_PERSISTENT=1:非持久 ;
+             DeliveryMode.PERSISTENT=2:持久
+        -->
+        <property name="deliveryMode" value="1"/>
+    </bean>
+    
+    <bean id="topicProducer" class="com.redxun.core.jms.TopicProducer"></bean>
+    
+    
+    <!-- 配置JMS连接工厂 -->
+    <bean id="consumerConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="failover:(tcp://${jms.ip}:${jms.port})" />
+        <property name="useAsyncSend" value="true" />
+        <property name="clientID" value="consumerClienctConnect" />
+    </bean>
+
+    <!-- 定义消息Destination -->
+    <bean id="topic1Destination"  class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="mytopic"/>
+    </bean>
+    
+    <bean id="topic2Destination"  class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="mytopic"/>
+    </bean>
+
+    <!-- 配置消息消费监听者 -->
+    <bean id="consumerMessageListener" class="com.redxun.jms.ConsumerMessageListener" />
+
+    <!-- 消息订阅客户端1 -->
+    <bean id="consumerListenerClient1" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="consumerConnectionFactory" />
+        <!-- 开启订阅模式 -->
+        <property name="pubSubDomain" value="true"/>
+        <property name="destination" ref="topic1Destination" />
+        <property name="subscriptionDurable" value="true"/>
+        <!---这里是设置接收客户端的ID，在持久化时，但这个客户端不在线时，消息就存在数据库里，直到被这个ID的客户端消费掉-->
+        <property name="clientId" value="consumerClient1"/>
+        <property name="messageListener" ref="consumerMessageListener" />
+        <!-- 消息应答方式
+             Session.AUTO_ACKNOWLEDGE  消息自动签收
+             Session.CLIENT_ACKNOWLEDGE  客户端调用acknowledge方法手动签收
+             Session.DUPS_OK_ACKNOWLEDGE 不必必须签收，消息可能会重复发送
+        -->
+        <property name="sessionAcknowledgeMode" value="1"/>
+    </bean>
+
+    <!-- 消息订阅客户端2 -->
+    <bean id="consumerListenerClient2" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="consumerConnectionFactory" />
+        <!-- 开启订阅模式 -->
+        <property name="pubSubDomain" value="true"/>
+        <property name="destination" ref="topic2Destination" />
+        <property name="subscriptionDurable" value="true"/>
+        <!---这里是设置接收客户端的ID，在持久化时，但这个客户端不在线时，消息就存在数据库里，直到被这个ID的客户端消费掉-->
+        <property name="clientId" value="consumerClient2"/>
+        <property name="messageListener" ref="consumerMessageListener" />
+        <!-- 消息应答方式
+             Session.AUTO_ACKNOWLEDGE  消息自动签收
+             Session.CLIENT_ACKNOWLEDGE  客户端调用acknowledge方法手动签收
+             Session.DUPS_OK_ACKNOWLEDGE 不必必须签收，消息可能会重复发送
+        -->
+        <property name="sessionAcknowledgeMode" value="1"/>
+    </bean>
+    
+    
+
+</beans>

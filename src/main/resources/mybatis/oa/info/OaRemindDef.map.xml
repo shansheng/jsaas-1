@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.info.entity.OaRemindDef">
+	<resultMap id="OaRemindDef" type="com.redxun.oa.info.entity.OaRemindDef">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="url" column="URL_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="setting" column="SETTING_" jdbcType="CLOB"/>
+		<result property="dsalias" column="DSALIAS_" jdbcType="VARCHAR"/>
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR"/>
+		<result property="sn" column="SN_" jdbcType="VARCHAR"/>
+		<result property="enabled" column="ENABLED_" jdbcType="NUMERIC"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	<resultMap id="OaRemindDefExt" type="com.redxun.oa.info.entity.OaRemindDef">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="subject" column="SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="url" column="URL_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="dsalias" column="DSALIAS_" jdbcType="VARCHAR"/>
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR"/>
+		<result property="sn" column="SN_" jdbcType="VARCHAR"/>
+		<result property="enabled" column="ENABLED_" jdbcType="NUMERIC"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.oa.info.entity.OaRemindDef">
+		INSERT INTO OA_REMIND_DEF
+		(ID_,SUBJECT_,URL_,TYPE_,SETTING_,DSALIAS_,DESCRIPTION_,SN_,ENABLED_,CREATE_BY_,CREATE_TIME_,TENANT_ID_,UPDATE_TIME_,UPDATE_BY_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{setting,jdbcType=CLOB}, #{dsalias,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{sn,jdbcType=VARCHAR}, #{enabled,jdbcType=NUMERIC}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{tenantId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="OaRemindDef">
+		SELECT * FROM OA_REMIND_DEF 
+		WHERE 
+		ID_=#{id}
+	</select>
+	<sql id="oaRemindFields">
+		a.ID_,a.SUBJECT_,a.URL_,a.TYPE_,a.DSALIAS_,a.SETTING_,a.DESCRIPTION_,a.SN_,a.ENABLED_,a.CREATE_BY_,a.CREATE_TIME_,a.TENANT_ID_,a.UPDATE_TIME_,a.UPDATE_BY_
+	</sql>
+	<select id="query" parameterType="java.util.Map" resultMap="OaRemindDef">
+		SELECT * FROM OA_REMIND_DEF
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.info.entity.OaRemindDef">
+		UPDATE OA_REMIND_DEF SET
+		SUBJECT_=#{subject,jdbcType=VARCHAR},
+		URL_=#{url,jdbcType=VARCHAR},
+		TYPE_=#{type,jdbcType=VARCHAR},
+		SETTING_=#{setting,jdbcType=CLOB},
+		DSALIAS_=#{dsalias,jdbcType=VARCHAR},
+		DESCRIPTION_=#{description,jdbcType=VARCHAR},
+		SN_=#{sn,jdbcType=VARCHAR},
+		ENABLED_=#{enabled,jdbcType=NUMERIC},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM OA_REMIND_DEF 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	
+	
+	<select id="getReminds" parameterType="java.util.Map" resultMap="OaRemindDef">
+		select * from OA_REMIND_DEF where ID_ IN ( 
+			SELECT OBJECT_ID_ from    SYS_OBJECT_AUTH s
+					where s.TENANT_ID_=#{teantId} 
+					and s.TYPE_='everyone'
+				union all
+			<foreach collection="profileMap" index="key"  item="ent" separator="union all">
+					SELECT  OBJECT_ID_  FROM SYS_OBJECT_AUTH s
+					where s.TENANT_ID_=#{teantId}  
+					and s.TYPE_=#{key}
+					and s.AUTH_ID_ in  
+					<foreach collection="ent"  item="id" separator="," open="(" close=")">#{id}</foreach>
+			</foreach> )  
+		ORDER BY SN_ ASC
+	</select>
+
+</mapper>

@@ -1,0 +1,432 @@
+body, ol, ul, dl, li, dt, dd, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend, input, textarea,select{
+    margin: 0;
+    padding: 0;
+}
+h1, h2, h3, h4, h5 {
+    font-weight: normal;
+}
+a {
+    text-decoration: none;
+}
+em, i , b {
+    font-style: normal;
+}
+ol, ul, dl, li, dt, dd {
+    list-style: none
+}
+.displayFlex{
+	display: -webkit-box;
+	display: -moz-box;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex; 
+}
+.bodyContainer{
+	height: 100%;
+}
+.headers{
+	height: 60px;
+	text-align: center;
+	box-sizing: border-box;
+	background: #40454e;
+}
+.headers ul{
+	font-size: 0;
+	display: inline-block;
+}
+.headers ul li{
+	font-size: 16px;
+	display: inline-block;
+	height: 56px;
+	line-height: 56px;
+	color: #fff;
+	border-bottom: 4px solid transparent;
+	margin: 0 20px;
+	padding: 0 4px;
+	cursor: pointer;
+}
+.headers ul li.active,
+.headers ul li:hover{
+	border-bottom: 4px solid #30b1c9;
+}
+.headers ul li i{
+	margin-right: 4px;
+}
+
+#editUl{
+	height: calc( 100% - 60px );
+	height: -moz-calc( 100% - 60px );
+	height: -webkit-calc( 100% - 60px );
+}
+.contentBox{
+	position: absolute;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex; 
+	
+	background: #2c2c32;
+	box-sizing: border-box;
+	z-index: 10;
+	top: 60px;
+	bottom: 0;
+	width: 100%;
+}
+.editCenter{
+	-webkit-flex:1;
+	-ms-flex:1;	
+	flex: 1;
+	-webkit-box-flex:1;
+	-moz-box-flex:1;
+}
+.editLeft,
+.editRight{
+	width: 360px;
+	margin-top: 1px;
+	background: #40454e;
+	box-sizing: border-box;
+	padding: 0 20px;
+}
+
+
+
+/*左边编辑栏*/
+.editLeft .first_li{
+	border-bottom: 1px solid #5c6168;
+	color: #c0c1c3;
+	font-size: 16px;
+}
+.editLeft .first_li i{
+	display: none;
+}
+.first_li p{
+	position: relative;
+	padding-right: 30px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	box-sizing: border-box;
+}
+.first_li>p{
+	padding-left: 6px;
+	height: 50px;
+	line-height: 50px;
+	cursor: pointer;
+}
+.first_li>p.active,
+.first_li>p:hover{
+	color: #30b1c9;
+}
+.two_ul li p{
+	padding-left: 20px;
+	height: 40px;
+	line-height: 40px;
+	border: 1px solid transparent;
+	border-radius: 2px;
+}
+.two_ul li p:hover,
+.two_ul li p.active{
+	background: #3b6673;
+	border: 1px solid #30b1c9;
+	color: #fff;
+	
+}
+.three_ul li p{
+	padding-left: 40px;
+}
+.first_li ul{
+	display: none;
+}
+
+.first_li p i{
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin-right: 10px;
+}
+
+
+/*中间编辑栏*/
+.centerHeader{
+	text-align: right;
+	height: 30px;
+	line-height: 30px;
+	padding-right: 20px;
+}
+.btnPre{
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+	background: #30b1c9;
+	color: #fff;
+	line-height: 34px;
+	text-align: center;
+	font-size: 14px;
+	border-radius: 3px;
+}
+.mobiles{
+	height: calc( 100% - 60px );
+	height: -moz-calc( 100% - 60px );
+	height: -webkit-calc( 100% - 60px );
+	overflow-y: auto;
+	box-sizing: border-box;
+}
+.mobileBox{
+	position: relative;
+	margin: auto;
+	height:calc( 100% - 4px );
+	height:-moz-calc( 100% - 4px );
+	height:-webkit-calc( 100% - 4px );
+	min-height: 550px;
+	text-align: center;
+	box-sizing: border-box;
+}
+.mobileBox span{
+	position: relative;
+	height: 100%;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+.mobileBox .mobileCenter{
+	position: relative;
+  	height: 100%;
+    box-sizing: border-box;  
+    background: url(../img/iphone6p.svg) no-repeat center;
+	background-size: contain;
+	text-align: center;
+}
+.modileContents{
+	position: absolute;
+	left: 7%;
+	right: 7%;
+	top: 8%;
+	bottom: 11%;
+	overflow-y: auto;
+	background: #fff;
+	box-shadow: 0px 0px 5px #c6c6c6 inset;
+}
+
+.editRight .anewBtn{
+	
+} 
+.editRight ul{
+	margin-top: 20px;
+}
+.editRight li{
+	font-size: 0;
+	padding: 4px 0;
+	line-height: 30px;
+}
+.editRight li span{
+	font-size: 14px;
+	display: inline-block;
+}
+.editRight li .firstName{
+	width: 88px;
+	text-align: right;
+	vertical-align: middle;
+	color: #97999c;
+}
+.editRight li .inportBox{
+	width: calc( 100% - 100px );
+	vertical-align: middle;
+}
+.editRight li .inportBox input{
+	width: 100%;
+	height: 30px;
+	box-sizing: border-box;
+	
+}
+.editRight .anewBtn{
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	border: 1px solid #30b1c9;
+	border-radius:3px ;
+	color: #fff;
+	cursor: pointer;
+}
+.editRight .anewBtn:hover{
+	background: #3b6673;
+}
+/*预览页*/
+.boxs{
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.searchBox{
+
+	text-align: right;
+	height: 40px;
+	line-height: 70px;
+	
+	padding-right: 20px;
+}
+.searchBtn{
+	position: relative;
+	display: inline-block;
+	width: 230px;
+	height: 34px;
+	background: #40454e;
+	border-radius: 3px;
+	line-height: 34px;
+}
+.searchBtn p{
+	height: 100%;
+	text-align: left;
+	padding-left: 10px;
+	padding-right: 30px;
+	
+}
+.searchBtn  em{
+	position: absolute;
+	top: 0px;
+	right: 7px;
+}
+.searchBtn ul{
+	position: absolute;
+	text-align: left;
+	top: 34px;
+	width: 100%;
+	padding: 6px 0;
+}
+.searchBtn ul li{
+	padding-left: 10px;
+	box-sizing: border-box;
+	background: #40454e;
+	border-radius: 3px;
+}
+.searchBtn ul li.active{
+	border:1px solid #30b1c9;
+	background: #3b6673;
+	color: #fff;
+}
+.mobileBox2{
+	text-align: center;
+	height: calc( 100% - 40px);
+	height: -moz-calc( 100% - 40px);
+	height: -webkit-calc( 100% - 40px);
+}
+.mobileBox2 span{
+	position: relative;
+	height: calc( 100% - 4px);
+	height: -moz-calc( 100% - 4px);
+	height: -webkit-calc( 100% - 4px);
+	display: inline-block;
+	padding-bottom: 10px;
+	box-sizing: border-box;
+	z-index: 99;
+}
+.mobileBox2 span img{
+	position: relative;
+	z-index: 100;
+	max-width: 100%;
+	max-height: 100%;
+}
+.mobileBox2 .mobileCenter{
+	position: absolute;
+    top: 6.5%;
+    left: 6.1%;
+    right: 6.1%;
+    bottom: 4.01%;
+    background: #fff;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 90;
+}
+.mobileTopIcon{
+	position: absolute;
+	background: #5475ab;
+	top: 2.8%;
+	left: 6.1%;
+    right: 6.1%;
+
+	height: 30px;
+}
+/*代码页面*/
+.paddings{
+	
+}
+.paddings>div{
+	width: 100%;
+	
+}
+#sss{
+	display: -webkit-box;
+	display: -moz-box;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex; 
+	height: calc( 100% - 60px );
+	height: -moz-calc( 100% - 60px );
+	height: -webkit-calc( 100% - 60px );
+}
+.codeTempHtml,
+.codeTempJs{
+	width:calc( 50% - 5px );
+	width:-webkit-calc( 50% - 5px );
+	width:-webkit-calc( 50% - 5px );
+	background: #40454e;
+}
+.codeTempHtml{
+	margin-right: 5px;
+}
+.codeTempJs{
+	margin-left: 5px;
+}
+.codeHeaderTop{
+	width: 70px;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+	background: rgba(255,255,255,0.2);
+}
+.codeBox{
+	height: 95%;
+	height: calc( 100% - 32px );
+	height: -moz-calc( 100% - 32px );
+	height: -webkit-calc( 100% - 32px );
+	box-sizing: border-box;
+	overflow: auto;
+}
+
+
+
+/*插件样式修改*/
+.CodeMirror{
+	height: 100%;
+}
+.CodeMirror-gutter-elt,
+.CodeMirror pre{
+	font-size: 14px;
+}
+/**/
+@media only screen and (max-width:1366px) {
+	.centerHeader {
+	    line-height: 50px;
+	}
+	.btnPre{
+		width: 60px;
+		height: 30px;
+		line-height: 30px;
+	}
+	.editLeft, .editRight{
+		width: 300px;
+	}
+	.mobiles {
+	    height: calc( 100% - 50px );
+	    height: -webkit-calc( 100% - 50px );
+	    height: -webkit-calc( 100% - 50px );
+	}
+	.mobileTime{
+		font-size: 12px;
+	}
+}

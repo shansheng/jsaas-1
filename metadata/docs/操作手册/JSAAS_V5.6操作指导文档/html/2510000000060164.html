@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>工作日历</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><strong>功能说明</strong></p> 
+ <p>在请假时，比如从周五到下周一请假，那么我们通过在表单中计算这段请假的时长，如果直接根据时间计算，那么是4天，这样是不合理的因为没有排除调假期。工作日历就是做工作时间计算的。</p> 
+ <p>在平台中工作日历的作用有两个：</p> 
+ <p>1.根据一个用户获取在一个开始和结束时间点，实际的工作时间。</p> 
+ <p>2.根据一个用户，一个时间点，工作日和工作日历计算出完成时间点。</p> 
+ <p><strong>操作步骤</strong></p> 
+ <p><strong>1.添加日历</strong></p> 
+ <p>系统配置-&gt;系统管理-&gt;工作日历<br></p> 
+ <p><img src="../img/2400000000591149.png" title="image.png" alt="image.png" width="600" height="304" border="0" vspace="0" style="width: 600px; height: 304px;"> </p> 
+ <p><br></p> 
+ <p><strong>2.日历设定</strong></p> 
+ <p>选择一个日历，点击设定。<br></p> 
+ <p><img src="../img/2400000000591154.png" title="image.png" alt=""> </p> 
+ <p><br></p> 
+ <p><img src="../img/2400000000591155.png" title="image.png" alt=""> </p> 
+ <p>如果没有班次定义的话，可以先定义班次，班次的意思指的是工作的时间段，比如一般公司是9-12点，下午2-6点。</p> 
+ <p>班次可以跨天，比如从23到凌晨5点。</p> 
+ <p><br></p> 
+ <p>定义完班次后，我们就可以对日历进行设定了</p> 
+ <p>1.选择一个班次，点击日历进行拖动，拖动结束后，会弹出一个设置框。</p> 
+ <p><img src="../img/2400000000591157.png" title="image.png" alt="image.png" width="800" height="348" border="0" vspace="0" style="width: 800px; height: 348px;"> </p> 
+ <p>1.点击设置那么选择的日历都会按照选中的班次设置。</p> 
+ <p>2.点击删除会将选择日历内设置的班次删除。</p> 
+ <p><br></p> 
+ <p>我们可以一次性设置未来一年的日历数据。</p> 
+ <p><strong>2.日历分配</strong></p> 
+ <p>定义完日历后，我们可以将日历进行分配，比如将日历设置到部门或者个人。</p> 
+ <p>我们在使用日历做计算的时候会按照下面的顺序查找日历：</p> 
+ <p>1.先根据用户查询看有没有分配日历。</p> 
+ <p>2.如果没有则查询他部门有没有日历。</p> 
+ <p>3.如果还没有就查询租户默认的日历，一般的公司需要设置一个日历。</p> 
+ <p><img src="../img/2400000000591159.png" title="image.png" alt=""> </p> 
+ <p>点击分配按钮。<br></p> 
+ <p><img src="../img/2400000000591160.png" title="image.png" alt=""> </p> 
+ <p><strong>3.测试日历</strong></p> 
+ <p>设置完日历，分配日历后，我们可以测试日历是否配置正确。</p> 
+ <p><img src="../img/2400000000591161.png" title="image.png" alt=""> </p> 
+ <p>点击测试。</p> 
+ <p><img src="../img/2400000000591162.png" title="image.png" alt=""> </p> 
+ <p>测试时，可以选择计算方式</p> 
+ <p>1.时长，取开始和结束时间，根据日历设定，计算出工作时间。</p> 
+ <p>2.时间点，取开始时间，时长，日历设定，计算出时间点。</p> 
+ <p><br></p>  
+</body></div>
+</body>
+</html>

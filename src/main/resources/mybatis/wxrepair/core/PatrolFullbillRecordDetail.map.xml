@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.airdrop.wxrepair.core.entity.PatrolFullbillRecordDetail">
+	<resultMap id="PatrolFullbillRecordDetail" type="com.airdrop.wxrepair.core.entity.PatrolFullbillRecordDetail">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="question" column="F_QUESTION" jdbcType="VARCHAR"/>
+		<result property="questionName" column="F_QUESTION_name" jdbcType="VARCHAR"/>
+		<result property="questionType" column="F_QUESTION_TYPE" jdbcType="VARCHAR"/>
+		<result property="questionTypeName" column="F_QUESTION_TYPE_name" jdbcType="VARCHAR"/>
+		<result property="answer" column="F_ANSWER" jdbcType="VARCHAR"/>
+		<result property="refId" column="REF_ID_" jdbcType="VARCHAR"/>
+		<result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR"/>
+		<result property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="instStatus" column="INST_STATUS_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.airdrop.wxrepair.core.entity.PatrolFullbillRecordDetail">
+		INSERT INTO w_patrol_fullbill_record_detail
+		(F_QUESTION,F_QUESTION_name,F_QUESTION_TYPE,F_QUESTION_TYPE_name,F_ANSWER,ID_,REF_ID_,PARENT_ID_,INST_ID_,INST_STATUS_,TENANT_ID_,CREATE_TIME_,CREATE_BY_,UPDATE_BY_,UPDATE_TIME_,GROUP_ID_)
+		VALUES 
+		(#{question,jdbcType=VARCHAR}, #{questionName,jdbcType=VARCHAR}, #{questionType,jdbcType=VARCHAR}, #{questionTypeName,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{refId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{instId,jdbcType=VARCHAR}, #{instStatus,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{groupId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="PatrolFullbillRecordDetail">
+		SELECT * FROM w_patrol_fullbill_record_detail 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="PatrolFullbillRecordDetail">
+		SELECT * FROM w_patrol_fullbill_record_detail
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.airdrop.wxrepair.core.entity.PatrolFullbillRecordDetail">
+		UPDATE w_patrol_fullbill_record_detail SET
+		F_QUESTION=#{question,jdbcType=VARCHAR},
+		F_QUESTION_name=#{questionName,jdbcType=VARCHAR},
+		F_QUESTION_TYPE=#{questionType,jdbcType=VARCHAR},
+		F_QUESTION_TYPE_name=#{questionTypeName,jdbcType=VARCHAR},
+		F_ANSWER=#{answer,jdbcType=VARCHAR},
+		REF_ID_=#{refId,jdbcType=VARCHAR},
+		PARENT_ID_=#{parentId,jdbcType=VARCHAR},
+		INST_ID_=#{instId,jdbcType=VARCHAR},
+		INST_STATUS_=#{instStatus,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		GROUP_ID_=#{groupId,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM w_patrol_fullbill_record_detail 
+		WHERE
+		ID_=#{id}
+	</delete>
+
+	<select id="getRecordDetail"   parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			q.ID_ as QID,
+			q.F_QUESTION_TYPE,
+			q.F_QUESTION_TYPE_name,
+			q.F_QUESTION_CONTENT,
+			q.F_SEQUENCE,
+			rd.ID_ as RDID,
+			rd.F_ANSWER
+		FROM
+			w_patrol_question_info q
+			LEFT JOIN w_patrol_fullbill_record r ON q.REF_ID_ = r.F_QUESTIONNAIRE
+			LEFT JOIN w_patrol_fullbill_record_detail rd ON q.ID_ = rd.F_QUESTION
+			AND rd.REF_ID_ = r.ID_
+		WHERE
+			r.ID_ = '${recordId}'
+		ORDER BY
+			q.F_SEQUENCE
+	</select>
+
+	<update id="updateRecordDetail" parameterType="java.util.Map">
+		UPDATE w_patrol_fullbill_record_detail SET
+		F_ANSWER='${answer}'
+		WHERE
+		ID_='${rdId}'
+	</update>
+</mapper>

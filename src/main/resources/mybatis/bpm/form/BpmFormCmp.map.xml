@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.form.entity.BpmFormCmp">
+	<resultMap id="BpmFormCmp" type="com.redxun.bpm.form.entity.BpmFormCmp">
+		<id property="cmpId" column="CMP_ID_" jdbcType="VARCHAR"/>
+		<result property="viewId" column="VIEW_ID_" jdbcType="VARCHAR"/>
+		<result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="key" column="KEY_" jdbcType="VARCHAR"/>
+		<result property="attFmName" column="ATT_FM_NAME_" jdbcType="VARCHAR"/>
+		<result property="attFmAlias" column="ATT_FM_ALIAS_" jdbcType="VARCHAR"/>
+		<result property="bodefId" column="BODEF_ID_" jdbcType="VARCHAR"/>
+		<result property="refType" column="REF_TYPE_" jdbcType="VARCHAR"/>
+		<result property="boListName" column="BO_LIST_NAME_" jdbcType="VARCHAR"/>
+		<result property="boListAlias" column="BO_LIST_ALIAS_" jdbcType="VARCHAR"/>
+		<result property="path" column="PATH_" jdbcType="VARCHAR"/>
+		<result property="mapType" column="MAP_TYPE_" jdbcType="VARCHAR"/>
+		<result property="dbsource" column="DBSOURCE_" jdbcType="VARCHAR"/>
+		<result property="sql" column="SQL_" jdbcType="CLOB"/>
+		<result property="url" column="URL_" jdbcType="VARCHAR"/>
+		<result property="bindConfs" column="BIND_CONFS_" jdbcType="CLOB"/>
+		<result property="sn" column="SN_" jdbcType="NUMERIC"/>
+		<result property="showType" column="SHOW_TYPE_" jdbcType="VARCHAR"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.form.entity.BpmFormCmp">
+		INSERT INTO BPM_FORM_CMP
+		(CMP_ID_,VIEW_ID_,PARENT_ID_,NAME_,KEY_,ATT_FM_NAME_,ATT_FM_ALIAS_,BODEF_ID_,REF_TYPE_,BO_LIST_NAME_,BO_LIST_ALIAS_,PATH_,MAP_TYPE_,DBSOURCE_,SQL_,URL_,BIND_CONFS_,SN_,SHOW_TYPE_,STATUS_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{viewId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{attFmName,jdbcType=VARCHAR}, #{attFmAlias,jdbcType=VARCHAR}, #{bodefId,jdbcType=VARCHAR}, #{refType,jdbcType=VARCHAR}, #{boListName,jdbcType=VARCHAR}, #{boListAlias,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{mapType,jdbcType=VARCHAR}, #{dbsource,jdbcType=VARCHAR}, #{sql,jdbcType=CLOB}, #{url,jdbcType=VARCHAR}, #{bindConfs,jdbcType=CLOB}, #{sn,jdbcType=NUMERIC}, #{showType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmFormCmp">
+		SELECT * FROM BPM_FORM_CMP 
+		WHERE 
+		CMP_ID_=#{cmpId}
+	</select>
+	
+	<select id="getByViewId"  parameterType="java.util.Map" resultMap="BpmFormCmp">
+		SELECT * FROM BPM_FORM_CMP 
+		WHERE 
+		VIEW_ID_=#{viewId}
+	</select>
+	
+	<select id="getByPath"  parameterType="java.util.Map" resultMap="BpmFormCmp">
+		SELECT * FROM BPM_FORM_CMP 
+		WHERE 
+		PATH_ like #{path}
+	</select>
+	
+	<delete id="delByPath" parameterType="java.lang.String">
+		DELETE FROM BPM_FORM_CMP 
+		WHERE
+		CMP_ID_ like #{path}
+	</delete>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmFormCmp">
+		SELECT * FROM BPM_FORM_CMP
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY CMP_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.form.entity.BpmFormCmp">
+		UPDATE BPM_FORM_CMP SET
+		VIEW_ID_=#{viewId,jdbcType=VARCHAR},
+		PARENT_ID_=#{parentId,jdbcType=VARCHAR},
+		NAME_=#{name,jdbcType=VARCHAR},
+		KEY_=#{key,jdbcType=VARCHAR},
+		ATT_FM_NAME_=#{attFmName,jdbcType=VARCHAR},
+		ATT_FM_ALIAS_=#{attFmAlias,jdbcType=VARCHAR},
+		BODEF_ID_=#{bodefId,jdbcType=VARCHAR},
+		REF_TYPE_=#{refType,jdbcType=VARCHAR},
+		BO_LIST_NAME_=#{boListName,jdbcType=VARCHAR},
+		BO_LIST_ALIAS_=#{boListAlias,jdbcType=VARCHAR},
+		PATH_=#{path,jdbcType=VARCHAR},
+		MAP_TYPE_=#{mapType,jdbcType=VARCHAR},
+		DBSOURCE_=#{dbsource,jdbcType=VARCHAR},
+		SQL_=#{sql,jdbcType=CLOB},
+		URL_=#{url,jdbcType=VARCHAR},
+		BIND_CONFS_=#{bindConfs,jdbcType=CLOB},
+		SN_=#{sn,jdbcType=NUMERIC},
+		SHOW_TYPE_=#{showType,jdbcType=VARCHAR},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		CMP_ID_=#{cmpId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_FORM_CMP 
+		WHERE
+		CMP_ID_=#{cmpId}
+	</delete>
+	
+	
+</mapper>

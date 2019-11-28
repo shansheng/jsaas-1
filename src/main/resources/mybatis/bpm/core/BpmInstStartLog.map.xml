@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.BpmInstStartLog">
+	<resultMap id="BpmInstStartLog" type="com.redxun.bpm.core.entity.BpmInstStartLog">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="fromSolId" column="FROM_SOL_ID_" jdbcType="VARCHAR"/>
+		<result property="fromNodeId" column="FROM_NODE_ID_" jdbcType="VARCHAR"/>
+		<result property="fromInstId" column="FROM_INST_ID_" jdbcType="VARCHAR"/>
+		<result property="fromNodeName" column="FROM_NODE_NAME_" jdbcType="VARCHAR"/>
+		<result property="fromSubject" column="FROM_SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="fromActDefId" column="FROM_ACT_DEF_ID_" jdbcType="VARCHAR"/>
+		<result property="toSolId" column="TO_SOL_ID_" jdbcType="VARCHAR"/>
+		<result property="toSubject" column="TO_SUBJECT_" jdbcType="VARCHAR"/>
+		<result property="toActDefId" column="TO_ACT_DEF_ID_" jdbcType="VARCHAR"/>
+		<result property="toInstId" column="TO_INST_ID_" jdbcType="VARCHAR"/>
+		<result property="toActInstId" column="TO_ACT_INST_ID_" jdbcType="VARCHAR"/>
+		<result property="createUser" column="CREATE_USER_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.BpmInstStartLog">
+		INSERT INTO BPM_INST_STARTLOG
+		(ID_,FROM_SOL_ID_,FROM_NODE_ID_,FROM_INST_ID_,FROM_NODE_NAME_,FROM_SUBJECT_,FROM_ACT_DEF_ID_,TO_SOL_ID_,TO_SUBJECT_,TO_ACT_DEF_ID_,TO_INST_ID_,TO_ACT_INST_ID_,CREATE_USER_,CREATE_BY_,CREATE_TIME_,UPDATE_TIME_,UPDATE_BY_,TENANT_ID_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{fromSolId,jdbcType=VARCHAR}, #{fromNodeId,jdbcType=VARCHAR}, #{fromInstId,jdbcType=VARCHAR}, 
+		#{fromNodeName,jdbcType=VARCHAR}, #{fromSubject,jdbcType=VARCHAR}, #{fromActDefId,jdbcType=VARCHAR}, #{toSolId,jdbcType=VARCHAR},
+		 #{toSubject,jdbcType=VARCHAR}, #{toActDefId,jdbcType=VARCHAR},#{toInstId,jdbcType=VARCHAR},#{toActInstId,jdbcType=VARCHAR},#{createUser,jdbcType=VARCHAR},  #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmInstStartLog">
+		SELECT * FROM BPM_INST_STARTLOG 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmInstStartLog">
+		SELECT * FROM BPM_INST_STARTLOG
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.BpmInstStartLog">
+		UPDATE BPM_INST_STARTLOG SET
+		FROM_SOL_ID_=#{fromSolId,jdbcType=VARCHAR},
+		FROM_NODE_ID_=#{fromNodeId,jdbcType=VARCHAR},
+		FROM_INST_ID_=#{fromInstId,jdbcType=VARCHAR},
+		FROM_NODE_NAME_=#{fromNodeName,jdbcType=VARCHAR},
+		FROM_SUBJECT_=#{fromSubject,jdbcType=VARCHAR},
+		FROM_ACT_DEF_ID_=#{fromActDefId,jdbcType=VARCHAR},
+		TO_SOL_ID_=#{toSolId,jdbcType=VARCHAR},
+		TO_SUBJECT_=#{toSubject,jdbcType=VARCHAR},
+		TO_ACT_DEF_ID_=#{toActDefId,jdbcType=VARCHAR},
+		TO_ACT_INST_ID_=#{toActInstId,jdbcType=VARCHAR},
+		CREATE_USER_=#{createUser,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<select id="getByInstSubSolId"   parameterType="java.lang.String" resultMap="BpmInstStartLog">
+		SELECT * FROM BPM_INST_STARTLOG 
+		WHERE 
+		FROM_INST_ID_=#{fromInstId} and TO_SOL_ID_=#{toSolId,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_INST_STARTLOG 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	
+</mapper>

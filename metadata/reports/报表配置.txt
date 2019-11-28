@@ -1,0 +1,2 @@
+﻿在菜单管理中配置报表地址：/sys/core/sysReport/preview.do?key=appFeeKey
+其中key后面的值根据报表不同而改变

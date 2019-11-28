@@ -1,0 +1,35 @@
+/*用于编写列表页面的样式定义*/
+.blue{
+	color:#44cef6;
+}
+.green{
+	color:#2edfa3;
+}
+.red{
+	color:#ff4c00;
+}
+
+.orange{
+	color:#ffa400;
+}
+.purple{
+	color:#8d4bbb;
+}
+.grey{
+	color:grey;
+}
+.mini-sm-active body{
+	overflow:auto !important
+}
+.mini-toolbar th a{
+	border: 1px solid #ececec;
+	border-radius:4px;
+}
+.mini-toolbar th{
+ background-color:#fff; 
+	text-align: left;
+}
+/* 分页工具条刷新按钮 */
+.mini-pager .mini-button-icon{
+	background-image: none !important; 
+}

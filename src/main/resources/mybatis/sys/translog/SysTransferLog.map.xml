@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.translog.entity.SysTransferLog">
+	<resultMap id="SysTransferLog" type="com.redxun.sys.translog.entity.SysTransferLog">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="opDescp" column="OP_DESCP_" jdbcType="VARCHAR"/>
+		<result property="authorPerson" column="AUTHOR_PERSON_" jdbcType="VARCHAR"/>
+		<result property="targetPerson" column="TARGET_PERSON_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.translog.entity.SysTransferLog">
+		INSERT INTO sys_transfer_log
+		(ID_,OP_DESCP_,AUTHOR_PERSON_,TARGET_PERSON_,CREATE_BY_,CREATE_TIME_,TENANT_ID_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{opDescp,jdbcType=VARCHAR}, #{authorPerson,jdbcType=VARCHAR}, #{targetPerson,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{tenantId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="SysTransferLog">
+		SELECT * FROM sys_transfer_log
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysTransferLog">
+		SELECT * FROM sys_transfer_log
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.translog.entity.SysTransferLog">
+		UPDATE sys_transfer_log SET
+		OP_DESCP_=#{opDescp,jdbcType=VARCHAR},
+		AUTHOR_PERSON_=#{authorPerson,jdbcType=VARCHAR},
+		TARGET_PERSON_=#{targetPerson,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM sys_transfer_log 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<delete id="delByTenantId" parameterType="java.lang.String">
+		delete from sys_transfer_log where TENANT_ID_ = #{tenantId}
+	</delete>
+	
+</mapper>

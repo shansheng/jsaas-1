@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>消息提示管理</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><strong style="white-space: normal;">功能说明</strong></p> 
+ <p>消息提示管理是管理首页消息提示的管理，可以自定义消息提示的内容，也可设置权限给可以看见提示消息的用户，以及增删查改。</p> 
+ <p><br></p> 
+ <p>首先：需要你去系统菜单栏配置消息提示菜单，URL:/oa/info/oaRemindDef/list.do</p> 
+ <p><img src="../img/2400000000671031.png" title="image.png" alt=""> </p> 
+ <p><br></p> 
+ <p>首先你要添加提示消息；</p> 
+ <p><br></p> 
+ <p><img src="../img/2400000000671038.png" title="image.png" alt=""> </p> 
+ <p>这里的跳转URL是你在消息提示框点击该消息查看明细的路径；数据源可以在系统设置里面配置其他数据库的数据源，这里可以选择</p> 
+ <p>访问其他数据的数据；</p> 
+ <p><strong>查询类型</strong>：</p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;1.调用方法：方法写在portalScript.java里并且返回int，这里填写方法名：例：portalScript.getCountMySolList()</p> 
+ <p><span style="white-space:pre"></span>/**</p> 
+ <p><span style="white-space:pre"></span> * 我的流程方案栏目数据</p> 
+ <p><span style="white-space:pre"></span> * @return</p> 
+ <p><span style="white-space:pre"></span> */</p> 
+ <p><span style="white-space:pre"></span>@MethodDefine(title = "我的流程方案", params = {@ParamDefine(title = "栏目主键", varName = "colId")})</p> 
+ <p><span style="white-space:pre"></span>public int getCountMySolList() {</p> 
+ <p><span style="white-space:pre"></span>String userId = ContextUtil.getCurrentUserId();</p> 
+ <p><span style="white-space:pre"></span>String tenantId = ContextUtil.getCurrentTenantId();</p> 
+ <p><span style="white-space:pre"></span>QueryFilter queryFilter= new QueryFilter();</p> 
+ <p><span style="white-space:pre"></span>ArrayList&lt;BpmSolution&gt; bpmSolutions=(ArrayList&lt;BpmSolution&gt;)bpmSolutionManager.getSolutions(queryFilter,false);</p> 
+ <p><span style="white-space:pre"></span>return bpmSolutions.size();</p> 
+ <p><span style="white-space:pre"></span>}</p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;2.Groovy Sql:查询的返回值是数量；事例如上图；</p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;3.sql::查询的返回值是数量；事例：select count(*) from act_ru_task&nbsp; where assignee_=[USERID] ;</p> 
+ <p><strong>消息描述</strong>：事例：你有[count]条公告未处理&nbsp; &nbsp; 这里[count]会被替换为查询的数字；</p> 
+ <p><br></p> 
+ <p><br></p> 
+ <p>还可以设置权限给指定的人显示提示的消息。</p> 
+ <p><img src="../img/2400000000671045.png" title="image.png" alt=""> </p> 
+ <p><br></p> 
+ <p><br></p> 
+ <p><br></p> 
+ <p><br></p> 
+ <p><strong>注意：如果sql或者方法错误、数据源不存在，便不会显示你配置的该条消息。</strong></p> 
+ <p><strong><img src="../img/2400000000671067.png" title="image.png" alt=""> </strong></p> 
+ <p>配置好了，就可以查看了</p> 
+ <p><br></p> 
+ <p><br></p> 
+ <p><br></p>  
+</body></div>
+</body>
+</html>

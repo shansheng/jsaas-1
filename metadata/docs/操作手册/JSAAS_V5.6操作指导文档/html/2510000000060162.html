@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>定时器管理</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><strong>功能说明</strong></p> 
+ <p>平台中使用quartz进行定时管理。quartz&nbsp;是一个开源的定时任务框架。定时任务在系统中的作用是，需要一些定时的操作，比如每天生成备份数据，每周末处理生成订单报表等等。</p> 
+ <p>在平台中定时器操作主要是：</p> 
+ <p>1.定义定时器任务。</p> 
+ <p>2.对定时任务定义执行计划。</p> 
+ <p><br></p> 
+ <p><strong>操作步骤</strong></p> 
+ <p>1.启动定时器。</p> 
+ <p>系统配置-&gt;系统管理-&gt;定时器管理</p> 
+ <p>平台中可以设置定时器是否自动开启，定时服务。<br></p> 
+ <p>配置文件：spring-base.xml</p> 
+ <p><img src="../img/2400000000591090.png" title="image.png" alt=""> </p> 
+ <p>我们看到当前定时器不是自动启动的，如果需要自动启动，我们需要修改该参数 autoStartup=“true”。</p> 
+ <p>启动定时器：</p> 
+ <p><img src="../img/2400000000591092.png" title="image.png" alt="image.png" width="300" height="97" border="0" vspace="0" style="width: 300px; height: 97px;"> </p> 
+ <p>启动完成后：<br></p> 
+ <p><img src="../img/2400000000591093.png" title="image.png" alt=""> </p> 
+ <p>可以点击停止定时器。</p> 
+ <p><strong><br></strong></p> 
+ <p><strong>2.添加定时器任务</strong></p> 
+ <p>定时器任务就是需要定时执行处理的事务，这种任务我们需要编写执行任务代码。在平台中有一个简单的任务实例，可以指导我们如何编写一个定时任务。</p> 
+ <p>这个类的代码如下：</p> 
+ <p><img src="../img/2400000000591094.png" title="image.png" alt="image.png" width="400" height="294" border="0" vspace="0" style="width: 400px; height: 294px;"> </p> 
+ <p>需要继承BaseJob,这里只有一个executeJob的方法，在这个方法中我们编写定时任务执行的任务，我们也可以通过代码context.getJobDetail().getJobDataMap(),获取界面上配置的参数。</p> 
+ <p><br></p> 
+ <p>在界面上点击添加定时任务。</p> 
+ <p><img src="../img/2400000000591095.png" title="image.png" alt="image.png" width="600" height="297" border="0" vspace="0" style="width: 600px; height: 297px;"> </p> 
+ <p>任务名称：输入名称</p> 
+ <p>类名:&nbsp;这里需要输入集成了BaseJob的类的全路径。</p> 
+ <p>描述:填写描述信息</p> 
+ <p>参数：需要根据JOB类的实际情况进行输入，在JOB类中需要通过上面说的方法进行获取。</p> 
+ <p><br></p> 
+ <p><strong>3.添加定时计划</strong></p> 
+ <p>添加完任务后，我们需要安排这个任务什么时候开始执行。</p> 
+ <p><img src="../img/2400000000591098.png" title="image.png" alt=""> </p> 
+ <p>选择定时的任务，点击定时计划图标。</p> 
+ <p><img src="../img/2400000000591099.png" title="image.png" alt="image.png" width="600" height="359" border="0" vspace="0" style="width: 600px; height: 359px;"> </p> 
+ <p>这里我们设置了每分钟执行。</p> 
+ <p><img src="../img/2400000000591101.png" title="image.png" alt=""> </p> 
+ <p>这里我们一分钟执行一次，可以看到这里进入了断点。</p> 
+ <p>这里可以按照我们的具体需求进行设置。</p> 
+ <p>如果满足不了定时需求，我们可以编写cron表达式进行定时，具体参考这个<a href="https://www.cnblogs.com/sunjie9606/archive/2012/03/15/2397626.html" target="_self">地址</a>。</p> 
+ <p><strong>4.立即执行</strong></p> 
+ <p>有时候定时任务需要直接执行，不通过计划配置。</p> 
+ <p><img src="../img/2400000000591106.png" title="image.png" alt=""> </p> 
+ <p><strong>5.查看定时日志</strong></p> 
+ <p>可以看到任务每分钟执行一次。</p> 
+ <p><img src="../img/2400000000591104.png" title="image.png" alt=""> </p> 
+ <p><br></p>  
+</body></div>
+</body>
+</html>

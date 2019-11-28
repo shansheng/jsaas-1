@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>审批人员</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body>
+ <h1>功能描述</h1>
+ <p>　节点的审批人员是批谁参与了节点的审批，当配置了该任务的执行人员时，流程流转至该节点时，这些人员的待办中即会出现对应的审批任务。</p>
+ <p><br></p>
+ <h1>操作步骤</h1>
+ <p><img src="../img/2510000000340220.png" title="image.png" alt=""></p>
+ <h4 style="white-space: normal;">【用户类型规则说明】</h4>
+ <p><strong>第一步：</strong>点击流程任务节点</p>
+ <p><strong>第二步：</strong>【添加】按钮</p>
+ <p><strong>第三步：</strong>在新增加的行中的用户类型列中，选择对应的下拉类型，然后根据不同的下拉类型，点击用户值列的单元格。</p>
+ <p><strong>第四步：</strong>点击保存按钮。</p>
+ <p><br></p>
+ <p>用户类型有多种，每种适应不同的场景下的人员查找算法。</p>
+ <ul style="list-style-type: square;" class=" list-paddingleft-2">
+  <li><p>发起人：代表该节点由发起人来处理</p></li>
+  <li><p>用户：代表用户由选择具体的用户来执行，如：</p></li>
+ </ul>
+ <p><img src="../img/2510000000340221.png" title="image.png" alt=""></p>
+ <p><img src="../img/2510000000340223.png" title="image.png" alt=""></p>
+ <p><br></p>
+ <p><br></p>
+ <p>以上则代表由以上的选择两个人来执行</p>
+ <ul style="list-style-type: square;" class=" list-paddingleft-2">
+  <li><p>用户组：</p></li>
+ </ul>
+ <p>表示该节点的审批人员由用户组下的用户来执行，一般来说包括：部门、角色、职务等下的用户。如：</p>
+ <p><img src="../img/2510000000340224.png" title="image.png" alt=""></p>
+ <p><img src="../img/2510000000340225.png" title="image.png" alt=""></p>
+ <p>以上用户可由用户组下的用户来执行，同时跟第一行的用户【郭靖、蔡明】等用户集合一起。</p>
+ <p><br></p>
+ <ul style="list-style-type: square;" class=" list-paddingleft-2">
+  <li><p>用户来自其他节点的审批人：</p></li>
+ </ul>
+ <p>表示该节点的审批人与另一节点的审批人相同，一般 另一节点是指运行流程的已审过的节点的审批人<br></p>
+ <p><img src="../img/2510000000340226.png" title="image.png" alt=""></p>
+ <p><img src="../img/2510000000340227.png" title="image.png" alt=""></p>
+ <p><br></p>
+ <ul class=" list-paddingleft-2" style="list-style-type: square;">
+  <li><p>用户或组来自流程变量：</p></li>
+ </ul>
+ <p style="white-space: normal;">表示该节点的审批人通过【变量配置】中获取表单中的用户或者用户组作为审批人员。如：</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340228.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340229.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><br></p>
+ <ul class=" list-paddingleft-2" style="list-style-type: square;">
+  <li><p>用户或组来自表单数据：</p></li>
+ </ul>
+ <p style="white-space: normal;">表示该节点审批人员使用表单中的用户类型,通过计算后的值作为流程任务的审批人员。如：</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340231.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340232.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><br></p>
+ <ul class=" list-paddingleft-2" style="list-style-type: square;">
+  <li><p>用户或组来自脚本运算：</p></li>
+ </ul>
+ <p style="white-space: normal;">表示该节点的审批人员通过编写java脚本计算出的值作为流程任务的审批人员。如：</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340234.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340235.png" title="image.png" alt=""> </p>
+ <p style="white-space: normal;"><img src="../img/2510000000340236.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340237.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><br></p>
+ <p style="white-space: normal;"><br></p>
+ <ul class=" list-paddingleft-2" style="list-style-type: square;">
+  <li><p>人员脚本运算：</p></li>
+ </ul>
+ <p style="white-space: normal;">表示该节点审批人员通过配置人员脚本,该功能模块中定义java脚本,计算脚本中的值作为流程任务的审批人员。如：</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340238.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340239.png" title="image.png" alt=""> </p>
+ <p style="white-space: normal;"><br></p>
+ <ul class=" list-paddingleft-2" style="list-style-type: square;">
+  <li><p>用户来自用户所在部门下的用户组用户：</p></li>
+ </ul>
+ <p style="white-space: normal;">表示该节点审批人员由所选用户变量(不支持选择用户组变量)所在部门下的用户组中的用户作为审批人员。如：</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340248.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340249.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340250.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><br></p>
+ <ul class=" list-paddingleft-2" style="list-style-type: square;">
+  <li><p>用户来自用户关系运算：</p></li>
+ </ul>
+ <p style="white-space: normal;">表示该节点审批人员通过所选用户变量(不支持选择用户组变量)在选择关系类型,通过关系类型查找用户的关系方作为流程任务的审批人员。如：</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340251.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340252.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><br></p>
+ <ul class=" list-paddingleft-2" style="list-style-type: square;">
+  <li><p>用户组来自用户与组关系运算：</p></li>
+ </ul>
+ <p style="white-space: normal;">表示该节点审批人员根据所选用户变量(不支持选取用户组变量)在选取用户关系类型,查找用户所在用户组中用户与组关系,计算出的关系值作为审批人员。如：</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340246.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340247.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><br></p>
+ <ul class=" list-paddingleft-2" style="list-style-type: square;">
+  <li><p>用户来自用户与组关系运算：</p></li>
+ </ul>
+ <p style="white-space: normal;">表示该节点审批人员是由所选用户组,通过组查找关系计算出的值作为审批人员,用户一般可来自变量,指定用户组,发起人所在的部门,。如：</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340244.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340245.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><br></p>
+ <ul class=" list-paddingleft-2" style="list-style-type: square;">
+  <li><p>用户来自发起人所在部门往上查找符合等级的部门的关系用户：</p></li>
+ </ul>
+ <p style="white-space: normal;">表示该节点审批人员由发起人所在部门往上找符合所选取等级的用户组,计算符合等级用户组中的值作为审批人员。如：</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340240.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340241.png" title="image.png" alt=""> </p>
+ <p style="white-space: normal;"><br></p>
+ <ul class=" list-paddingleft-2" style="list-style-type: square;">
+  <li><p>查找某部门下的拥有某种用户组（角色、职务）的人：</p></li>
+ </ul>
+ <p style="white-space: normal;">表示该节点审批人员。如：</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340242.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;"><img src="../img/2510000000340243.png" title="image.png" alt=""></p>
+</body></div>
+</body>
+</html>

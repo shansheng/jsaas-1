@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.BpmTestCase">
+	<resultMap id="BpmTestCase" type="com.redxun.bpm.core.entity.BpmTestCase">
+		<id property="testId" column="TEST_ID_" jdbcType="VARCHAR"/>
+		<result property="testSolId" column="TEST_SOL_ID_" jdbcType="VARCHAR"/>
+		<result property="actDefId" column="ACT_DEF_ID_" jdbcType="VARCHAR"/>
+		<result property="caseName" column="CASE_NAME_" jdbcType="VARCHAR"/>
+		<result property="paramsConf" column="PARAMS_CONF_" jdbcType="CLOB"/>
+		<result property="startUserId" column="START_USER_ID_" jdbcType="VARCHAR"/>
+		<result property="userConf" column="USER_CONF_" jdbcType="CLOB"/>
+		<result property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="lastStatus" column="LAST_STATUS_" jdbcType="VARCHAR"/>
+		<result property="exeExceptions" column="EXE_EXCEPTIONS_" jdbcType="CLOB"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.BpmTestCase">
+		INSERT INTO BPM_TEST_CASE
+		(TEST_ID_,TEST_SOL_ID_,ACT_DEF_ID_,CASE_NAME_,PARAMS_CONF_,START_USER_ID_,USER_CONF_,INST_ID_,LAST_STATUS_,EXE_EXCEPTIONS_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{testId,jdbcType=VARCHAR}, #{testSolId,jdbcType=VARCHAR}, #{actDefId,jdbcType=VARCHAR}, #{caseName,jdbcType=VARCHAR}, #{paramsConf,jdbcType=CLOB}, #{startUserId,jdbcType=VARCHAR}, #{userConf,jdbcType=CLOB}, #{instId,jdbcType=VARCHAR}, #{lastStatus,jdbcType=VARCHAR}, #{exeExceptions,jdbcType=CLOB}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmTestCase">
+		SELECT * FROM BPM_TEST_CASE 
+		WHERE 
+		TEST_ID_=#{testId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmTestCase">
+		SELECT * FROM BPM_TEST_CASE
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY TEST_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.BpmTestCase">
+		UPDATE BPM_TEST_CASE SET
+		TEST_SOL_ID_=#{testSolId,jdbcType=VARCHAR},
+		ACT_DEF_ID_=#{actDefId,jdbcType=VARCHAR},
+		CASE_NAME_=#{caseName,jdbcType=VARCHAR},
+		PARAMS_CONF_=#{paramsConf,jdbcType=CLOB},
+		START_USER_ID_=#{startUserId,jdbcType=VARCHAR},
+		USER_CONF_=#{userConf,jdbcType=CLOB},
+		INST_ID_=#{instId,jdbcType=VARCHAR},
+		LAST_STATUS_=#{lastStatus,jdbcType=VARCHAR},
+		EXE_EXCEPTIONS_=#{exeExceptions,jdbcType=CLOB},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		TEST_ID_=#{testId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_TEST_CASE 
+		WHERE
+		TEST_ID_=#{testId}
+	</delete>
+
+	<delete id="delByInstId" parameterType="java.lang.String">
+		DELETE FROM BPM_TEST_CASE
+		WHERE
+		INST_ID_=#{instId}
+	</delete>
+	
+	
+</mapper>

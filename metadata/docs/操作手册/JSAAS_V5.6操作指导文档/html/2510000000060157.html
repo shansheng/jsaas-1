@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>数据源管理</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><strong>功能说明</strong></p> 
+ <p>数据源功能是用来访问第三方数据库的。</p> 
+ <p>平台中数据源功能用途：</p> 
+ <ol class=" list-paddingleft-2" style="list-style-type: decimal;"> 
+  <li><p>直接通过API获取数据源，访问第三方数据库，平台中自定SQL,自定义列表都有使用此功能。</p></li> 
+  <li><p>切换数据源访问第三方数据库，平台中应用租户使用数据源，租户可以独立使用数据源对应的库。</p></li> 
+  <li><p>这个功能一般由根租户管理员操作。<br></p></li> 
+ </ol> 
+ <p><strong>操作步骤</strong></p> 
+ <ol class=" list-paddingleft-2" style="list-style-type: decimal;"> 
+  <li><p>添加数据源<br></p><p><img src="../img/2400000000581010.png" title="image.png" alt=""> </p><p>参数说明：</p><p>数据源名称：这个随便定义，易于理解的名称。</p><p>别名：系统中唯一的名称，一般使用英文</p><p>是否使用：这个决定数据源是否生效</p><p>启动时初始化：在web服务器启动时，同时根据数据源配置初始化数据源。</p><p>数据库类型：这个指的是支持连接的数据库类型，目前支持3个常用的数据库，mysql，oracle，sqlserver</p><p>下面的参数是需要参考 DRUID的参数来配置的，需要根据实际情况来配置。</p><p>initalSize:初始化大小</p><p>minIdle:空闲连接数</p><p>maxActive:连接池最大的连接数</p><p>具体参考：</p><p><a href="https://github.com/alibaba/druid/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98" target="_self">DRUID介绍文档</a></p></li> 
+  <li><p>测试连接</p><p>配置好参数后，用户可以点击测试，测试连接是否正确。</p></li> 
+  <li><p>监控</p><p>监控功能是&nbsp;druid&nbsp;数据库连接池提供的功能，可以查看当前的数据源和SQL执行的情况监控。</p><p><img src="../img/2400000000581015.png" title="image.png" alt=""> </p><p>具体可以参考druid&nbsp;的文档介绍</p></li> 
+  <li><p>开发者需要了解的API接口</p><p>默认数据源指的是，系统启动时使用的数据源。</p><p><br></p> 
+   <table data-sort="sortDisabled" style="border-collapse:collapse;"> 
+    <tbody> 
+     <tr class="firstRow"> 
+      <td style="width: 200px; border-width: 1px; border-style: solid;" valign="top">类名</td> 
+      <td style="width: 600px; border-width: 1px; border-style: solid;" valign="top">方法名称</td> 
+     </tr> 
+     <tr> 
+      <td valign="top" rowspan="3" colspan="1" style="border-width: 1px; border-style: solid;">com.redxun.core.database.datasource.DataSourceUtil<br></td> 
+      <td valign="top" style="border-width: 1px; border-style: solid;">DataSource getDataSourceByAlias(String alias);<br>根据数据源别名获取数据库连接文档<br></td> 
+     </tr> 
+     <tr> 
+      <td valign="top" style="border-width: 1px; border-style: solid;">JdbcTemplate getJdbcTempByDsAlias(String alias)<br>根据数据源别名获取JdbcTemplate&nbsp;实例，操作数据库</td> 
+     </tr> 
+     <tr> 
+      <td valign="top" style="border-width: 1px; border-style: solid;">Connection getConnectionByAlias(String alias)<br>根据数据源别名获取数据连接，这个连接使用完成后<br>需要调用&nbsp;该类的close(conn)方法关闭</td> 
+     </tr> 
+     <tr> 
+      <td valign="top" style="border-width: 1px; border-style: solid;">com.redxun.core.database.datasource.DbContextHolder<br></td> 
+      <td valign="top" style="border-width: 1px; border-style: solid;">void setDataSource(String alias)<br>调用此方法切换到指定的数据源，这个切换不能在事务层使用。<br>一般在控制器层切换或者过滤器中进行切换。<br><br></td> 
+     </tr> 
+     <tr> 
+      <td valign="top" colspan="1" rowspan="1" style="border-width: 1px; border-style: solid;"><br></td> 
+      <td valign="top" colspan="1" rowspan="1" style="border-width: 1px; border-style: solid;">void setDefaultDataSource()<br>切换成默认数据源。</td> 
+     </tr> 
+    </tbody> 
+   </table></li> 
+ </ol>  
+</body></div>
+</body>
+</html>

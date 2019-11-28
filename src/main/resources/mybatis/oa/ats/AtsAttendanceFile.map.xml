@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.ats.entity.AtsAttendanceFile">
+	<resultMap id="AtsAttendanceFile" type="com.redxun.oa.ats.entity.AtsAttendanceFile">
+		<id property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="cardNumber" column="CARD_NUMBER" jdbcType="VARCHAR"/>
+		<result property="isAttendance" column="IS_ATTENDANCE" jdbcType="NUMERIC"/>
+		<result property="attencePolicy" column="ATTENCE_POLICY" jdbcType="VARCHAR"/>
+		<result property="holidayPolicy" column="HOLIDAY_POLICY" jdbcType="VARCHAR"/>
+		<result property="defaultShift" column="DEFAULT_SHIFT" jdbcType="VARCHAR"/>
+		<result property="status" column="STATUS" jdbcType="NUMERIC"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		
+		<result property="attencePolicyName" column="attencePolicyName" jdbcType="VARCHAR"/>
+		<result property="holidayPolicyName" column="holidayPolicyName" jdbcType="VARCHAR"/>
+		<result property="defaultShiftName" column="defaultShiftName" jdbcType="VARCHAR"/>
+		<result property="orgName" column="orgName" jdbcType="VARCHAR"/>
+		<result property="userName" column="userName" jdbcType="VARCHAR"/>
+		<result property="userNo" column="userNo" jdbcType="VARCHAR"/>
+		<result property="loginName" column="loginName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.oa.ats.entity.AtsAttendanceFile">
+		INSERT INTO ats_attendance_file
+		(ID,USER_ID,CARD_NUMBER,IS_ATTENDANCE,ATTENCE_POLICY,HOLIDAY_POLICY,DEFAULT_SHIFT,STATUS,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{cardNumber,jdbcType=VARCHAR}, #{isAttendance,jdbcType=NUMERIC}, #{attencePolicy,jdbcType=VARCHAR}, #{holidayPolicy,jdbcType=VARCHAR}, #{defaultShift,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="AtsAttendanceFile">
+		SELECT a.*,b.NAME as attencePolicyName,c.NAME as holidayPolicyName,
+		d.NAME as defaultShiftName,e.FULLNAME_ as userName,g.NAME_ as orgName
+		FROM ats_attendance_file a left join ats_attence_policy b
+		on a.ATTENCE_POLICY = b.ID left join ats_holiday_policy c
+		on a.HOLIDAY_POLICY = c.ID left join ats_shift_info d
+		on a.DEFAULT_SHIFT = d.ID left join os_user e
+    	on a.USER_ID = e.USER_ID_ left join os_rel_inst f
+    	on a.USER_ID = f.PARTY2_ left join os_group g
+    	on f.PARTY1_ = g.GROUP_ID_
+		WHERE 
+		a.ID=#{id} and DIM_ID_=1 and e.STATUS_ = 'IN_JOB'
+	</select>
+
+	<select id="query" parameterType="java.util.Map" resultMap="AtsAttendanceFile">
+		SELECT a.*,b.NAME as attencePolicyName,c.NAME as holidayPolicyName,
+		d.NAME as defaultShiftName,e.FULLNAME_ as userName,g.NAME_ as orgName,e.USER_NO_ as userNo
+		FROM ats_attendance_file a left join ats_attence_policy b
+		on a.ATTENCE_POLICY = b.ID left join ats_holiday_policy c
+		on a.HOLIDAY_POLICY = c.ID left join ats_shift_info d
+		on a.DEFAULT_SHIFT = d.ID left join os_user e
+    	on a.USER_ID = e.USER_ID_ left join os_rel_inst f
+    	on a.USER_ID = f.PARTY2_ left join os_group g
+    	on f.PARTY1_ = g.GROUP_ID_
+		<where>
+		    1=1
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				and ${whereSql}
+			</if>
+			and DIM_ID_=1 and e.STATUS_ = 'IN_JOB'
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY a.ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.ats.entity.AtsAttendanceFile">
+		UPDATE ats_attendance_file SET
+		USER_ID=#{userId,jdbcType=VARCHAR},
+		CARD_NUMBER=#{cardNumber,jdbcType=VARCHAR},
+		IS_ATTENDANCE=#{isAttendance,jdbcType=NUMERIC},
+		ATTENCE_POLICY=#{attencePolicy,jdbcType=VARCHAR},
+		HOLIDAY_POLICY=#{holidayPolicy,jdbcType=VARCHAR},
+		DEFAULT_SHIFT=#{defaultShift,jdbcType=VARCHAR},
+		STATUS=#{status,jdbcType=NUMERIC},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM ats_attendance_file 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<select id="getDisUserList" parameterType="java.util.Map" resultMap="AtsAttendanceFile">
+		select b.USER_ID_ as USER_ID,b.USER_NO_ as userNo,b.FULLNAME_ as userName,d.NAME_ as orgName
+		from ats_attendance_file a right join os_user b
+		on a.USER_ID = b.USER_ID_ left join os_rel_inst c
+		on c.PARTY2_ = b.USER_ID_ left join os_group d
+		on c.PARTY1_ = d.GROUP_ID_ 
+		<where>
+			<if test="USER_ID!=null">
+				and b.USER_ID_ = ${USER_ID}
+			</if>
+			<if test="GROUP_ID_!=null">
+				and d.GROUP_ID_ = ${GROUP_ID_}
+			</if>
+			and DIM_ID_=1 and a.USER_ID is null or a.USER_ID = "" and b.STATUS_ = 'IN_JOB'
+		</where>
+		group by userName
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY a.ID DESC
+		</if>
+	</select>
+	
+	<select id="getDisUserOne" parameterType="java.lang.String" resultMap="AtsAttendanceFile">
+		SELECT e.USER_ID_ as USER_ID,e.FULLNAME_ as userName,h.NAME_ as orgName,e.USER_NO_ as loginName
+		FROM ats_attendance_file a left join ats_attence_policy b
+		on a.ATTENCE_POLICY = b.ID left join ats_holiday_policy c
+		on a.HOLIDAY_POLICY = c.ID left join ats_shift_info d
+		on a.DEFAULT_SHIFT = d.ID right join os_user e
+    	on a.USER_ID = e.USER_ID_ left join os_rel_inst g
+    	on a.USER_ID = g.PARTY2_ left join os_group h
+    	on g.PARTY1_ = h.GROUP_ID_  
+		WHERE e.USER_NO_=#{userId} and e.STATUS_ = 'IN_JOB'
+		GROUP BY a.USER_ID
+	</select>
+	
+	<select id="getByAttendPolicy" parameterType="java.lang.String" resultMap="AtsAttendanceFile">
+		SELECT *
+		FROM ATS_ATTENDANCE_FILE
+		WHERE
+		ATTENCE_POLICY=#{attendPolicy}
+	</select>
+	
+	<select id="getByTenantId" parameterType="java.lang.String" resultMap="AtsAttendanceFile">
+		select * from ats_attendance_file where TENANT_ID_ = #{tenantId}
+	</select>
+	
+	<select id="getUserFile" parameterType="java.util.Map" resultMap="AtsAttendanceFile">
+		select a.ID,a.CARD_NUMBER from ats_attendance_file a left join os_user b
+		on a.USER_ID = b.USER_ID_
+		where b.USER_NO_ = #{userNo} and IS_ATTENDANCE !=0 and b.STATUS_ = 'IN_JOB'
+	</select>
+	
+	<select id="getUserCardFile" parameterType="java.util.Map" resultMap="AtsAttendanceFile">
+		select a.*,b.fullname_ as userName from ats_attendance_file a left join os_user b
+		on a.USER_ID = b.USER_ID_
+		where a.CARD_NUMBER = #{cardNumber} and IS_ATTENDANCE !=0 and b.STATUS_ = 'IN_JOB'
+	</select>
+	
+	<select id="getNoneCalList" resultMap="AtsAttendanceFile">
+		SELECT DISTINCT af.*,u.USER_NO_ userNo, u.fullname_ userName, o.NAME_ orgName,u.USER_NO_ loginName
+		 FROM  ats_attendance_file af
+			LEFT JOIN os_user u on   af.user_Id=u.USER_ID_
+		LEFT JOIN os_rel_inst up  on  u.USER_ID_=up.PARTY2_
+		LEFT JOIN os_group o on up.PARTY1_ = o.GROUP_ID_
+	  	LEFT JOIN (select ID,FILE_ID from  ats_attence_calculate  ac
+		<where>
+				<if test="@Ognl@isNotEmpty(beginattenceTime)"> AND ac.ATTENCE_TIME  >=#{beginattenceTime,jdbcType=TIMESTAMP} </if>
+				<if test="@Ognl@isNotEmpty(endattenceTime)"> AND ac.ATTENCE_TIME <![CDATA[ <=#{endattenceTime,jdbcType=TIMESTAMP}]]> </if>
+		</where>
+	 	) aac on af.ID=aac.FILE_ID where aac.ID is null and o.DIM_ID_ = 1 and IS_ATTENDANCE !=0 and u.STATUS_ = 'IN_JOB'
+		<if test="@Ognl@isNotEmpty(userId)"> AND af.USER_ID  =#{userId} </if>
+		<if test="@Ognl@isNotEmpty(attencePolicy)"> AND af.ATTENCE_POLICY  =#{attencePolicy} </if>
+		<if test="@Ognl@isNotEmpty(fullname)"> AND u.fullname_  like #{fullname} </if>
+		<if test="@Ognl@isNotEmpty(path)"> AND o.path_  like #{path} </if>
+		order by af.ID  desc
+	</select>
+	
+	<select id="getAttendance" resultMap="AtsAttendanceFile">
+		select a.*,b.USER_NO_ as CARD_NUMBER from ats_attendance_file a right join os_user b 
+		on a.USER_ID = b.USER_ID_ left join sys_account c
+		on c.USER_ID_ = b.USER_ID_
+		where b.STATUS_ = 'IN_JOB' and (a.USER_ID is not null or a.USER_ID != "")
+	</select>
+	
+	<select id="getNotAttendance" resultMap="AtsAttendanceFile">
+		select b.USER_NO_ as CARD_NUMBER from ats_attendance_file a right join os_user b 
+		on a.USER_ID = b.USER_ID_ left join sys_account c
+		on c.USER_ID_ = b.USER_ID_
+		where b.STATUS_ = 'IN_JOB' and a.USER_ID is null
+	</select>
+	
+	<select id="getFileAll" resultMap="AtsAttendanceFile">
+		select b.USER_NO_ as CARD_NUMBER from ats_attendance_file a right join os_user b 
+		on a.USER_ID = b.USER_ID_ left join sys_account c
+		on c.USER_ID_ = b.USER_ID_
+		where b.STATUS_ = 'IN_JOB' and a.USER_ID is not null
+	</select>
+	
+</mapper>

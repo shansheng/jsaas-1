@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-04-20T15:00:51 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="moban" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aef42fa1-5fb3-4ae5-86b5-46dfeb17168a">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<queryString>
+		<![CDATA[select * from bpm_inst ORDER BY STATUS_]]>
+	</queryString>
+	<field name="INST_ID_" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SUBJECT_" class="java.lang.String">
+		<fieldDescription><![CDATA[标题]]></fieldDescription>
+	</field>
+	<field name="STATUS_" class="java.lang.String">
+		<fieldDescription><![CDATA[运行状态]]></fieldDescription>
+	</field>
+	<variable name="statusCount" class="java.lang.Integer" resetType="Group" resetGroup="status" calculation="Count">
+		<variableExpression><![CDATA[$F{STATUS_}]]></variableExpression>
+	</variable>
+	<variable name="STATUS_1" class="java.lang.Integer" resetType="Group" resetGroup="status" calculation="Count">
+		<variableExpression><![CDATA[$F{STATUS_}]]></variableExpression>
+	</variable>
+	<group name="status">
+		<groupExpression><![CDATA[$F{STATUS_}]]></groupExpression>
+		<groupHeader>
+			<band height="22">
+				<textField pattern="0.00">
+					<reportElement mode="Opaque" x="80" y="0" width="470" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="aa721cd0-31cd-4f6e-aa20-2cf10e5938c5"/>
+					<textElement textAlignment="Left">
+						<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{STATUS_}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="12b86a23-39e8-4fec-a940-6837723d7d58"/>
+					<textElement markup="none">
+						<font fontName="微软雅黑" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[状态:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="20" width="540" height="1" uuid="a9e2bfee-8921-4bbd-add9-20cacf5b6100"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<textField>
+					<reportElement mode="Opaque" x="380" y="0" width="170" height="18" forecolor="#000000" backcolor="#C0C0C0" uuid="151fd049-210b-4332-9d0c-0ebf182c5537">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{statusCount}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="180" y="0" width="200" height="18" forecolor="#000000" backcolor="#C0C0C0" uuid="b3c7c6ee-b0ea-4255-a2f7-e10093c8548a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[总数:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="180" height="18" forecolor="#000000" backcolor="#C0C0C0" uuid="8cad9c0d-bc64-46e0-940b-e056e15e18ca">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="272" splitType="Stretch">
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="80" y="35" width="333" height="237" uuid="83e2696a-ed43-4f95-826e-fd5ee4c61b0a"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset incrementType="Group" incrementGroup="status"/>
+					<keyExpression><![CDATA[$F{STATUS_}]]></keyExpression>
+					<valueExpression><![CDATA[$V{statusCount}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="true" labelFormat="{0} {2}" legendLabelFormat="{0} ">
+					<plot backcolor="#FFFFFF" foregroundAlpha="1.0">
+						<seriesColor seriesOrder="0" color="#BAC4E2"/>
+						<seriesColor seriesOrder="1" color="#8FA2D4"/>
+						<seriesColor seriesOrder="2" color="#4472C4"/>
+						<seriesColor seriesOrder="3" color="#3B64AD"/>
+						<seriesColor seriesOrder="4" color="#315493"/>
+					</plot>
+					<itemLabel color="#050505" backgroundColor="#FFFFFF"/>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="35" uuid="6db3851c-5f84-4848-93db-ea24bcaeeb83"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[任务状态]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="550" height="20" forecolor="#FFFFFF" backcolor="#474747" uuid="272edbc5-1c1e-4f77-bb61-1a112827ac5c"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[主题]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="0" width="230" height="18" uuid="75899d1d-ba47-4467-9945-09e238e49d3b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBJECT_}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="18" width="540" height="1" forecolor="#808080" uuid="832bafc4-245a-4758-ac70-81584b739fa0"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

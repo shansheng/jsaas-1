@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.webreq.entity.SysWebReqDef">
+	<resultMap id="SysWebReqDef" type="com.redxun.sys.webreq.entity.SysWebReqDef">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="key" column="KEY_" jdbcType="VARCHAR"/>
+		<result property="url" column="URL_" jdbcType="VARCHAR"/>
+		<result property="mode" column="MODE_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="dataType" column="DATA_TYPE_" jdbcType="VARCHAR"/>
+		<result property="paramsSet" column="PARAMS_SET_" jdbcType="CLOB"/>
+		<result property="data" column="DATA_" jdbcType="CLOB"/>
+		<result property="temp" column="TEMP_" jdbcType="CLOB"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.webreq.entity.SysWebReqDef">
+		INSERT INTO SYS_WEBREQ_DEF
+		(ID_,NAME_,KEY_,URL_,MODE_,TYPE_,DATA_TYPE_,PARAMS_SET_,DATA_,TEMP_,STATUS_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{mode,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{dataType,jdbcType=VARCHAR}, #{paramsSet,jdbcType=CLOB}, #{data,jdbcType=CLOB}, #{temp,jdbcType=CLOB}, #{status,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="SysWebReqDef">
+		SELECT * FROM SYS_WEBREQ_DEF 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysWebReqDef">
+		SELECT * FROM SYS_WEBREQ_DEF
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.webreq.entity.SysWebReqDef">
+		UPDATE SYS_WEBREQ_DEF SET
+		NAME_=#{name,jdbcType=VARCHAR},
+		KEY_=#{key,jdbcType=VARCHAR},
+		URL_=#{url,jdbcType=VARCHAR},
+		MODE_=#{mode,jdbcType=VARCHAR},
+		TYPE_=#{type,jdbcType=VARCHAR},
+		DATA_TYPE_=#{dataType,jdbcType=VARCHAR},
+		PARAMS_SET_=#{paramsSet,jdbcType=CLOB},
+		DATA_=#{data,jdbcType=CLOB},
+		TEMP_=#{temp,jdbcType=CLOB},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM SYS_WEBREQ_DEF 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getKey"   parameterType="java.util.Map" resultMap="SysWebReqDef">
+		SELECT * FROM SYS_WEBREQ_DEF 
+		WHERE
+		KEY_=#{key}
+	</select>
+	
+	<select id="isExist"  resultType="java.lang.Integer">
+		SELECT count(*) FROM SYS_WEBREQ_DEF where KEY_=#{key}
+		<if test="id!=null">
+			and ID_!=#{id}
+		</if>
+		
+	</select>
+</mapper>

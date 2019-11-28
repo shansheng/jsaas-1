@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.org.entity.OsGroupSys">
+	<resultMap id="OsGroupSys" type="com.redxun.sys.org.entity.OsGroupSys">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+		<result property="sysId" column="SYS_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.org.entity.OsGroupSys">
+		INSERT INTO os_group_sys
+		(ID_,GROUP_ID_,SYS_ID_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{sysId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="OsGroupSys">
+		SELECT * FROM os_group_sys 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="OsGroupSys">
+		SELECT * FROM os_group_sys
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.org.entity.OsGroupSys">
+		UPDATE os_group_sys SET
+		GROUP_ID_=#{groupId,jdbcType=VARCHAR},
+		SYS_ID_=#{sysId,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM os_group_sys 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<delete id="deleteByGroupId" parameterType="java.lang.String">
+		delete from os_group_sys where GROUP_ID_=#{groupId}
+	</delete>
+</mapper>

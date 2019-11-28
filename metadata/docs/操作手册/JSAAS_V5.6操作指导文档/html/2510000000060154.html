@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>机构类型</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><strong>功能说明</strong></p> 
+ <p>机构类型和机构管理相关，机构类型的作用是：<br></p> 
+ <ol class=" list-paddingleft-2" style="list-style-type: decimal;"> 
+  <li><p>机构类型可以分配子系统。比如我们可以创建一个“日常办公”的机构类型，这个机构类型可以分配个人控制台，CRM和OA的功能。</p></li> 
+  <li><p>在创建机构的时候，我们可以指定“日常办公”的机构类型，那么这个租户的用户就可以拥有该机构类型的功能。</p></li> 
+  <li><p>平台中默认就有一个“平台机构”的机构类型，这个包含根租户的所有功能。比如流程管理，表单管理等等。</p></li> 
+  <li><p>机构类型和子系统的关系是多对多的关系，一个机构类型可以有多个子系统，一个子系统可以属于多个机构类型。</p></li> 
+  <li><p>租户和机构类型的关系是，一个租户只能是分配一个机构类型，多个机构可以是同一个机构类型。<br></p></li> 
+ </ol> 
+ <p><br></p> 
+ <p><strong>操作步骤</strong></p> 
+ <p><br></p> 
+ <ol class=" list-paddingleft-2" style="list-style-type: decimal;"> 
+  <li><p>添加机构类型</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="../img/2400000000561021.png" title="image.png" alt="image.png" width="800" height="181" border="0" vspace="0" style="width: 800px; height: 181px;"> <br></p></li> 
+ </ol> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属性说明:<br></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称：需要取一个易于理解的名称。<br></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类型编码:&nbsp;这个在平台中是唯一的，不能重复。<br></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是否启用：这个机构类型是否可用。<br></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是否缺省：是否为平台初始的机构类型。<br></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;首页访问地址：用户在登录时，默认的首页地址。<br></p> 
+ <p><br></p> 
+ <p>&nbsp; &nbsp;2.分配子系统<br></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在列表的中点击分配子系统，选择这个机构类型所需要的功能，那么该机构类型就有了这些子系统的权限。<br></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="../img/2400000000561025.png" title="image.png" alt="image.png" width="300" height="542" border="0" vspace="0" style="width: 300px; height: 542px;"> </p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></p>  
+</body></div>
+</body>
+</html>

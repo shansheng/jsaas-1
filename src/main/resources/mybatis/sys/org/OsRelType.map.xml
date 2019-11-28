@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.org.entity.OsRelType">
+	<resultMap id="OsRelType" type="com.redxun.sys.org.entity.OsRelType">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="key" column="KEY_" jdbcType="VARCHAR"/>
+		<result property="relType" column="REL_TYPE_" jdbcType="VARCHAR"/>
+		<result property="constType" column="CONST_TYPE_" jdbcType="VARCHAR"/>
+		<result property="party1" column="PARTY1_" jdbcType="VARCHAR"/>
+		<result property="party2" column="PARTY2_" jdbcType="VARCHAR"/>
+		<result property="dimId1" column="DIM_ID1_" jdbcType="VARCHAR"/>
+		<result property="dimId2" column="DIM_ID2_" jdbcType="VARCHAR"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="isSystem" column="IS_SYSTEM_" jdbcType="VARCHAR"/>
+		<result property="isDefault" column="IS_DEFAULT_" jdbcType="VARCHAR"/>
+		<result property="isTwoWay" column="IS_TWO_WAY_" jdbcType="VARCHAR"/>
+		<result property="level" column="LEVEL_" jdbcType="NUMERIC"/>
+		<result property="memo" column="MEMO_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<insert id="create" parameterType="com.redxun.sys.org.entity.OsRelType">
+		INSERT INTO os_rel_type
+		(ID_,NAME_,KEY_,REL_TYPE_,CONST_TYPE_,PARTY1_,PARTY2_,DIM_ID1_,DIM_ID2_,STATUS_,IS_SYSTEM_,IS_DEFAULT_,LEVEL_, IS_TWO_WAY_,MEMO_,CREATE_BY_,CREATE_TIME_,TENANT_ID_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{relType,jdbcType=VARCHAR}, #{constType,jdbcType=VARCHAR}, #{party1,jdbcType=VARCHAR}, #{party2,jdbcType=VARCHAR}, #{dimId1,jdbcType=VARCHAR}, #{dimId2,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{isSystem,jdbcType=VARCHAR}, #{isDefault,jdbcType=VARCHAR},
+		 #{level,jdbcType=NUMERIC}, #{isTwoWay,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{tenantId,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="OsRelType">
+		SELECT * FROM os_rel_type 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="OsRelType">
+		SELECT * FROM os_rel_type
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.org.entity.OsRelType">
+		UPDATE os_rel_type SET
+		NAME_=#{name,jdbcType=VARCHAR},
+		KEY_=#{key,jdbcType=VARCHAR},
+		REL_TYPE_=#{relType,jdbcType=VARCHAR},
+		CONST_TYPE_=#{constType,jdbcType=VARCHAR},
+		PARTY1_=#{party1,jdbcType=VARCHAR},
+		PARTY2_=#{party2,jdbcType=VARCHAR},
+		DIM_ID1_=#{dimId1,jdbcType=VARCHAR},
+		DIM_ID2_=#{dimId2,jdbcType=VARCHAR},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		IS_SYSTEM_=#{isSystem,jdbcType=VARCHAR},
+		LEVEL_=#{level,jdbcType=NUMERIC},
+		IS_DEFAULT_=#{isDefault,jdbcType=VARCHAR},
+		IS_TWO_WAY_=#{isTwoWay,jdbcType=VARCHAR},
+		MEMO_=#{memo,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM os_rel_type 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getByRelType"   parameterType="java.lang.String" resultMap="OsRelType">
+		select * from os_rel_type where REL_TYPE_=#{relType}
+	</select>
+	<select id="getUserRelTypeExcludeBelong"   parameterType="java.util.Map" resultMap="OsRelType">
+		select * from os_rel_type where (REL_TYPE_=#{relType1} or REL_TYPE_=#{relType2}) and KEY_!=#{key}
+	</select>
+	<select id="getByRelTypeTenantId"   parameterType="java.util.Map" resultMap="OsRelType">
+		select * from os_rel_type where REL_TYPE_=#{relType} and TENANT_ID_=#{tenantId}
+	</select>
+	<select id="getByKeyTenanId"   parameterType="java.util.Map" resultMap="OsRelType">
+		select * from os_rel_type where KEY_=#{key} and TENANT_ID_ in (#{tenantId},#{publicTenantId})
+	</select>
+	<select id="getByRelTypeKey"   parameterType="java.util.Map" resultMap="OsRelType">
+		select * from os_rel_type where KEY_=#{key}
+	</select>
+	<select id="getByDimId1RelType"   parameterType="java.util.Map" resultMap="OsRelType">
+		select * from os_rel_type where (DIM_ID1_ is null or DIM_ID1_=#{dimId}) and REL_TYPE_=#{relType} and TENANT_ID_ in (#{tenantId},#{publicTenantId}) 
+		<choose>
+			<when test="level!=-1">
+				and (LEVEL_ is null or LEVEL_=#{level})
+			</when>
+			<otherwise>
+				and LEVEL_ is null
+			</otherwise>
+		</choose>
+		order by CREATE_TIME_ asc
+	</select>
+	<select id="getByRelTypeTenantIdIncludePublic"   parameterType="java.util.Map" resultMap="OsRelType">
+		select * from os_rel_type where REL_TYPE_=#{relType} and TENANT_ID_ in (#{tenantId},#{publicTenantId})
+		<choose>
+			<when test="dimId!=null">
+				and (DIM_ID1_=#{dimId} or DIM_ID1_ is null or DIM_ID1_ ='') 
+			</when>
+			<otherwise>
+				and (DIM_ID1_ is null or DIM_ID1_ ='')
+			</otherwise>
+		</choose>
+	</select>
+	<select id="getByDimIdRelType"   parameterType="java.util.Map" resultMap="OsRelType">
+		select * from os_rel_type where DIM_ID1_=#{dimId} or (DIM_ID2_=#{dimId} and IS_TWO_WAY_=#{isTwoWay})
+	</select>
+</mapper>

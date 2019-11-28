@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.BpmInstUser">
+	<resultMap id="BpmInstUser" type="com.redxun.bpm.core.entity.BpmInstUser">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="nodeId" column="NODE_ID_" jdbcType="VARCHAR"/>
+		<result property="userIds" column="USER_IDS_" jdbcType="VARCHAR"/>
+		<result property="userNames" column="USER_NAMES" jdbcType="VARCHAR"/>
+		<result property="actDefId" column="ACT_DEF_ID_" jdbcType="VARCHAR"/>
+		<result property="isSub" column="IS_SUB_" jdbcType="NUMERIC"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.BpmInstUser">
+		INSERT INTO BPM_INST_USER
+		(ID_,INST_ID_,NODE_ID_,USER_IDS_,USER_NAMES,ACT_DEF_ID_,IS_SUB_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{instId,jdbcType=VARCHAR}, #{nodeId,jdbcType=VARCHAR}, #{userIds,jdbcType=VARCHAR}, #{userNames,jdbcType=VARCHAR}, #{actDefId,jdbcType=VARCHAR}, #{isSub,jdbcType=NUMERIC}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmInstUser">
+		SELECT * FROM BPM_INST_USER 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmInstUser">
+		SELECT * FROM BPM_INST_USER
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.BpmInstUser">
+		UPDATE BPM_INST_USER SET
+		INST_ID_=#{instId,jdbcType=VARCHAR},
+		NODE_ID_=#{nodeId,jdbcType=VARCHAR},
+		USER_IDS_=#{userIds,jdbcType=VARCHAR},
+		USER_NAMES=#{userNames,jdbcType=VARCHAR},
+		ACT_DEF_ID_=#{actDefId,jdbcType=VARCHAR},
+		IS_SUB_=#{isSub,jdbcType=NUMERIC},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_INST_USER 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<delete id="delByInstId" parameterType="java.lang.String">
+		DELETE FROM BPM_INST_USER WHERE INST_ID_=#{instId}
+	</delete>
+	
+	<select id="getByInst"   parameterType="java.lang.String" resultMap="BpmInstUser">
+		SELECT * FROM BPM_INST_USER 
+		WHERE INST_ID_=#{instId} and NODE_ID_=#{nodeId}
+		<if test="isSub==0">
+			 and IS_SUB_=0
+		</if>
+		<if test="isSub==1">
+			 and IS_SUB_=1 and ACT_DEF_ID_=#{actDefId}
+		</if>
+	</select>
+	
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.ats.entity.AtsHoliday">
+	<resultMap id="AtsHoliday" type="com.redxun.oa.ats.entity.AtsHoliday">
+		<id property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+		<result property="holidayType" column="HOLIDAY_TYPE" jdbcType="VARCHAR"/>
+		<result property="startTime" column="START_TIME" jdbcType="TIMESTAMP"/>
+		<result property="endTime" column="END_TIME" jdbcType="TIMESTAMP"/>
+		<result property="holidayTime" column="HOLIDAY_TIME" jdbcType="NUMERIC"/>
+		<result property="duration" column="DURATION" jdbcType="NUMERIC"/>
+		<result property="runId" column="RUN_ID" jdbcType="NUMERIC"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.oa.ats.entity.AtsHoliday">
+		INSERT INTO ats_holiday
+		(ID,USER_ID,HOLIDAY_TYPE,START_TIME,END_TIME,HOLIDAY_TIME,DURATION,RUN_ID,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{holidayType,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{holidayTime,jdbcType=NUMERIC}, #{duration,jdbcType=NUMERIC}, #{runId,jdbcType=NUMERIC}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="AtsHoliday">
+		SELECT * FROM ats_holiday 
+		WHERE 
+		ID=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="AtsHoliday">
+		SELECT * FROM ats_holiday
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.ats.entity.AtsHoliday">
+		UPDATE ats_holiday SET
+		USER_ID=#{userId,jdbcType=VARCHAR},
+		HOLIDAY_TYPE=#{holidayType,jdbcType=VARCHAR},
+		START_TIME=#{startTime,jdbcType=TIMESTAMP},
+		END_TIME=#{endTime,jdbcType=TIMESTAMP},
+		HOLIDAY_TIME=#{holidayTime,jdbcType=NUMERIC},
+		DURATION=#{duration,jdbcType=NUMERIC},
+		RUN_ID=#{runId,jdbcType=NUMERIC},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM ats_holiday 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	
+</mapper>

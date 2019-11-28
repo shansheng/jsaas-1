@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.ats.entity.AtsAttenceGroupDetail">
+	<resultMap id="AtsAttenceGroupDetail" type="com.redxun.oa.ats.entity.AtsAttenceGroupDetail">
+		<id property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="groupId" column="GROUP_ID" jdbcType="VARCHAR"/>
+		<result property="fileId" column="FILE_ID" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		
+		<result property="userNo" column="userNo" jdbcType="VARCHAR"/>
+		<result property="fullName" column="fullName" jdbcType="VARCHAR"/>
+		<result property="orgName" column="orgName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	<insert id="create" parameterType="com.redxun.oa.ats.entity.AtsAttenceGroupDetail">
+		INSERT INTO ats_attence_group_detail
+		(ID,GROUP_ID,FILE_ID,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{fileId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="AtsAttenceGroupDetail">
+		SELECT a.*
+		FROM ats_attence_group_detail a inner join ats_attendance_file b
+		on a.FILE_ID = b.ID left join os_user c
+		on b.USER_ID = c.USER_ID_
+		WHERE 
+		a.ID=#{id} and c.STATUS_ = 'IN_JOB'
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="AtsAttenceGroupDetail">
+		SELECT a.*,c.USER_NO_ as userNo,c.FULLNAME_ as fullName,e.NAME_ as orgName 
+		FROM ats_attence_group_detail a inner join ats_attendance_file b
+		on a.FILE_ID = b.ID left join os_user c
+		on b.USER_ID = c.USER_ID_ left join os_rel_inst d
+		on c.USER_ID_ = d.PARTY2_ left join os_group e
+		on d.PARTY1_ = e.GROUP_ID_
+		<where>
+		    1=1
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+			and c.STATUS_ = 'IN_JOB'
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.ats.entity.AtsAttenceGroupDetail">
+		UPDATE ats_attence_group_detail SET
+		GROUP_ID=#{groupId,jdbcType=VARCHAR},
+		FILE_ID=#{fileId,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM ats_attence_group_detail 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<delete id="delByMainId">
+	    DELETE FROM ats_attence_group_detail
+	    WHERE
+	    group_id=#{groupId}
+	</delete>    
+	
+	<select id="getAtsAttenceGroupDetailList" resultMap="AtsAttenceGroupDetail">
+	    SELECT a.*,c.USER_NO_ as userNo,c.FULLNAME_ as fullName,e.NAME_ as orgName
+		FROM ats_attence_group_detail a inner join ats_attendance_file b
+		on a.FILE_ID = b.ID left join os_user c
+		on b.USER_ID = c.USER_ID_ left join os_rel_inst d
+		on c.USER_ID_ = d.PARTY2_ left join os_group e
+		on d.PARTY1_ = e.GROUP_ID_ 
+	    WHERE 1=1 and a.group_id like #{groupId} and c.STATUS_ = 'IN_JOB'
+	     and e.DIM_ID_=1 
+	     group by a.ID HAVING count(a.ID)>0
+	</select>
+	
+	
+	<select id="getAtsAttenceGroupDetailListSet" resultMap="AtsAttenceGroupDetail">
+		SELECT a.*,b.ID,c.USER_NO_ as userNo,c.FULLNAME_ as fullName,e.NAME_ as orgName
+		FROM ats_attendance_file b right join ats_attence_group_detail a
+		on a.FILE_ID = b.ID left join os_user c
+		on b.USER_ID = c.USER_ID_ left join os_rel_inst d
+		on c.USER_ID_ = d.PARTY2_ left join os_group e
+		on d.PARTY1_ = e.GROUP_ID_ 
+	    WHERE 1=1 and b.IS_ATTENDANCE!=0 and c.STATUS_ = 'IN_JOB'
+	    <if test="ATTENCE_POLICY!=null"> and b.ATTENCE_POLICY like #{ATTENCE_POLICY}</if>
+	    <if test="GROUP_ID!=null"> and a.GROUP_ID like #{GROUP_ID}</if>
+	    <if test="FULLNAME_!=null"> and c.FULLNAME_ like #{FULLNAME_}</if>
+	    <if test="GROUP_ID_ !=null"> and e.GROUP_ID_ like #{GROUP_ID_}</if>
+	     and e.DIM_ID_=1 
+	     group by b.ID
+	</select>
+	<select id="getUserGroup" resultType="java.lang.String">
+		select e.NAME_ as orgName
+ 		from os_user c left join os_rel_inst d
+		on c.USER_ID_ = d.PARTY2_ left join os_group e
+		on d.PARTY1_ = e.GROUP_ID_
+		where e.DIM_ID_=1 and c.USER_ID_=#{userId}
+		group by c.USER_ID_
+	</select>
+	
+	<delete id="delByFileId" parameterType="java.lang.String">
+		DELETE FROM ATS_ATTENCE_GROUP_DETAIL 
+		WHERE
+		FILE_ID=#{fileId}
+	</delete>
+	
+</mapper>

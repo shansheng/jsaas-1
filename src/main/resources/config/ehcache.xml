@@ -1,0 +1,15 @@
+<ehcache
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+        updateCheck="false">
+
+    <diskStore path="java.io.tmpdir"/>
+    <cache name="tokenCache"
+           maxElementsInMemory="20000"
+           eternal="false"
+           overflowToDisk="true"
+           diskPersistent="false"
+           timeToLiveSeconds="7200"
+           diskExpiryThreadIntervalSeconds="120"
+            />
+</ehcache>

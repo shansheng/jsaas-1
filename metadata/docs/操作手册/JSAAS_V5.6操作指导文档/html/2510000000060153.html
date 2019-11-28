@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>单据单号</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><strong>功能说明</strong></p> 
+ <p>单据单号这个功能是在表单和流程中进行使用，这个功能可以在单据上生成递增的单号 ，比如 XSDD-20171205-00002这种编号。</p> 
+ <p>也可以通过API接口调用产生单号。</p> 
+ <p><strong>操作步骤</strong></p> 
+ <p>1.添加单据单号<br></p> 
+ <p><img src="../img/2400000000561008.png" title="image.png" alt="image.png" width="978" height="373" style="width: 978px; height: 373px;" border="0" vspace="0"> </p> 
+ <p>属性说明:</p> 
+ <p>别名：租户中别名独一无二，不能重复</p> 
+ <p>规则：比如图中 XSDD-{yyyy}{MM}{DD}-{NO} ，这个规则的意思是会产生XSDD-20171205-00002这样的编号。</p> 
+ <p>生成方式：</p> 
+ <p>每天：每天重新生成NO编号 ，比如0001开始增长，第二天又从0001开始增长。</p> 
+ <p>每周：每一周重新生成NO编号</p> 
+ <p>每月：每月重新生成NO编号</p> 
+ <p>每年：每年重新生成NO编号</p> 
+ <p>自动增长:&nbsp;编号一直累加不中断。</p> 
+ <p>初始值：一开始单号的值，默认从1开始。</p> 
+ <p>步长：流水号每次递增的量，默认为1.</p> 
+ <p><br></p> 
+ <p>2.通过API接口产生流水号</p> 
+ <p><br></p> 
+ <pre class="brush:java;toolbar:false">@Resource
+SysSeqIdManager&nbsp;sysSeqIdManager;
+
+String&nbsp;no=sysSeqIdManager.genSequenceNo(“DDH“,“1“);</pre> 
+ <p><br></p> 
+ <p><br></p> 
+ <p><br></p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></p> 
+ <p><br></p> 
+ <p><br></p>  
+</body></div>
+</body>
+</html>

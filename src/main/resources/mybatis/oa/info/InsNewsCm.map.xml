@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.info.entity.InsNewsCm">
+	<resultMap id="InsNewsCm" type="com.redxun.oa.info.entity.InsNewsCm">
+		<id property="commId" column="COMM_ID_" jdbcType="VARCHAR"/>
+		<result property="newId" column="NEW_ID_" jdbcType="VARCHAR"/>
+		<result property="fullName" column="FULL_NAME_" jdbcType="VARCHAR"/>
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR"/>
+		<result property="agreeNums" column="AGREE_NUMS_" jdbcType="NUMERIC"/>
+		<result property="refuseNums" column="REFUSE_NUMS_" jdbcType="NUMERIC"/>
+		<result property="isReply" column="IS_REPLY_" jdbcType="VARCHAR"/>
+		<result property="repId" column="REP_ID_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.oa.info.entity.InsNewsCm">
+		INSERT INTO INS_NEWS_CM
+		(COMM_ID_,NEW_ID_,FULL_NAME_,CONTENT_,AGREE_NUMS_,REFUSE_NUMS_,IS_REPLY_,REP_ID_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{commId,jdbcType=VARCHAR}, #{newId,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{agreeNums,jdbcType=NUMERIC}, #{refuseNums,jdbcType=NUMERIC}, #{isReply,jdbcType=VARCHAR}, #{repId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="InsNewsCm">
+		SELECT * FROM INS_NEWS_CM 
+		WHERE 
+		COMM_ID_=#{commId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="InsNewsCm">
+		SELECT * FROM INS_NEWS_CM
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY COMM_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.info.entity.InsNewsCm">
+		UPDATE INS_NEWS_CM SET
+		NEW_ID_=#{newId,jdbcType=VARCHAR},
+		FULL_NAME_=#{fullName,jdbcType=VARCHAR},
+		CONTENT_=#{content,jdbcType=VARCHAR},
+		AGREE_NUMS_=#{agreeNums,jdbcType=NUMERIC},
+		REFUSE_NUMS_=#{refuseNums,jdbcType=NUMERIC},
+		IS_REPLY_=#{isReply,jdbcType=VARCHAR},
+		REP_ID_=#{repId,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		COMM_ID_=#{commId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM INS_NEWS_CM 
+		WHERE
+		COMM_ID_=#{commId}
+	</delete>
+	
+	
+	<select id="getByNewId"   parameterType="java.lang.String" resultMap="InsNewsCm">
+		SELECT * FROM INS_NEWS_CM 
+		WHERE NEW_ID_=#{newId} and TENANT_ID_=#{tenantId}
+		order by CREATE_TIME_ desc 
+	</select>
+	
+	<select id="getByReplyId"   parameterType="java.lang.String" resultMap="InsNewsCm">
+		SELECT * FROM INS_NEWS_CM 
+		WHERE REP_ID_=#{repId} and TENANT_ID_=#{tenantId}
+		order by CREATE_TIME_ desc 
+	</select>
+	
+	
+	
+</mapper>

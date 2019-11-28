@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns="http://www.redxun.cn/sqlgen"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.redxun.cn/sqlgen sqlgen.xsd"
+    filePath="d:\init.sql" >
+	<!-- 
+	 <resource table="sys_type_group" pk="id_">
+	 	<sql>
+	 		SELECT * from sys_type_group
+	 	</sql>
+	 	<template>
+	 		insert into sys_type_group (id_,group_key_,name_,flag_,sn_,type_) 
+	 		values ('${ID_}','${GROUP_KEY_}','${NAME_}','${FLAG_}','${SN_}','${TYPE_}');
+	 	</template>
+	 </resource>
+	 
+	 <resource table="bpm_selector_def" pk="id_">
+	 	<sql>
+	 		select * from bpm_selector_def
+	 	</sql>
+	 	<template>
+	 		insert into bpm_selector_def (id_, name_, alias_, group_field_, buttons_, is_custom_, flag_, method_, conf_key_)
+	 		values ('${ID_}', '${NAME_}', '${ALIAS_}', '${GROUP_FIELD_}', '${BUTTONS_}', '${IS_CUSTOM_}', '${FLAG_}', '${METHOD_}', '${CONF_KEY_}');
+	 	</template>
+	 </resource>
+	 
+	 -->
+	 
+	 <resource table="SYS_SUBSYS">
+	 	<sql>
+	 		select * from sys_properties
+	 	</sql>
+	 	<template>
+	 		INSERT INTO sys_properties (PRO_ID_, NAME_, ALIAS_, GLOBAL_, ENCRYPT_, VALUE_, CATEGORY_, DESCRIPTION_)
+	 		values ('${PRO_ID_}','${NAME_}','${ALIAS_}','${GLOBAL_}','${ENCRYPT_}','${VALUE_}','${CATEGORY_}','${DESCRIPTION_}');
+	 	</template>
+	 </resource> 
+	 
+
+	 <!-- 
+	 <resource table="sys_menu">
+	 	<sql>
+	 		select * from sys_menu
+	 	</sql>
+	 	<template>
+	 		INSERT INTO sys_menu (MENU_ID_, SYS_ID_, NAME_, KEY_, FORM_, ENTITY_NAME_, MODULE_ID_, ICON_CLS_, IMG_, PARENT_ID_, DEPTH_, PATH_, SN_, IS_MGR_, URL_, SHOW_TYPE_, IS_BTN_MENU_, CHILDS_, TENANT_ID_, CREATE_BY_, CREATE_TIME_, UPDATE_BY_, UPDATE_TIME_)
+	 		values ('${MENU_ID_}','${SYS_ID_}','${NAME_}','${KEY_}',NULL,NULL,NULL,'${ICON_CLS_}','${IMG_}','${PARENT_ID_}',${DEPTH_},'${PATH_}','${SN_}','${IS_MGR_}','${URL_}',NULL,'${IS_BTN_MENU_}','${CHILDS_}',NULL,1,NULL,NULL,NULL);
+	 	</template>
+	 </resource> 
+	 
+	 <resource table="sys_script" pk="ID_">
+		<sql>select * from  SYS_SCRIPT</sql>
+		<template>
+			INSERT INTO SYS_SCRIPT(ID_,NAME_,SCRIPT_,CATEGORY_,MEMO_)
+			values ('${ID_}','${NAME_}','${SCRIPT_}','${CATEGORY_}','${MEMO_}');
+		</template>
+	</resource>
+	 
+	 <resource table="sys_properties" pk="id">
+	 	<sql>
+	 		select * from sys_properties
+	 	</sql>
+	 	<template>
+			INSERT INTO SYS_PROPERTIES (id,name,alias,group_,value,encrypt,description)
+			VALUES ('${ID}', '${NAME}', '${ALIAS}', '${GROUP_}', '${VALUE}', ${ENCRYPT}, '${DESCRIPTION}');
+		</template>
+	 </resource>
+	  
+	<resource table="custom_dialog" pk="id_">
+		<sql>
+			select * from custom_dialog
+		</sql>
+		<template>
+			insert into custom_dialog (id_,name_,alias_,style_,obj_name_,need_page_,page_size_,displayfield_,conditionfield_,resultfield_,sortfield_,dsalias_,is_table_,diy_sql_,sql_build_type_,width_,height_,select_num_,system_)
+			values ('${ID_}','${NAME_}','${ALIAS_}','${STYLE_}','${OBJ_NAME_}',${NEED_PAGE_},${PAGE_SIZE_},'${DISPLAYFIELD_}','${CONDITIONFIELD_}','${RESULTFIELD_}','${SORTFIELD_}','${DSALIAS_}',${IS_TABLE_},'${DIY_SQL_}','${SQL_BUILD_TYPE_}',${WIDTH_?c},${HEIGHT_?c},${SELECT_NUM_},${SYSTEM_});
+		</template>
+	</resource>
+	
+
+	<resource table="SYS_MENU" pk="ID_"  parentId="PARENT_ID_" parentIdVal="0">
+		<sql>SELECT * FROM  SYS_MENU where SYSTEM_ID_ ='${SYSTEMID}' AND PARENT_ID_='${PARENT_ID_}' ORDER BY SN_</sql>
+		<template>
+		<![CDATA[INSERT INTO SYS_MENU (ID_,SYSTEM_ID_,ALIAS_,NAME_,default_url_,ENABLE_MENU_,HAS_CHILDREN_,OPENED_,ICON_,NEW_WINDOW_,SN_,PARENT_ID_)
+		VALUES  ('${ID_}', '${SYSTEM_ID_}', '${ALIAS_}', '${NAME_}', '${DEFAULT_URL_}', ${ENABLE_MENU_}, ${HAS_CHILDREN_}, ${OPENED_}, '${ICON_}', ${NEW_WINDOW_}, '<#if (SN_)??>${SN_?c}<#else>0</#if>','${PARENT_ID_}');]]>
+		</template>
+	</resource>
+-->
+
+</resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.sql.entity.BpmSqlNode">
+	<resultMap id="BpmSqlNode" type="com.redxun.bpm.sql.entity.BpmSqlNode">
+		<id property="bpmSqlNodeId" column="BPM_SQL_NODE_ID_" jdbcType="VARCHAR"/>
+		<result property="solId" column="SOL_ID_" jdbcType="VARCHAR"/>
+		<result property="nodeId" column="NODE_ID_" jdbcType="VARCHAR"/>
+		<result property="nodeText" column="NODE_TEXT_" jdbcType="VARCHAR"/>
+		<result property="sql" column="SQL_" jdbcType="CLOB"/>
+		<result property="dsId" column="DS_ID_" jdbcType="VARCHAR"/>
+		<result property="dsName" column="DS_NAME_" jdbcType="VARCHAR"/>
+		<result property="jsonData" column="JSON_DATA_" jdbcType="CLOB"/>
+		<result property="jsonTable" column="JSON_TABLE_" jdbcType="CLOB"/>
+		<result property="sqlType" column="SQL_TYPE_" jdbcType="NUMERIC"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.sql.entity.BpmSqlNode">
+		INSERT INTO BPM_SQL_NODE
+		(BPM_SQL_NODE_ID_,SOL_ID_,NODE_ID_,NODE_TEXT_,SQL_,DS_ID_,DS_NAME_,JSON_DATA_,JSON_TABLE_,SQL_TYPE_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{bpmSqlNodeId,jdbcType=VARCHAR}, #{solId,jdbcType=VARCHAR}, #{nodeId,jdbcType=VARCHAR}, #{nodeText,jdbcType=VARCHAR}, #{sql,jdbcType=CLOB}, #{dsId,jdbcType=VARCHAR}, #{dsName,jdbcType=VARCHAR}, #{jsonData,jdbcType=CLOB}, #{jsonTable,jdbcType=CLOB}, #{sqlType,jdbcType=NUMERIC}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmSqlNode">
+		SELECT * FROM BPM_SQL_NODE 
+		WHERE 
+		BPM_SQL_NODE_ID_=#{bpmSqlNodeId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmSqlNode">
+		SELECT * FROM BPM_SQL_NODE
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY BPM_SQL_NODE_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.sql.entity.BpmSqlNode">
+		UPDATE BPM_SQL_NODE SET
+		SOL_ID_=#{solId,jdbcType=VARCHAR},
+		NODE_ID_=#{nodeId,jdbcType=VARCHAR},
+		NODE_TEXT_=#{nodeText,jdbcType=VARCHAR},
+		SQL_=#{sql,jdbcType=CLOB},
+		DS_ID_=#{dsId,jdbcType=VARCHAR},
+		DS_NAME_=#{dsName,jdbcType=VARCHAR},
+		JSON_DATA_=#{jsonData,jdbcType=CLOB},
+		JSON_TABLE_=#{jsonTable,jdbcType=CLOB},
+		SQL_TYPE_=#{sqlType,jdbcType=NUMERIC},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		BPM_SQL_NODE_ID_=#{bpmSqlNodeId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_SQL_NODE 
+		WHERE
+		BPM_SQL_NODE_ID_=#{bpmSqlNodeId}
+	</delete>
+	
+	<select id="getByBpmFormInsIdSolIdNodeId"   resultMap="BpmSqlNode">
+		SELECT * FROM BPM_SQL_NODE 
+		WHERE 
+		SOL_ID_=#{solId} and NODE_ID_=#{nodeId}
+	</select>
+	
+	
+</mapper>

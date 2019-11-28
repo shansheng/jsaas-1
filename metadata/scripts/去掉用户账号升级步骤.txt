@@ -1,0 +1,26 @@
+
+
+-- 备份用户表和账号表
+CREATE TABLE os_user_back SELECT * FROM os_user;
+
+CREATE TABLE SYS_ACCOUNT_back SELECT * FROM SYS_ACCOUNT;
+
+1.在用户表增加密码 PWD_字段
+
+	alter table OS_USER add PWD_ varchar(64);
+
+2.将账号表的 密码更新到用户表。
+
+	update OS_USER a, sys_account b set a.PWD_= b.PWD_ where a.USER_ID_=b.USER_ID_;
+
+3.增加 表 SYS_INST_USERS 表，同步数据。
+
+	INSERT INTO os_inst_users (ID_,USER_ID_,TENANT_ID_,STATUS_,IS_ADMIN_,CREATE_TYPE_,APPLY_STATUS_)
+	SELECT USER_ID_,USER_ID_,TENANT_ID_  ,'IN_JOB' ,0,'CREATE','ENABLED' FROM OS_USER;
+
+	UPDATE os_inst_users A,sys_inst T SET A.DOMAIN_=T.DOMAIN_ WHERE A.TENANT_ID_=T.INST_ID_;
+
+4.删除帐号表
+	DROP TABLE SYS_ACCOUNT;
+
+	

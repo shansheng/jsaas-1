@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.core.entity.SysEsList">
+	<resultMap id="SysEsList" type="com.redxun.sys.core.entity.SysEsList">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="alias" column="ALIAS_" jdbcType="VARCHAR"/>
+		<result property="idField" column="ID_FIELD_" jdbcType="VARCHAR"/>
+		<result property="queryType" column="QUERY_TYPE_" jdbcType="NUMERIC"/>
+		<result property="esTable" column="ES_TABLE_" jdbcType="VARCHAR"/>
+		<result property="query" column="QUERY_" jdbcType="VARCHAR"/>
+		<result property="returnFields" column="RETURN_FIELDS_" jdbcType="CLOB"/>
+		<result property="conditionFields" column="CONDITION_FIELDS_" jdbcType="CLOB"/>
+		<result property="sortFields" column="SORT_FIELDS_" jdbcType="CLOB"/>
+		<result property="isPage" column="IS_PAGE_" jdbcType="NUMERIC"/>
+		<result property="listHtml" column="LIST_HTML_" jdbcType="CLOB"/>
+		<result property="treeId" column="TREE_ID_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.core.entity.SysEsList">
+		INSERT INTO SYS_ES_LIST
+		(ID_,NAME_,ALIAS_,ID_FIELD_,QUERY_TYPE_,ES_TABLE_,QUERY_,RETURN_FIELDS_,CONDITION_FIELDS_,SORT_FIELDS_,IS_PAGE_,LIST_HTML_,TREE_ID_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{idField,jdbcType=VARCHAR}, #{queryType,jdbcType=NUMERIC}, #{esTable,jdbcType=VARCHAR}, #{query,jdbcType=VARCHAR}, #{returnFields,jdbcType=CLOB}, #{conditionFields,jdbcType=CLOB}, #{sortFields,jdbcType=CLOB}, #{isPage,jdbcType=NUMERIC}, #{listHtml,jdbcType=CLOB}, #{treeId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="SysEsList">
+		SELECT * FROM SYS_ES_LIST 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysEsList">
+		SELECT * FROM SYS_ES_LIST
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.core.entity.SysEsList">
+		UPDATE SYS_ES_LIST SET
+		NAME_=#{name,jdbcType=VARCHAR},
+		ALIAS_=#{alias,jdbcType=VARCHAR},
+		ID_FIELD_=#{idField,jdbcType=VARCHAR},
+		QUERY_TYPE_=#{queryType,jdbcType=NUMERIC},
+		ES_TABLE_=#{esTable,jdbcType=VARCHAR},
+		QUERY_=#{query,jdbcType=VARCHAR},
+		RETURN_FIELDS_=#{returnFields,jdbcType=CLOB},
+		CONDITION_FIELDS_=#{conditionFields,jdbcType=CLOB},
+		SORT_FIELDS_=#{sortFields,jdbcType=CLOB},
+		IS_PAGE_=#{isPage,jdbcType=NUMERIC},
+		LIST_HTML_=#{listHtml,jdbcType=CLOB},
+		TREE_ID_=#{treeId,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM SYS_ES_LIST 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getByAlias"  parameterType="java.util.Map" resultMap="SysEsList">
+		select * from SYS_ES_LIST where alias_ = #{alias}
+	</select>
+</mapper>

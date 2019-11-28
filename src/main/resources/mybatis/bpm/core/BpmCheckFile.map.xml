@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.BpmCheckFile">
+	<resultMap id="BpmCheckFile" type="com.redxun.bpm.core.entity.BpmCheckFile">
+		<id property="fileId" column="FILE_ID_" jdbcType="VARCHAR"/>
+		<result property="fileName" column="FILE_NAME_" jdbcType="VARCHAR"/>
+		<result property="jumpId" column="JUMP_ID_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.BpmCheckFile">
+		INSERT INTO BPM_CHECK_FILE
+		(FILE_ID_,FILE_NAME_,JUMP_ID_,UPDATE_TIME_,UPDATE_BY_,CREATE_TIME_,CREATE_BY_,TENANT_ID_)
+		VALUES 
+		(#{fileId,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{jumpId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmCheckFile">
+		SELECT * FROM BPM_CHECK_FILE 
+		WHERE 
+		FILE_ID_=#{fileId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmCheckFile">
+		SELECT * FROM BPM_CHECK_FILE
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY FILE_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.BpmCheckFile">
+		UPDATE BPM_CHECK_FILE SET
+		FILE_NAME_=#{fileName,jdbcType=VARCHAR},
+		JUMP_ID_=#{jumpId,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR}
+		WHERE
+		FILE_ID_=#{fileId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_CHECK_FILE 
+		WHERE
+		FILE_ID_=#{fileId}
+	</delete>
+
+	<delete id="removeByInst" parameterType="java.lang.String">
+		DELETE FROM BPM_CHECK_FILE
+		WHERE
+		JUMP_ID_ in (select j.JUMP_ID_ from BPM_NODE_JUMP j where j.ACT_INST_ID_ = #{actInstId})
+	</delete>
+
+
+	<select id="getByNodeId" parameterType="java.lang.String" resultMap="BpmCheckFile">
+		SELECT * FROM BPM_CHECK_FILE
+		WHERE
+		JUMP_ID_=#{nodeId}
+	</select>
+	
+</mapper>

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.org.entity.OsGroup">
+	<resultMap id="OsGroup" type="com.redxun.sys.org.entity.OsGroup">
+		<id property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="dimId" column="DIM_ID_" jdbcType="VARCHAR" />
+		<result property="key" column="KEY_" jdbcType="VARCHAR"/>
+		<result property="rankLevel" column="RANK_LEVEL_" jdbcType="NUMERIC"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="descp" column="DESCP_" jdbcType="VARCHAR"/>
+		<result property="sn" column="SN_" jdbcType="NUMERIC"/>
+		<result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR"/>
+		<result property="depth" column="DEPTH_" jdbcType="VARCHAR"/>
+		<result property="path" column="PATH_" jdbcType="VARCHAR"/>
+		<result property="areaCode" column="AREA_CODE_" jdbcType="VARCHAR"/>
+		<result property="childs" column="CHILDS_" jdbcType="NUMERIC"/>
+		<result property="from" column="FROM_" jdbcType="VARCHAR"/>
+		<result property="isDefault" column="IS_DEFAULT_" jdbcType="VARCHAR"/>
+		<result property="isMain" column="IS_MAIN_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<!--<result property="lastUpdateTime" column="LAST_UPDATE_TIME_" jdbcType="BIGINT"/>-->
+		<!--association property="osDimension" column="DIM_ID_" javaType="com.redxun.sys.org.entity.OsDimension" resultMap="com.redxun.sys.org.entity.OsDimension" select="selectOsDimension"/-->
+	</resultMap>
+	
+	<resultMap id="OsGroupExt" type="com.redxun.sys.org.entity.OsGroup">
+		<id property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="sn" column="SN_" jdbcType="NUMERIC"/>
+		<result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR"/>
+		<result property="syncWx" column="SYNC_WX_" jdbcType="NUMERIC"/>
+		<result property="wxPid" column="WX_PID_" jdbcType="NUMERIC"/>
+		<result property="wxParentPid" column="WX_PARENT_PID_" jdbcType="NUMERIC"/>
+	</resultMap>
+
+
+	<select id="getBySql"   parameterType="java.util.Map" resultMap="OsGroup">
+		select * from os_group os where os.GROUP_ID_ in (${groupId})  and TENANT_ID_=#{tenantId}
+	</select>
+
+	<select id="getByDimIdGroupIdTenantIdAdmin" parameterType="java.util.Map" resultMap="OsGroup">
+		<if test="userId!=1">
+			select * from os_group where DIM_ID_=#{dimId}  and TENANT_ID_=#{tenantId} and PARENT_ID_ in
+			(select parent_id_ from os_group where group_id_ in (SELECT oi.party1_ FROM os_inst_users ou RIGHT JOIN OS_REL_INST oi on ou.USER_ID_=oi.PARTY2_
+			WHERE oi.REL_TYPE_ID_='1' and oi.PARTY2_=#{userId} and ou.STATUS_='IN_JOB'))
+			order by PATH_ asc
+		</if>
+		<if test="userId==1">
+			select * from os_group where DIM_ID_=#{dimId} and PARENT_ID_ = #{parentId} and TENANT_ID_=#{tenantId} order by PATH_ asc
+		</if>
+	</select>
+
+
+	<select id="getByDimIdGroupIdTenantIdRole" parameterType="java.util.Map" resultMap="OsGroup">
+		select * from os_group where DIM_ID_=#{dimId} and PARENT_ID_ = #{parentId} and TENANT_ID_=#{tenantId}
+		<if test="userId!=1">
+			and group_id_ in (select GROUP_ID_ from os_grade_role where admin_id_ in (select ID_ from os_grade_admin where user_id_ = #{userId}))
+		</if>
+		order by PATH_ asc
+	</select>
+
+
+	<select id="getByUserIdConfig" resultType="java.util.Map" resultMap="OsGroup">
+		select * from os_group where group_id_ in
+		(
+		select a.GROUP_ID_ from os_group a inner join os_grade_admin b
+		on a.GROUP_ID_ = b.GROUP_ID_
+		<if test="userId!=1">
+			where b.GROUP_ID_ in (select GROUP_ID_ from os_grade_admin where USER_ID_ = #{userId})
+		</if>
+		GROUP BY a.GROUP_ID_
+		)
+	</select>
+
+
+	<select id="getByMyParentId" parameterType="java.util.Map" resultMap="OsGroup">
+		select  <include refid="countFields"></include> from os_group grp where group_id_ in
+		(
+		select a.GROUP_ID_ from os_group a inner join os_grade_admin b
+		on a.GROUP_ID_ = b.GROUP_ID_
+		<where>
+			<if test="parentId!=null">
+				and a.PARENT_ID_=#{parentId}
+			</if>
+		</where>
+		GROUP BY a.GROUP_ID_
+		)
+	</select>
+
+	<sql id="countFields">
+		GROUP_ID_,DIM_ID_,NAME_,KEY_,STATU_,AREA_CODE_,
+	    	RANK_LEVEL_,STATUS_,DESCP_,SN_,PARENT_ID_,DEPTH_,PATH_,FORM_,SYNC_WX_,WX_PARENT_PID_,WX_PID_,
+	    	IS_DEFAULT_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_,
+	    	(select count(*) from os_group where PARENT_ID_=grp.GROUP_ID_) CHILDS_
+	</sql>
+
+
+	<!--select id="selectOsDimension" parameterType="java.lang.String" resultType="com.redxun.sys.org.entity.OsDimension">
+		SELECT * FROM OS_DIMENSION_ od where od.DIM_ID_=#{value}
+	</select-->
+	<insert id="create" parameterType="com.redxun.sys.org.entity.OsGroup">
+		INSERT INTO os_group
+		(GROUP_ID_,DIM_ID_,NAME_,KEY_,AREA_CODE_,RANK_LEVEL_,STATUS_,DESCP_,SN_,PARENT_ID_,DEPTH_,PATH_,CHILDS_,FORM_,SYNC_WX_,WX_PARENT_PID_,WX_PID_,IS_DEFAULT_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{groupId,jdbcType=VARCHAR}, #{dimId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{key,jdbcType=VARCHAR},#{areaCode,jdbcType=VARCHAR},#{rankLevel,jdbcType=NUMERIC},
+		#{status,jdbcType=VARCHAR},#{descp,jdbcType=VARCHAR},#{sn,jdbcType=NUMERIC},#{parentId,jdbcType=VARCHAR}, #{depth,jdbcType=NUMERIC}, #{path,jdbcType=VARCHAR}, 
+		#{childs,jdbcType=NUMERIC}, #{form,jdbcType=VARCHAR}, #{syncWx,jdbcType=NUMERIC}, #{wxParentPid,jdbcType=NUMERIC}, #{wxPid,jdbcType=NUMERIC}, #{isDefault,jdbcType=VARCHAR},
+		#{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="OsGroup">
+		SELECT * FROM os_group 
+		WHERE 
+		GROUP_ID_=#{groupId}
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.org.entity.OsGroup">
+		UPDATE os_group SET
+		DIM_ID_=#{dimId,jdbcType=VARCHAR},
+		NAME_=#{name,jdbcType=VARCHAR},
+		KEY_=#{key,jdbcType=VARCHAR},
+		AREA_CODE_=#{areaCode,jdbcType=VARCHAR},
+		RANK_LEVEL_=#{rankLevel,jdbcType=NUMERIC},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		DESCP_=#{descp,jdbcType=VARCHAR},
+		SN_=#{sn,jdbcType=NUMERIC},
+		PARENT_ID_=#{parentId,jdbcType=VARCHAR},
+		DEPTH_=#{depth,jdbcType=NUMERIC},
+		PATH_=#{path,jdbcType=VARCHAR},
+		CHILDS_=#{childs,jdbcType=NUMERIC},
+		FORM_=#{form,jdbcType=VARCHAR},
+		SYNC_WX_=#{syncWx,jdbcType=NUMERIC},
+		WX_PARENT_PID_=#{wxParentPid,jdbcType=NUMERIC},
+		WX_PID_=#{wxPid,jdbcType=NUMERIC},
+		IS_DEFAULT_=#{isDefault,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		GROUP_ID_=#{groupId}
+	</update>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="OsGroup">
+		SELECT * FROM OS_GROUP
+		<where>
+			<if test="whereSql!=null">
+				${whereSql}
+			</if>
+		</where>
+		<if test="orderBySql!=null">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="orderBySql==null">
+			ORDER BY GROUP_ID_ DESC
+		</if>
+	</select>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM OS_GROUP 
+		WHERE
+		GROUP_ID_=#{groupId}
+	</delete>
+	
+	<select id="getByGroupIdRelTypeId"   parameterType="java.util.Map" resultMap="OsGroup">
+		SELECT ou.*,oi.IS_MAIN_ IS_MAIN_ FROM OS_GROUP,oi.ALIAS_ ALIAS_ ou RIGHT JOIN OS_REL_INST oi on ou.GROUP_ID_=oi.PARTY2_ WHERE oi.REL_TYPE_ID_=#{relTypeId} and oi.PARTY1_=#{groupId}
+		<if test="orderByClause!=null">
+			ORDER BY ${orderByClause}
+		</if>
+	</select>
+	<select id="getByParentIdGroupName" parameterType="java.util.Map" resultMap="OsGroup">
+		select * from OS_GROUP p where p.parent_id_=#{parentId} and name_=#{name}
+	</select>
+	<select id="getByUserIdRelTypeId" parameterType="java.util.Map" resultMap="OsGroup">
+		SELECT distinct ou.*,oi.IS_MAIN_ IS_MAIN_ FROM OS_GROUP ou INNER JOIN OS_REL_INST oi on ou.GROUP_ID_=oi.PARTY1_
+		WHERE oi.REL_TYPE_ID_=#{relTypeId} and oi.PARTY2_=#{userId} and oi.TENANT_ID_=#{tenantId}
+
+	</select>
+	
+	<select id="getByDimIdUserIdRelTypeId" parameterType="java.util.Map" resultMap="OsGroup">
+		SELECT ou.*,oi.IS_MAIN_ IS_MAIN_ FROM OS_GROUP ou  JOIN OS_REL_INST oi on ou.GROUP_ID_=oi.PARTY1_ WHERE oi.DIM1_=#{dimId} and oi.REL_TYPE_ID_=#{relTypeId} and oi.PARTY2_=#{userId}
+	</select>
+	
+	<select id="getByDimIdUserIdRelTypeIdIsMain" parameterType="java.util.Map" resultMap="OsGroup">
+		SELECT
+			ou.*,
+			asou.IS_MAIN_ IS_MAIN_
+		FROM
+			OS_GROUP ou
+		JOIN (
+				SELECT
+					oi.PARTY1_,
+					oi.IS_MAIN_ IS_MAIN_
+				FROM
+					OS_REL_INST oi,
+					os_inst_users iu
+				WHERE
+					oi.DIM1_ =#{dimId}
+					AND oi.REL_TYPE_ID_ = #{relTypeId}
+					AND oi.PARTY2_ = #{userId}
+					AND oi.IS_MAIN_ = #{isMain}
+					AND iu.TENANT_ID_ = #{tenantId}
+					AND iu.USER_ID_ = #{userId}
+		) asou
+		ON ou.GROUP_ID_ = asou.PARTY1_
+        where ou.TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="getByParty2RelType" parameterType="java.util.Map" resultMap="OsGroup">
+		SELECT ou.* FROM OS_GROUP ou inner JOIN OS_REL_INST oi on ou.GROUP_ID_=oi.PARTY1_ WHERE  oi.PARTY2_=#{party2} and oi.REL_TYPE_=#{relType} and oi.TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="getByUserId" parameterType="java.util.Map" resultMap="OsGroup">
+		SELECT distinct ou.*,oi.IS_MAIN_ IS_MAIN_ FROM OS_GROUP ou RIGHT JOIN OS_REL_INST oi on ou.GROUP_ID_=oi.PARTY1_ WHERE oi.PARTY2_=#{userId}
+	</select>
+	
+	<select id="getMainGroupByUserId" resultMap="OsGroup">
+		SELECT t.* FROM os_group t , OS_REL_INST rel where t.GROUP_ID_=rel.PARTY1_ and rel.DIM1_=1 and rel.PARTY2_=#{userId}
+		and REL_TYPE_KEY_='GROUP-USER-BELONG' and rel.IS_MAIN_='YES'
+	</select>
+	
+	<select id="getByKeyTenantId" resultMap="OsGroup">
+		SELECT t.* FROM os_group t where KEY_ =#{key} and TENANT_ID_=#{tenantId}
+	</select>
+	
+	<select id="getByDimIdUserId"  parameterType="java.util.Map"  resultMap="OsGroup">
+		SELECT og.* 
+		FROM OS_GROUP og
+		JOIN OS_REL_INST ori
+		ON  ori.PARTY1_=og.GROUP_ID_
+		WHERE ori.PARTY2_=#{userId} 
+		AND og.DIM_ID_=#{dimId}
+		<if test="tenantId!=null">
+			and og.TENANT_ID_ = ${tenantId}
+		</if>
+	</select>
+	
+	<select id="getByReportUserIdByGroup" resultMap="OsGroup">
+		SELECT g.* from OS_REL_INST w,OS_GROUP g, OS_DIMENSION dim where w.rel_type_id_=1 and w.party2_=#{userId}  
+		and g.GROUP_ID_=w.PARTY1_ 
+		and w.dim1_=dim.dim_id_ and dim.NAME_=#{dimName}
+	</select>
+	
+	
+	<select id="getSyncWx" resultMap="OsGroupExt">
+		SELECT t.GROUP_ID_,t.PARENT_ID_,t.SN_,t.NAME_,t.SYNC_WX_,t.WX_PID_,t.WX_PARENT_PID_ from os_group t where t.DIM_ID_=1 and TENANT_ID_=#{tenantId}
+	</select>
+	
+	<update id="updWxFlag">
+		update OS_GROUP set SYNC_WX_=1 where GROUP_ID_=#{groupId}
+	</update>
+	
+	<select id="getMaxPid" resultType="java.lang.Integer">
+	    select max(WX_PID_) from os_group;	    
+	</select>
+	
+	<update id="updateWxPid">
+	    update OS_GROUP set WX_PID_=#{wxPid},WX_PARENT_PID_=#{wxParentPid} where GROUP_ID_=#{groupId}
+	</update>
+	
+	<select id="getByMenuId" resultMap="OsGroup">
+		SELECT og.* FROM os_group_menu gm,os_group og where gm.GROUP_ID_=og.GROUP_ID_ 
+		and MENU_ID_=#{menuId} and og.STATUS_='ENABLED'
+	</select>
+	
+	
+	<select id="getByDimAndLevel" resultMap="OsGroup">
+		select os.* from os_group os
+		where os.DIM_ID_ = #{dimId} and os.RANK_LEVEL_ = #{rankLevel}
+	</select>
+	
+	<select id="getByDimAndParent" resultMap="OsGroup">
+	    select os.* from os_group os
+		where os.TENANT_ID_=#{tenantId} and os.DIM_ID_ = #{dimId} 
+		
+		<if test="parentId!='0'">
+			and os.PARENT_ID_ = #{parentId}
+		</if>
+	</select>
+	
+	
+
+	<select id="getByDimId" parameterType="java.lang.String" resultMap="OsGroup">
+	    select * from os_group where DIM_ID_=#{dimId} order by PATH_ asc
+	</select>
+	
+	<select id="getByDimIdTenantId" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group where DIM_ID_=#{dimId} and TENANT_ID_=#{tenantId} order by PATH_ asc
+	</select>
+
+	<select id="getByDimIdGroupIdTenantId" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group where DIM_ID_=#{dimId} and PARENT_ID_ = #{parentId} and TENANT_ID_=#{tenantId} and STATUS_='ENABLED' order by PATH_ asc
+	</select>
+	
+	<select id="getChildCounts" parameterType="java.lang.String" resultType="java.lang.Long">
+	    select count(*) from os_group where PARENT_ID_=#{parentId}
+	</select>
+	
+	<select id="getByParentId" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group  
+	    <where>
+	    STATUS_='ENABLED'
+	    <if test="parentId!=null">
+	    	and PARENT_ID_=#{parentId}
+	    </if>
+	    <if test="tenantId!=null">
+	    	and TENANT_ID_=#{tenantId}
+	    </if>
+	    </where>
+	    order by SN_ asc
+	</select>
+	
+	<select id="getByDimIdParentId" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group where DIM_ID_=#{dimId} and PARENT_ID_=#{parentId} order by PATH_ asc
+	</select>
+	
+	<select id="getByDepName" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group where DIM_ID_=#{dimId} and NAME_=#{depName}
+	</select>
+	
+	<select id="getByGroupNameExcludeAdminDim" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group where DIM_ID_!=#{dimId} and NAME_=#{groupName}
+	</select>
+	
+	<select id="getByDimIdNameKey" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group where TENANT_ID_ in (#{tenantId},#{publicTenantId})
+	    <if test="dimId!=null">
+	    	and DIM_ID_=#{dimId}
+	    </if>
+	    <if test="name!=null">
+	    	and NAME_ like CONCAT('%', #{name}, '%')
+	    </if>
+	    <if test="key!=null">
+	    	and KEY_ like CONCAT('%', #{key}, '%')
+	    </if>
+	</select>
+	
+	<select id="getBykey" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group where KEY_=#{key}
+	</select>
+	
+	<select id="getCountByparentId" parameterType="java.lang.String" resultType="java.lang.Long">
+	    select count(*) from os_group where PARENT_ID_ = #{parentId}
+	</select>
+	
+	<select id="isLDAPExist" parameterType="java.lang.String" resultType="java.lang.Long">
+	    select count(*) from os_group where KEY_=#{key}
+	</select>
+	
+	<select id="getGroupByParentId" parameterType="java.lang.String" resultMap="OsGroup">
+	    select * from os_group from where PARENT_ID_ = #{parentId}
+	</select>
+	
+	<select id="getByPath" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group where PATH_=#{path}
+	</select>
+
+	<select id="getByParentIdBelongs" parameterType="java.util.Map" resultMap="OsGroup">
+		select * from os_group g LEFT JOIN os_rel_inst r on g.GROUP_ID_ = r.PARTY1_ where r.PARTY2_ = #{currentUserId} and PARENT_ID_ = #{parentId} and g.TENANT_ID_ = #{tenantId}
+	</select>
+
+	<select id="getByDimAndLevelBelongs" parameterType="java.util.Map" resultMap="OsGroup">
+		SELECT
+			*
+		FROM
+			os_group g
+		LEFT JOIN os_rel_inst r ON g.GROUP_ID_ = r.PARTY1_
+		WHERE
+			r.PARTY2_ = #{currentUserId}
+		AND g.DIM_ID_ = #{dimId}
+		AND g.RANK_LEVEL_ = #{initRankLevel}
+		AND g.TENANT_ID_ = #{tenantId}
+	</select>
+	
+	<select id="getByPathLeftLike" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group where PATH_ like #{path} and TENANT_ID_ =#{tenantId}
+	</select>
+	
+	<insert id="insertOrUpdate">
+	
+ 	INSERT INTO os_group 
+ 	(GROUP_ID_,DIM_ID_,NAME_,KEY_,AREA_CODE_,RANK_LEVEL_,STATUS_,DESCP_,SN_,PARENT_ID_,DEPTH_,PATH_,CHILDS_,FORM_,SYNC_WX_,WX_PARENT_PID_,WX_PID_,IS_DEFAULT_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_,LAST_UPDATE_TIME_) 
+ 	VALUES
+ 	(#{groupId,jdbcType=VARCHAR}, #{dimId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{key,jdbcType=VARCHAR},#{areaCode,jdbcType=VARCHAR},#{rankLevel,jdbcType=NUMERIC},
+	#{status,jdbcType=VARCHAR},#{descp,jdbcType=VARCHAR},#{sn,jdbcType=NUMERIC},#{parentId,jdbcType=VARCHAR}, #{depth,jdbcType=NUMERIC}, #{path,jdbcType=VARCHAR}, 
+	#{childs,jdbcType=NUMERIC}, #{form,jdbcType=VARCHAR}, #{syncWx,jdbcType=NUMERIC}, #{wxParentPid,jdbcType=NUMERIC}, #{wxPid,jdbcType=NUMERIC}, #{isDefault,jdbcType=VARCHAR},
+	#{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},#{lastUpdateTime,jdbcType=BIGINT}) 
+ 	ON DUPLICATE KEY UPDATE 
+ 	DIM_ID_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{dimId,jdbcType=VARCHAR} , DIM_ID_),
+	NAME_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR} , NAME_),
+	KEY_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{key,jdbcType=VARCHAR}, KEY_),
+	AREA_CODE_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{areaCode,jdbcType=VARCHAR}, AREA_CODE_),
+	RANK_LEVEL_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{rankLevel,jdbcType=NUMERIC}, RANK_LEVEL_),
+	STATUS_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, STATUS_),
+	DESCP_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{descp,jdbcType=VARCHAR}, DESCP_),
+	SN_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{sn,jdbcType=NUMERIC}, SN_),
+	PARENT_ID_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{parentId,jdbcType=VARCHAR}, PARENT_ID_),
+	DEPTH_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{depth,jdbcType=NUMERIC}, DEPTH_),
+	PATH_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{path,jdbcType=VARCHAR}, PATH_),
+	CHILDS_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{childs,jdbcType=NUMERIC}, CHILDS_),
+	FORM_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{form,jdbcType=VARCHAR}, FORM_),
+	SYNC_WX_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{syncWx,jdbcType=NUMERIC}, SYNC_WX_),
+	WX_PARENT_PID_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{wxParentPid,jdbcType=NUMERIC}, WX_PARENT_PID_),
+	WX_PID_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{wxPid,jdbcType=NUMERIC}, WX_PID_),
+	IS_DEFAULT_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{isDefault,jdbcType=VARCHAR}, IS_DEFAULT_),
+	TENANT_ID_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{tenantId,jdbcType=VARCHAR}, TENANT_ID_),
+	CREATE_BY_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, CREATE_BY_),
+	CREATE_TIME_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, CREATE_TIME_),
+	UPDATE_BY_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, UPDATE_BY_),
+	UPDATE_TIME_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, UPDATE_TIME_),
+	LAST_UPDATE_TIME_=IF(LAST_UPDATE_TIME_ <![CDATA[<]]> #{lastUpdateTime,jdbcType=BIGINT}, #{lastUpdateTime,jdbcType=BIGINT}, LAST_UPDATE_TIME_)
+    
+	</insert>
+
+	<select id="getByGroupId" parameterType="java.util.Map" resultMap="OsGroup">
+	    select * from os_group where group_id_ in
+		<foreach collection="groupIdList" item="item" index="index"  open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+
+	<select id="getByDimIAndkey" parameterType="java.util.Map" resultType="java.lang.Long">
+		select count(*) from  os_group og where og.dim_id_=#{dimId} and og.key_=#{key} and og.tenant_id_=#{tenantId}
+	</select>
+
+</mapper>

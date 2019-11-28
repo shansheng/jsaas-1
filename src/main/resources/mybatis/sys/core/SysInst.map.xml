@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.core.entity.SysInst">
+	<resultMap id="SysInst" type="com.redxun.sys.core.entity.SysInst">
+		<id property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="nameCn" column="NAME_CN_" jdbcType="VARCHAR"/>
+		<result property="nameEn" column="NAME_EN_" jdbcType="VARCHAR"/>
+		<result property="busLiceNo" column="BUS_LICE_NO_" jdbcType="VARCHAR"/>
+		<result property="instNo" column="INST_NO_" jdbcType="VARCHAR"/>
+		<result property="busLiceFileId" column="BUS_LICE_FILE_ID_" jdbcType="VARCHAR"/>
+		<result property="regCodeFileId" column="REG_CODE_FILE_ID_" jdbcType="VARCHAR"/>
+		<result property="domain" column="DOMAIN_" jdbcType="VARCHAR"/>
+		<result property="nameCnS" column="NAME_CN_S_" jdbcType="VARCHAR"/>
+		<result property="nameEnS" column="NAME_EN_S_" jdbcType="VARCHAR"/>
+		<result property="legalMan" column="LEGAL_MAN_" jdbcType="VARCHAR"/>
+		<result property="descp" column="DESCP_" jdbcType="CLOB"/>
+		<result property="address" column="ADDRESS_" jdbcType="VARCHAR"/>
+		<result property="phone" column="PHONE_" jdbcType="VARCHAR"/>
+		<result property="email" column="EMAIL_" jdbcType="VARCHAR"/>
+		<result property="fax" column="FAX_" jdbcType="VARCHAR"/>
+		<result property="contractor" column="CONTRACTOR_" jdbcType="VARCHAR"/>
+		<result property="dsName" column="DS_NAME_" jdbcType="VARCHAR"/>
+		<result property="dsAlias" column="DS_ALIAS_" jdbcType="VARCHAR"/>
+		<result property="homeUrl" column="HOME_URL_" jdbcType="VARCHAR"/>
+		<result property="instType" column="INST_TYPE_" jdbcType="VARCHAR"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR"/>
+		<result property="path" column="PATH_" jdbcType="VARCHAR"/>
+		<result property="idSn" column="ID_SN_" jdbcType="NUMERIC"/>
+		<result property="compId" column="COMP_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+
+
+	<select id="getByUserIdAndStatus"   parameterType="java.util.Map" resultMap="SysInst">
+			SELECT
+				a.INST_ID_,
+				a.NAME_CN_,
+				a.DOMAIN_,
+				a.STATUS_,
+				b.CREATE_TYPE_ as moreInstCreateType,
+				b.APPLY_STATUS_ as moreInstStatus
+			FROM
+				sys_inst a,
+				os_inst_users b
+			WHERE
+				b.USER_ID_ = #{userId}
+				AND a.STATUS_ = 'ENABLED'
+				AND b.TENANT_ID_ = a.INST_ID_
+				<if test="status!=null">
+					AND b.STATUS_ =#{status}
+				</if>
+	</select>
+
+	<select id="getALL"   parameterType="java.lang.String" resultMap="SysInst">
+				SELECT * FROM sys_inst
+	</select>
+
+	<insert id="create" parameterType="com.redxun.sys.core.entity.SysInst">
+		INSERT INTO SYS_INST
+		(INST_ID_,NAME_CN_,NAME_EN_,BUS_LICE_NO_,INST_NO_,BUS_LICE_FILE_ID_,REG_CODE_FILE_ID_,DOMAIN_,NAME_CN_S_,NAME_EN_S_,LEGAL_MAN_,DESCP_,ADDRESS_,PHONE_,EMAIL_,FAX_,CONTRACTOR_,DS_NAME_,DS_ALIAS_,HOME_URL_,INST_TYPE_,STATUS_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_,PARENT_ID_,PATH_,ID_SN_,COMP_ID_)
+		VALUES 
+		(#{instId,jdbcType=VARCHAR}, #{nameCn,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}, #{busLiceNo,jdbcType=VARCHAR}, #{instNo,jdbcType=VARCHAR}, #{busLiceFileId,jdbcType=VARCHAR}, #{regCodeFileId,jdbcType=VARCHAR}, #{domain,jdbcType=VARCHAR}, #{nameCnS,jdbcType=VARCHAR}, #{nameEnS,jdbcType=VARCHAR}, #{legalMan,jdbcType=VARCHAR}, #{descp,jdbcType=CLOB}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{contractor,jdbcType=VARCHAR}, #{dsName,jdbcType=VARCHAR}, #{dsAlias,jdbcType=VARCHAR}, #{homeUrl,jdbcType=VARCHAR}, #{instType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},  #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{parentId,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR},#{idSn,jdbcType=NUMERIC},#{compId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"  parameterType="java.lang.String" resultMap="SysInst">
+		SELECT * FROM SYS_INST 
+		WHERE 
+		INST_ID_=#{instId}
+	</select>
+	
+	<select id="getByCompId"  parameterType="java.lang.String" resultMap="SysInst">
+		SELECT * FROM SYS_INST 
+		WHERE 
+		COMP_ID_=#{compId}
+	</select>
+	
+	<select id="getMaxIdSn"  parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT max(ID_SN_) from SYS_INST
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysInst">
+		SELECT * FROM SYS_INST
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY INST_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.core.entity.SysInst">
+		UPDATE SYS_INST SET
+		NAME_CN_=#{nameCn,jdbcType=VARCHAR},
+		NAME_EN_=#{nameEn,jdbcType=VARCHAR},
+		BUS_LICE_NO_=#{busLiceNo,jdbcType=VARCHAR},
+		INST_NO_=#{instNo,jdbcType=VARCHAR},
+		BUS_LICE_FILE_ID_=#{busLiceFileId,jdbcType=VARCHAR},
+		REG_CODE_FILE_ID_=#{regCodeFileId,jdbcType=VARCHAR},
+		DOMAIN_=#{domain,jdbcType=VARCHAR},
+		NAME_CN_S_=#{nameCnS,jdbcType=VARCHAR},
+		NAME_EN_S_=#{nameEnS,jdbcType=VARCHAR},
+		LEGAL_MAN_=#{legalMan,jdbcType=VARCHAR},
+		DESCP_=#{descp,jdbcType=CLOB},
+		ADDRESS_=#{address,jdbcType=VARCHAR},
+		PHONE_=#{phone,jdbcType=VARCHAR},
+		EMAIL_=#{email,jdbcType=VARCHAR},
+		FAX_=#{fax,jdbcType=VARCHAR},
+		CONTRACTOR_=#{contractor,jdbcType=VARCHAR},
+		DS_NAME_=#{dsName,jdbcType=VARCHAR},
+		DS_ALIAS_=#{dsAlias,jdbcType=VARCHAR},
+		HOME_URL_=#{homeUrl,jdbcType=VARCHAR},
+		INST_TYPE_=#{instType,jdbcType=VARCHAR},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		PARENT_ID_=#{parentId,jdbcType=VARCHAR},
+		PATH_=#{path,jdbcType=VARCHAR}
+		WHERE
+		INST_ID_=#{instId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM SYS_INST 
+		WHERE
+		INST_ID_=#{instId}
+	</delete>
+	
+	<select id="getByDomain"   parameterType="java.lang.String" resultMap="SysInst">
+		SELECT * FROM SYS_INST 
+		WHERE  DOMAIN_=#{domain}
+	</select>
+	
+	<select id="getByStatus"   parameterType="java.lang.String" resultMap="SysInst">
+		SELECT * FROM SYS_INST 
+		WHERE  STATUS_=#{status}
+	</select>
+	
+	<select id="getByNameCn"   parameterType="java.lang.String" resultMap="SysInst">
+		SELECT * FROM SYS_INST 
+		WHERE NAME_CN_=#{nameCn}
+	</select>
+	
+	<select id="getByShortNameCn"   parameterType="java.lang.String" resultMap="SysInst">
+		SELECT * FROM SYS_INST 
+		WHERE NAME_CN_S_=#{nameCnS}
+	</select>
+	
+</mapper>

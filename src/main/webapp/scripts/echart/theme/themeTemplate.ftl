@@ -1,0 +1,9 @@
+<script type="text/javascript" src="${ctxPath}/scripts/echart/theme/chajk.js"></script>
+<script type="text/javascript" src="${ctxPath}/scripts/echart/theme/dark.js"></script>
+<script type="text/javascript" src="${ctxPath}/scripts/echart/theme/essos.js"></script>
+<script type="text/javascript" src="${ctxPath}/scripts/echart/theme/infographic.js"></script>
+<script type="text/javascript" src="${ctxPath}/scripts/echart/theme/macarons.js"></script>
+<script type="text/javascript" src="${ctxPath}/scripts/echart/theme/roma.js"></script>
+<script type="text/javascript" src="${ctxPath}/scripts/echart/theme/shine.js"></script>
+<script type="text/javascript" src="${ctxPath}/scripts/echart/theme/walden.js"></script>
+<script type="text/javascript" src="${ctxPath}/scripts/echart/theme/westeros.js"></script>

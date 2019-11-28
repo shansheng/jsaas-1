@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.wx.portal.entity.WxMobilePortal">
+	<resultMap id="WxMobilePortal" type="com.redxun.wx.portal.entity.WxMobilePortal">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="typeId" column="TYPE_ID_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="btnType" column="BTN_TYPE_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.wx.portal.entity.WxMobilePortal">
+		INSERT INTO wx_mobile_portal
+		(ID_,NAME_,TYPE_ID_,TENANT_ID_,CREATE_TIME_,CREATE_BY_,UPDATE_TIME_,UPDATE_BY_,BTN_TYPE_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{btnType,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get" parameterType="java.lang.String" resultMap="WxMobilePortal">
+		SELECT * FROM wx_mobile_portal 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="WxMobilePortal">
+		SELECT * FROM wx_mobile_portal
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ ASC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.wx.portal.entity.WxMobilePortal">
+		UPDATE wx_mobile_portal SET
+		NAME_=#{name,jdbcType=VARCHAR},
+		TYPE_ID_=#{typeId,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		BTN_TYPE_=#{btnType,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<select id="getByTenantId" parameterType="java.lang.String" resultMap="WxMobilePortal">
+		SELECT * FROM wx_mobile_portal 
+		WHERE TENANT_ID_=#{tenantId} 
+	</select>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM wx_mobile_portal 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="checkTypeidRepeat" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM wx_mobile_portal 
+		WHERE 1=1 
+		<if test="id != null">
+			AND ID_!=#{id} AND TYPE_ID_=#{typeId}
+		</if>
+		<if test="id == null">
+			AND TYPE_ID_=#{typeID}
+		</if>
+	</select>
+</mapper>

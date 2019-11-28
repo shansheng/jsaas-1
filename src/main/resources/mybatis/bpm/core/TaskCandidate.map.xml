@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.TaskCandidate">
+	<resultMap id="TaskCandidate" type="com.redxun.bpm.core.entity.TaskCandidate">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="rev" column="REV_" jdbcType="NUMERIC"/>
+		<result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="userId" column="USER_ID_" jdbcType="VARCHAR"/>
+		<result property="taskId" column="TASK_ID_" jdbcType="VARCHAR"/>
+		<result property="procInstId" column="PROC_INST_ID_" jdbcType="VARCHAR"/>
+		<result property="procDefId" column="PROC_DEF_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.TaskCandidate">
+		INSERT INTO act_ru_identitylink
+		(ID_,REV_,GROUP_ID_,TYPE_,USER_ID_,TASK_ID_,PROC_INST_ID_,PROC_DEF_ID_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{rev,jdbcType=NUMERIC}, #{groupId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{procInstId,jdbcType=VARCHAR}, #{procDefId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="TaskCandidate">
+		SELECT * FROM act_ru_identitylink 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="TaskCandidate">
+		SELECT * FROM act_ru_identitylink
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.TaskCandidate">
+		UPDATE act_ru_identitylink SET
+		REV_=#{rev,jdbcType=NUMERIC},
+		GROUP_ID_=#{groupId,jdbcType=VARCHAR},
+		TYPE_=#{type,jdbcType=VARCHAR},
+		USER_ID_=#{userId,jdbcType=VARCHAR},
+		TASK_ID_=#{taskId,jdbcType=VARCHAR},
+		PROC_INST_ID_=#{procInstId,jdbcType=VARCHAR},
+		PROC_DEF_ID_=#{procDefId,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM act_ru_identitylink 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<select id="getByTaskId"  resultMap="TaskCandidate">
+		SELECT * FROM act_ru_identitylink WHERE  TASK_ID_=#{taskId}
+	</select>
+	
+	
+	
+	
+</mapper>

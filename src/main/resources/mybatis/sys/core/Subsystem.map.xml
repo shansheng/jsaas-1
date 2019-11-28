@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.core.entity.Subsystem">
+	<resultMap id="Subsystem" type="com.redxun.sys.core.entity.Subsystem">
+		<id property="sysId" column="SYS_ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="key" column="KEY_" jdbcType="VARCHAR"/>
+		<result property="logo" column="LOGO_" jdbcType="VARCHAR"/>
+		<result property="isDefault" column="IS_DEFAULT_" jdbcType="VARCHAR"/>
+		<result property="homeUrl" column="HOME_URL_" jdbcType="VARCHAR"/>
+		<result property="status" column="STATUS_" jdbcType="VARCHAR"/>
+		<result property="sn" column="SN_" jdbcType="NUMERIC"/>
+		<result property="descp" column="DESCP_" jdbcType="VARCHAR"/>
+		<result property="iconCls" column="ICON_CLS_" jdbcType="VARCHAR"/>
+		<result property="isSaas" column="IS_SAAS_" jdbcType="VARCHAR"/>
+		<result property="type" column="TYPE_" jdbcType="VARCHAR"/>
+		<result property="secret" column="SECRET_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.core.entity.Subsystem">
+		INSERT INTO SYS_SUBSYS
+		(SYS_ID_,NAME_,KEY_,LOGO_,IS_DEFAULT_,HOME_URL_,STATUS_,DESCP_,ICON_CLS_,SN_,IS_SAAS_,TYPE_,SECRET_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{sysId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, #{isDefault,jdbcType=VARCHAR}, #{homeUrl,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{descp,jdbcType=VARCHAR}, #{iconCls,jdbcType=VARCHAR}, #{sn,jdbcType=NUMERIC},  #{isSaas,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},#{secret,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<update id="update" parameterType="com.redxun.sys.core.entity.Subsystem">
+		UPDATE SYS_SUBSYS SET
+		NAME_=#{name,jdbcType=VARCHAR},
+		KEY_=#{key,jdbcType=VARCHAR},
+		LOGO_=#{logo,jdbcType=VARCHAR},
+		IS_DEFAULT_=#{isDefault,jdbcType=VARCHAR},
+		HOME_URL_=#{homeUrl,jdbcType=VARCHAR},
+		STATUS_=#{status,jdbcType=VARCHAR},
+		DESCP_=#{descp,jdbcType=VARCHAR},
+		ICON_CLS_=#{iconCls,jdbcType=VARCHAR},
+		SN_=#{sn,jdbcType=NUMERIC},
+		IS_SAAS_=#{isSaas,jdbcType=VARCHAR},
+		TYPE_=#{type,jdbcType=VARCHAR},
+		SECRET_=#{secret,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		SYS_ID_=#{sysId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM SYS_SUBSYS 
+		WHERE
+		SYS_ID_=#{sysId}
+	</delete>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="Subsystem">
+		SELECT * FROM SYS_SUBSYS 
+		WHERE 
+		SYS_ID_=#{sysId}
+	</select>
+	
+
+	<select id="query" parameterType="java.util.Map" resultMap="Subsystem">
+		SELECT * FROM SYS_SUBSYS
+		<where>
+			<if test="whereSql!=null">
+				${whereSql}
+			</if>
+		</where>
+		<if test="orderBySql!=null">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="orderBySql==null">
+			ORDER BY SYS_ID_ DESC
+		</if>
+	</select>
+	
+	
+	<select id="getGrantSubsByGroupIds" parameterType="java.util.Map" resultMap="Subsystem">
+		select distinct s.* from os_group_sys gs  join sys_subsys s on gs.sys_id_=s.SYS_ID_ 
+		where gs.group_id_ in 
+		<foreach collection="groupIdList" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+		order by s.sn_ asc
+	</select>
+	
+	<select id="getGrantSubsByGroupId" parameterType="java.util.Map" resultMap="Subsystem">
+		SELECT sm.* FROM SYS_SUBSYS sm RIGHT JOIN OS_GROUP_SYS gs on sm.SYS_ID_=gs.SYS_ID_ 
+		WHERE gs.GROUP_ID_=#{groupId} and sm.STATUS_='ENABLED' order by SN_ 
+		
+	</select>
+	
+	<select id="getGrantSubsByUserId" resultMap="Subsystem">
+		SELECT distinct sm.* FROM SYS_SUBSYS sm , OS_GROUP_SYS gs ,OS_REL_INST rel,sys_type_sub_ref ref,sys_inst_type type
+		where  sm.SYS_ID_=gs.SYS_ID_ and  gs.GROUP_ID_=rel.PARTY1_ and sm.STATUS_='ENABLED'
+		and rel.PARTY2_=#{userId} and rel.TENANT_ID_=#{tenantId} and sm.SYS_ID_=ref.SUB_SYS_ID_
+		and ref.INST_TYPE_ID_=type.TYPE_ID_ and type.TYPE_CODE_=#{instType} order by sm.SN_ 
+	</select>
+	
+	
+	
+	<select id="getByStatus"   resultMap="Subsystem">
+		SELECT * FROM SYS_SUBSYS sm 
+		 WHERE   sm.STATUS_=#{status} order by SN_ asc
+	</select>
+	
+	<select id="getByInstTypeStatus" resultMap="Subsystem">
+		SELECT * FROM SYS_SUBSYS sm ,sys_type_sub_ref ref,sys_inst_type t
+		 WHERE sm.SYS_ID_=ref.SUB_SYS_ID_ and ref.INST_TYPE_ID_=t.TYPE_ID_ and 
+		 t.TYPE_CODE_=#{instType} and sm.STATUS_=#{status} order by SN_ asc
+	</select>
+	
+	
+	<select id="getByKey"   resultMap="Subsystem">
+		SELECT * FROM SYS_SUBSYS  
+		 WHERE   KEY_=#{key}
+	</select>
+	
+	<select id="getAllOrderBySn"   resultMap="Subsystem">
+		SELECT * FROM SYS_SUBSYS  order by SN_ asc
+	</select>
+	
+	<select id="getByTenantStatus"   resultMap="Subsystem">
+		SELECT * FROM SYS_SUBSYS 
+		 WHERE  TENANT_ID_=#{tenantId} and STATUS_=#{status}
+		 order by SN_ asc
+	</select>
+	
+	
+	
+	
+	
+
+</mapper>

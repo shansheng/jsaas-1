@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>系统参数</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><strong>功能说明</strong></p> 
+ <p>系统参数就是平台中的一些参数，可以通过这个参数进行设置，打开系统中的一些开关。比如redis配置。这些参数一般是在系统中进行初始化，一般情况下我们只需要修改这些参数，当然参数也可以通过系统添加，但是需要通过代码调用。</p> 
+ <p><strong>操作步骤</strong></p> 
+ <p><strong>1.添加参数</strong></p> 
+ <p><strong><img src="../img/2400000000591108.png" title="image.png" alt=""> </strong></p> 
+ <p>名称：参数名称</p> 
+ <p>是否全局:是否为全局参数，全局参数的意思是整体租户都有效，私有参数，意思是每个租户可以设定自己的参数。</p> 
+ <p>别名:参数别名，这个值唯一。</p> 
+ <p>是否加密存储：是否使用密文存放参数，在数据库中使用密文存储。</p> 
+ <p>参数值：系统参数的值</p> 
+ <p>分类：用户可以自行添加。</p> 
+ <p>描述：描述参数的用途</p> 
+ <p><strong>2.租户参数管理</strong></p> 
+ <p>系统配置-》系统管理-》私有参数管理</p> 
+ <p><img src="../img/2400000000591138.png" title="image.png" alt=""> </p> 
+ <p>私有参数租户可以设置值，这些参数只对租户有影响。<strong><br></strong></p> 
+ <p><strong>3.平台中通过API获取</strong></p> 
+ <p>接口类为：</p> 
+ <p>com.redxun.sys.core.util.SysPropertiesUtil</p> 
+ <p>获取参数的方法如下：</p> 
+ <p>1.根据key获取属性。</p> 
+ <p>SysProperties getGlobalPropertyObj(String key)；</p> 
+ <p>2.根据key获取属性值</p> 
+ <p>String getGlobalProperty(String key)；</p> 
+ <p>3.根据key获取整形属性值</p> 
+ <p>Integer getGlobalPropertyInt(String key);</p> 
+ <p>4.根据key获取boolean型的属性值</p> 
+ <p>Boolean getGlobalPropertyBool(String key)；</p> 
+ <p>5.根据key获取Long型的属性值</p> 
+ <p>Long getGlobalPropertyLong(String key)</p> 
+ <p>6.根据key和租户Id获取属性值</p> 
+ <p>String getTenantProperty(String key,String tenantId)</p> 
+ <p>7.根据key和租户Id获取长整型的属性值</p> 
+ <p>Long getTenantPropertyLong(String key,String tenantId)；</p> 
+ <p>8.根据key和租户ID获取整形的属性值。</p> 
+ <p>Integer getTenantPropertyInteger(String key,String tenantId)</p> 
+ <p>9.根据key和租户ID获取布尔型的属性值。<br></p> 
+ <p>Boolean getTenantPropertyBoolean(String key,String tenantId)</p>  
+</body></div>
+</body>
+</html>

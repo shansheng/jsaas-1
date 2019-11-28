@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.org.entity.OsGradeRole">
+	<resultMap id="OsGradeRole" type="com.redxun.sys.org.entity.OsGradeRole">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="adminId" column="ADMIN_ID_" jdbcType="VARCHAR"/>
+		<result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.org.entity.OsGradeRole">
+		INSERT INTO OS_GRADE_ROLE
+		(ID_,ADMIN_ID_,GROUP_ID_,NAME_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="OsGradeRole">
+		SELECT * FROM OS_GRADE_ROLE 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="OsGradeRole">
+		SELECT * FROM OS_GRADE_ROLE
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.org.entity.OsGradeRole">
+		UPDATE OS_GRADE_ROLE SET
+		ADMIN_ID_=#{adminId,jdbcType=VARCHAR},
+		GROUP_ID_=#{groupId,jdbcType=VARCHAR},
+		NAME_=#{name,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM OS_GRADE_ROLE 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	<delete id="delByMainId">
+	    DELETE FROM OS_GRADE_ROLE
+	    WHERE
+	    ADMIN_ID_=#{adminId}
+	</delete>
+
+	<delete id="delByRoleId">
+	    DELETE FROM OS_GRADE_ROLE
+	    WHERE
+	    ID_=#{id}
+	</delete>
+
+	<delete id="deleteRoleByGroupId">
+	    DELETE FROM OS_GRADE_ROLE
+	    WHERE
+	    GROUP_ID_=#{groupId}
+	</delete>
+
+	<select id="getByMain" resultMap="OsGradeRole">
+	    SELECT *
+	    FROM OS_GRADE_ROLE 
+	    WHERE ADMIN_ID_=#{adminId}
+	</select>
+
+	<select id="getGroupByUserId" resultMap="OsGradeRole">
+        select * from os_grade_role a,os_grade_admin b where b.id_=a.ADMIN_ID_ and b.USER_ID_=#{userId} and b.TENANT_ID_=#{tenantId}
+	</select>
+	
+</mapper>

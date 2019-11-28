@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>文档模板管理功能运用</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <h1>业务场景：</h1> 
+ <p>可以自定义Word文档模板界面，根据数据ID,可以把数据回填进文档模板生成一份带数据Word文档。</p> 
+ <p><br></p> 
+ <h1>实现操作：</h1> 
+ <p><br></p> 
+ <p>&nbsp; &nbsp;1.先定义一个业务表单（菜单路径：敏捷开发---&gt;业务表单设计）<br></p> 
+ <p>&nbsp; &nbsp; &nbsp; 设计一个业务表单（添加一个表单有三种方式，分别是在线设计，根据业务模型生成表单，添加url表单）</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 以在线设计表单为实例，设计主子表关系的表单</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="../img/2410000000110717.png" title="image.png" alt="">  </p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;设计表单页面，设计完成后，点击生成元数据，就生成物理表，发布表单，发布表单后，Bo实体就有我们的设计的主子表表单</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="../img/2410000000110720.png" title="image.png" alt="">  </p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 查看一下Bo实体（菜单路径：系统配置----&gt;实体管理）</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="../img/2410000000110721.png" title="image.png" alt="">  </p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 表单设计完成后，配置业务模型（一对一是指对应一条数据，一对多是指对应多条数据）</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="../img/2410000000110723.png" title="image.png" alt="">  </p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 业务模型配置好，配置表单方案（菜单路径：敏捷开发----&gt;业务表单方案）</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="../img/2410000000140007.png" title="image.png" alt="">  </p> 
+ <p>&nbsp; &nbsp; 2.表单配置完成后，新建文档模板（菜单路径：工作台---&gt;文档模板管理）</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="../img/2410000000110715.png" title="image.png" alt="">  <br></p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp;点击添加进入如下页面（配置文档模板管理有两种方式发布是sql,Bo定义 ）</p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp;先以Bo定义实现word文档的打印</p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="../img/2410000000110713.png" title="image.png" alt="">  </p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;点击下一步，（一对一的关系在word文档中随便设计，但是一对多在word文档上设计表单一行必须是表头，下一行是显示数据）</p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="../img/2410000000140009.png" title="image.png" alt="">  </p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp; 保存后，点击预览 ，需要输入pk,(pk是表的id)</p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="../img/2410000000140010.png" title="image.png" alt="">  </p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp; 可以查看之前设置的表单</p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="../img/2410000000140011.png" title="image.png" alt="">  </p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp; 后面我们把这个word文档控件用到表单上，回到业务表单设计中用一个word控件，选择word控件，然后选择word模版，</p> 
+ <p style="white-space: normal;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="../img/2410000000140012.png" title="image.png" alt="">  </p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;点击确定，表单上就有打印的按钮</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="../img/2410000000110719.png" title="image.png" alt="">  </p> 
+ <p>&nbsp; &nbsp; &nbsp;&nbsp;</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3.启动这个业务表单对应业务流程</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 在流程方案中启动流程是填写表单信息，这个word控件是隐藏的，因为没有值，</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="../img/2410000000140013.png" title="image.png" alt="">  </p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 信息填写后，提交，然后到待办任务中去办理启动的流程，点击办理，表单上出现了word控件，打印的按钮（有值才能打印）</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="../img/2410000000140014.png" title="image.png" alt="">  </p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 点击打印，就可以看到word文档的表单模板</p> 
+ <p><br></p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp;4.以sql定义（主表，子表写sql）</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="../img/2410000000150003.png" title="image.png" alt="">  </p> 
+ <p>&nbsp; 后面的操作和Bo定义是一样的</p> 
+ <p>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p> 
+ <p>&nbsp; &nbsp;</p> 
+ <p><br></p>  
+</body></div>
+</body>
+</html>

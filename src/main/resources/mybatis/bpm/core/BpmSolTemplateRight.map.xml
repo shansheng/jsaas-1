@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.core.entity.BpmSolTemplateRight">
+	<resultMap id="BpmSolTemplateRight" type="com.redxun.bpm.core.entity.BpmSolTemplateRight">
+		<id property="rightId" column="RIGHT_ID_" jdbcType="VARCHAR"/>
+		<result property="treeId" column="TREE_ID_" jdbcType="VARCHAR"/>
+		<result property="groupIds" column="GROUP_IDS_" jdbcType="VARCHAR"/>
+		<result property="userIds" column="USER_IDS_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="DATE"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="DATE"/>
+		<result property="isAll" column="IS_ALL" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.core.entity.BpmSolTemplateRight">
+		INSERT INTO BPM_SOL_TEMPLATE_RIGHT
+		(RIGHT_ID_,TREE_ID_,GROUP_IDS_,USER_IDS_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_,IS_ALL)
+		VALUES 
+		(#{rightId,jdbcType=VARCHAR}, #{treeId,jdbcType=VARCHAR}, #{groupIds,jdbcType=VARCHAR}, #{userIds,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, #{isAll,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmSolTemplateRight">
+		SELECT * FROM BPM_SOL_TEMPLATE_RIGHT 
+		WHERE 
+		RIGHT_ID_=#{rightId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmSolTemplateRight">
+		SELECT * FROM BPM_SOL_TEMPLATE_RIGHT
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY RIGHT_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.core.entity.BpmSolTemplateRight">
+		UPDATE BPM_SOL_TEMPLATE_RIGHT SET
+		TREE_ID_=#{treeId,jdbcType=VARCHAR},
+		GROUP_IDS_=#{groupIds,jdbcType=VARCHAR},
+		USER_IDS_=#{userIds,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=DATE},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=DATE},
+		IS_ALL=#{isAll,jdbcType=VARCHAR}
+		WHERE
+		RIGHT_ID_=#{rightId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_SOL_TEMPLATE_RIGHT 
+		WHERE
+		RIGHT_ID_=#{rightId}
+	</delete>
+
+	<select id="getByTreeId"   parameterType="java.lang.String" resultMap="BpmSolTemplateRight">
+		SELECT * FROM BPM_SOL_TEMPLATE_RIGHT
+		WHERE
+		TREE_ID_=#{treeId}
+	</select>
+	
+	
+</mapper>

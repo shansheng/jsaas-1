@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.oa.ats.entity.AtsAttencePolicy">
+	<resultMap id="AtsAttencePolicy" type="com.redxun.oa.ats.entity.AtsAttencePolicy">
+		<id property="id" column="ID" jdbcType="VARCHAR"/>
+		<result property="code" column="CODE" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME" jdbcType="VARCHAR"/>
+		<result property="workCalendar" column="WORK_CALENDAR" jdbcType="NUMERIC"/>
+		<result property="attenceCycle" column="ATTENCE_CYCLE" jdbcType="VARCHAR"/>
+		<result property="orgId" column="ORG_ID" jdbcType="VARCHAR"/>
+		<result property="isDefault" column="IS_DEFAULT" jdbcType="NUMERIC"/>
+		<result property="memo" column="MEMO" jdbcType="VARCHAR"/>
+		<result property="weekHour" column="WEEK_HOUR" jdbcType="NUMERIC"/>
+		<result property="daysHour" column="DAYS_HOUR" jdbcType="NUMERIC"/>
+		<result property="monthDay" column="MONTH_DAY" jdbcType="NUMERIC"/>
+		<result property="leaveAllow" column="LEAVE_ALLOW" jdbcType="NUMERIC"/>
+		<result property="lateAllow" column="LATE_ALLOW" jdbcType="NUMERIC"/>
+		<result property="absentAllow" column="ABSENT_ALLOW" jdbcType="NUMERIC"/>
+		<result property="otStart" column="OT_START" jdbcType="NUMERIC"/>
+		<result property="leaveStart" column="LEAVE_START" jdbcType="NUMERIC"/>
+		<result property="preNotBill" column="PRE_NOT_BILL" jdbcType="NUMERIC"/>
+		<result property="afterNotBill" column="AFTER_NOT_BILL" jdbcType="NUMERIC"/>
+		<result property="offLater" column="OFF_LATER" jdbcType="TIMESTAMP"/>
+		<result property="offLaterAllow" column="OFF_LATER_ALLOW" jdbcType="NUMERIC"/>
+		<result property="onLater" column="ON_LATER" jdbcType="TIMESTAMP"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		
+		<result property="workCalendarName" column="workCalendarName" jdbcType="VARCHAR"/>
+		<result property="attenceCycleName" column="attenceCycleName" jdbcType="VARCHAR"/>
+		<result property="orgName" column="orgName" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.oa.ats.entity.AtsAttencePolicy">
+		INSERT INTO ats_attence_policy
+		(ID,CODE,NAME,WORK_CALENDAR,ATTENCE_CYCLE,ORG_ID,IS_DEFAULT,MEMO,WEEK_HOUR,DAYS_HOUR,MONTH_DAY,LEAVE_ALLOW,LATE_ALLOW,ABSENT_ALLOW,OT_START,LEAVE_START,PRE_NOT_BILL,AFTER_NOT_BILL,OFF_LATER,OFF_LATER_ALLOW,ON_LATER,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{workCalendar,jdbcType=NUMERIC}, #{attenceCycle,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, #{isDefault,jdbcType=NUMERIC}, #{memo,jdbcType=VARCHAR}, #{weekHour,jdbcType=NUMERIC}, #{daysHour,jdbcType=NUMERIC}, #{monthDay,jdbcType=NUMERIC}, #{leaveAllow,jdbcType=NUMERIC}, #{lateAllow,jdbcType=NUMERIC}, #{absentAllow,jdbcType=NUMERIC}, #{otStart,jdbcType=NUMERIC}, #{leaveStart,jdbcType=NUMERIC}, #{preNotBill,jdbcType=NUMERIC}, #{afterNotBill,jdbcType=NUMERIC}, #{offLater,jdbcType=TIMESTAMP}, #{offLaterAllow,jdbcType=NUMERIC}, #{onLater,jdbcType=TIMESTAMP}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="AtsAttencePolicy">
+		SELECT a.*,b.NAME as workCalendarName,c.NAME as attenceCycleName ,d.NAME_ as orgName
+		FROM ats_attence_policy a left JOIN ats_work_calendar b
+		on a.WORK_CALENDAR = b.ID left join ats_attence_cycle c
+		on a.ATTENCE_CYCLE = c.ID left join os_group d
+        on a.ORG_ID=d.GROUP_ID_
+		WHERE 
+		a.ID=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="AtsAttencePolicy">
+		SELECT a.*,b.NAME as workCalendarName,c.NAME as attenceCycleName ,d.NAME_ as orgName
+		FROM ats_attence_policy a left JOIN ats_work_calendar b
+		on a.WORK_CALENDAR = b.ID left join ats_attence_cycle c
+		on a.ATTENCE_CYCLE = c.ID left join os_group d
+        on a.ORG_ID=d.GROUP_ID_
+		<where>
+			1=1
+			<if test="@Ognl@isNotEmpty(CODE)">
+				and a.code like '%${CODE}%'
+			</if>
+			<if test="@Ognl@isNotEmpty(NAME)">
+				and a.NAME like '%${NAME}%'
+			</if>
+			<if test="@Ognl@isNotEmpty(IS_DEFAULT)">
+				and a.IS_DEFAULT like '%${IS_DEFAULT}%'
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.oa.ats.entity.AtsAttencePolicy">
+		UPDATE ats_attence_policy SET
+		CODE=#{code,jdbcType=VARCHAR},
+		NAME=#{name,jdbcType=VARCHAR},
+		WORK_CALENDAR=#{workCalendar,jdbcType=NUMERIC},
+		ATTENCE_CYCLE=#{attenceCycle,jdbcType=VARCHAR},
+		ORG_ID=#{orgId,jdbcType=VARCHAR},
+		IS_DEFAULT=#{isDefault,jdbcType=NUMERIC},
+		MEMO=#{memo,jdbcType=VARCHAR},
+		WEEK_HOUR=#{weekHour,jdbcType=NUMERIC},
+		DAYS_HOUR=#{daysHour,jdbcType=NUMERIC},
+		MONTH_DAY=#{monthDay,jdbcType=NUMERIC},
+		LEAVE_ALLOW=#{leaveAllow,jdbcType=NUMERIC},
+		LATE_ALLOW=#{lateAllow,jdbcType=NUMERIC},
+		ABSENT_ALLOW=#{absentAllow,jdbcType=NUMERIC},
+		OT_START=#{otStart,jdbcType=NUMERIC},
+		LEAVE_START=#{leaveStart,jdbcType=NUMERIC},
+		PRE_NOT_BILL=#{preNotBill,jdbcType=NUMERIC},
+		AFTER_NOT_BILL=#{afterNotBill,jdbcType=NUMERIC},
+		OFF_LATER=#{offLater,jdbcType=TIMESTAMP},
+		OFF_LATER_ALLOW=#{offLaterAllow,jdbcType=NUMERIC},
+		ON_LATER=#{onLater,jdbcType=TIMESTAMP},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP}
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM ats_attence_policy 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<select id="getDefaultAttencePolicy" resultMap="AtsAttencePolicy">
+		select * from ats_attence_policy where IS_DEFAULT =1 
+	</select>
+	
+	<select id="getAttencePolicy" resultMap="AtsAttencePolicy">
+		select NAME from ats_attence_policy 
+	</select>
+	
+	<select id="getAttencePolicyByName" parameterType="java.lang.String" resultMap="AtsAttencePolicy">
+		select ID from ats_attence_policy where NAME = #{name}
+	</select>
+	
+	<select id="getAtsAttencePolicyName" parameterType="java.util.Map" resultMap="AtsAttencePolicy">
+		select a.`NAME` from ats_attence_policy a left join ats_attendance_file b
+		on a.ID = b.ATTENCE_POLICY left join os_user c
+		on b.USER_ID = c.USER_ID_ where c.FULLNAME_ = #{userName}
+	</select>
+	
+</mapper>

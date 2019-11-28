@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.airdrop.wxrepair.core.entity.PatrolWechatuserAccounts">
+	<resultMap id="PatrolWechatuserAccounts" type="com.airdrop.wxrepair.core.entity.PatrolWechatuserAccounts">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="openid" column="F_OPENID" jdbcType="VARCHAR"/>
+		<result property="account" column="F_ACCOUNT" jdbcType="VARCHAR"/>
+		<result property="accountName" column="F_ACCOUNT_name" jdbcType="VARCHAR"/>
+		<result property="refId" column="REF_ID_" jdbcType="VARCHAR"/>
+		<result property="parentId" column="PARENT_ID_" jdbcType="VARCHAR"/>
+		<result property="instId" column="INST_ID_" jdbcType="VARCHAR"/>
+		<result property="instStatus" column="INST_STATUS_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.airdrop.wxrepair.core.entity.PatrolWechatuserAccounts">
+		INSERT INTO w_patrol_wechatuser_accounts
+		(F_OPENID,F_ACCOUNT,F_ACCOUNT_name,ID_,REF_ID_,PARENT_ID_,INST_ID_,INST_STATUS_,TENANT_ID_,CREATE_TIME_,CREATE_BY_,UPDATE_BY_,UPDATE_TIME_,GROUP_ID_)
+		VALUES 
+		(#{openid,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{refId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{instId,jdbcType=VARCHAR}, #{instStatus,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{groupId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="PatrolWechatuserAccounts">
+		SELECT * FROM w_patrol_wechatuser_accounts 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="PatrolWechatuserAccounts">
+		SELECT * FROM w_patrol_wechatuser_accounts
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.airdrop.wxrepair.core.entity.PatrolWechatuserAccounts">
+		UPDATE w_patrol_wechatuser_accounts SET
+		F_OPENID=#{openid,jdbcType=VARCHAR},
+		F_ACCOUNT=#{account,jdbcType=VARCHAR},
+		F_ACCOUNT_name=#{accountName,jdbcType=VARCHAR},
+		REF_ID_=#{refId,jdbcType=VARCHAR},
+		PARENT_ID_=#{parentId,jdbcType=VARCHAR},
+		INST_ID_=#{instId,jdbcType=VARCHAR},
+		INST_STATUS_=#{instStatus,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		GROUP_ID_=#{groupId,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM w_patrol_wechatuser_accounts 
+		WHERE
+		ID_=#{id}
+	</delete>
+
+	<select id="getWxUserAccount"   parameterType="java.lang.String" resultMap="PatrolWechatuserAccounts">
+		SELECT * FROM w_patrol_wechatuser_accounts
+		WHERE
+		F_OPENID=#{openId}
+	</select>
+
+	<update id="updateWxUserAccount" parameterType="java.util.Map">
+		UPDATE w_patrol_wechatuser_accounts SET
+		F_ACCOUNT='${account}',
+		F_ACCOUNT_name='${accountName}'
+		WHERE
+		F_OPENID='${openId}'
+	</update>
+</mapper>

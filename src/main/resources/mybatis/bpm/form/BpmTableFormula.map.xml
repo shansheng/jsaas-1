@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.bpm.form.entity.BpmTableFormula">
+	<resultMap id="BpmTableFormula" type="com.redxun.bpm.form.entity.BpmTableFormula">
+		<id property="id" column="ID_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="descp" column="DESCP_" jdbcType="VARCHAR"/>
+		<result property="fillConf" column="FILL_CONF_" jdbcType="CLOB"/>
+		<result property="boDefId" column="BO_DEF_ID_" jdbcType="VARCHAR"/>
+		<result property="action" column="ACTION_" jdbcType="VARCHAR"/>
+		<result property="isTest" column="IS_TEST_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="treeId" column="TREE_ID_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.bpm.form.entity.BpmTableFormula">
+		INSERT INTO BPM_TABLE_FORMULA
+		(ID_,NAME_,DESCP_,FILL_CONF_,BO_DEF_ID_,ACTION_,IS_TEST_,TENANT_ID_,CREATE_BY_,CREATE_TIME_,UPDATE_BY_,UPDATE_TIME_,TREE_ID_)
+		VALUES 
+		(#{id,jdbcType=VARCHAR},  #{name,jdbcType=VARCHAR}, #{descp,jdbcType=VARCHAR},  #{fillConf,jdbcType=CLOB}, #{boDefId,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR},  #{isTest,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{treeId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="BpmTableFormula">
+		SELECT * FROM BPM_TABLE_FORMULA 
+		WHERE 
+		ID_=#{id}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="BpmTableFormula">
+		SELECT * FROM BPM_TABLE_FORMULA
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.bpm.form.entity.BpmTableFormula">
+		UPDATE BPM_TABLE_FORMULA SET
+		NAME_=#{name,jdbcType=VARCHAR},
+		DESCP_=#{descp,jdbcType=VARCHAR},
+		FILL_CONF_=#{fillConf,jdbcType=CLOB},
+		BO_DEF_ID_=#{boDefId,jdbcType=VARCHAR},
+		ACTION_=#{action,jdbcType=VARCHAR},
+		IS_TEST_=#{isTest,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		TREE_ID_= #{treeId,jdbcType=VARCHAR}
+		WHERE
+		ID_=#{id}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM BPM_TABLE_FORMULA 
+		WHERE
+		ID_=#{id}
+	</delete>
+	
+	
+	<select id="getByFormSolId"   parameterType="java.lang.String" resultMap="BpmTableFormula">
+		SELECT * FROM BPM_TABLE_FORMULA a,SYS_FORMULA_MAPPING b where a.ID_=b.FORMULA_ID_
+		and FORM_SOL_ID_=#{formSolId}
+	</select>
+	
+	
+	<select id="getBySolIdNode"   parameterType="java.lang.String" resultMap="BpmTableFormula">
+		SELECT * FROM BPM_TABLE_FORMULA a,BPM_FORMULA_MAPPING b where a.ID_=b.FORMULA_ID_
+		and SOL_ID_=#{solId}  and ACT_DEF_ID_=#{actDefId} and NODE_ID_=#{nodeId}
+	</select>
+	
+	
+	
+</mapper>

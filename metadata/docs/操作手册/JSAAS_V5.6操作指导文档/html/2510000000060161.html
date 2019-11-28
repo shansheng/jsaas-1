@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>自定义SQL查询</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body> 
+ <p><strong>功能说明</strong></p> 
+ <p>我们在表单中很多情况下，需要查询数据，对表单进行填充，这种情况下，我们一般是需要在编写控制器代码，查询数据然后进行返回，这样在配置表单时需要开发人员参与，而且需要重启服务器，非常麻烦。我们设计此功能的目的是通过界面配置就可以实现服务器数据查询，在前台可以通过配置或者使用脚本进行调用定义好的查询进行返回数据。</p> 
+ <p><strong>操作步骤</strong></p> 
+ <p><strong>1.添加自定义查询</strong></p> 
+ <p>点击 “系统配置”-&gt;“系统管理”-&gt;“自定义SQL查询”-&gt;点击添加按钮。</p> 
+ <p><img src="../img/2400000000591082.png" title="image.png" alt="image.png" width="800" height="292" border="0" vspace="0" style="width: 800px; height: 292px;"> </p> 
+ <p>1.1.基本信息：</p> 
+ <p>名称：填写有意义的名称</p> 
+ <p>标识：唯一名称</p> 
+ <p>数据源：需要查询的数据库，这个数据源可以参考 “系统配置”-》“数据源管理”</p> 
+ <p>选择对象：这里可以选择表或者视图</p> 
+ <p><img src="../img/2400000000591059.png" title="image.png" alt="image.png" width="600" height="351" border="0" vspace="0" style="width: 600px; height: 351px;"> </p> 
+ <p>1.2设置返回字段，这些列是返回数据用的。</p> 
+ <p><br></p> 
+ <p>我们定义一个OS_USER查询为例。</p> 
+ <p><img src="../img/2400000000591083.png" title="image.png" alt=""> </p> 
+ <p>这里自定查询将会返回三个字段，这里我们可以修改字段注解。</p> 
+ <p>1.3&nbsp;设置条件列</p> 
+ <p><img src="../img/2400000000591084.png" title="image.png" alt=""> </p> 
+ <p>自定义查询一般都需要根据条件过滤数据，当然有些配置数据特别小，我们就不需要配置条件。</p> 
+ <p>配置条件说明:<br></p> 
+ <p>字段注解：用于显示<br></p> 
+ <p>字段名称：用于作为WHERE&nbsp;条件</p> 
+ <p>数据类型：字段的类型<br></p> 
+ <p>操作类型：根据实际的需求配置<br></p> 
+ <p>值来源:&nbsp;<br></p> 
+ <p>参数传入：这个一般是从页面传入进来，典型的例子时，我们在表单选择了一个用户，我们需要取该用户的订单信息，我们可以通过从页面传入参数。</p> 
+ <p>固定值：条件为固定值，比如获取全部女生，我们就可以使用固定值。</p> 
+ <p>常量：&nbsp;</p> 
+ <p><img src="../img/2400000000591065.png" title="image.png" alt="image.png" width="500" height="196" border="0" vspace="0" style="width: 500px; height: 196px;"> </p> 
+ <p>我们可以使用常量来进行过滤，比如当前人，当前部门等。</p> 
+ <p>脚本：</p> 
+ <p>有时候条件需要通过脚本进行计算，这里的脚本是java脚本。</p> 
+ <p><img src="../img/2400000000591066.png" title="image.png" alt="image.png" width="500" height="376" border="0" vspace="0" style="width: 500px; height: 376px;"> </p> 
+ <p>我们可以选择常用脚本，也可以直接编写脚本。</p> 
+ <p>1.4&nbsp;设置排序列</p> 
+ <p>意思是我们在做查询时，返回的数据可以按照设置的排序来处理。</p> 
+ <p>选择需要排序的列，接下来选择排序，是升序还是降序排列。&nbsp; &nbsp;</p> 
+ <p><img src="../img/2400000000591070.png" title="image.png" alt=""> </p> 
+ <p>1.5&nbsp;自定义SQL<br></p> 
+ <p>有些情况下，通过前面的配置可能配置不出来，我们需要的数据，这个时候我们可以通过自定SQL返回我们需要的语句,程序在处理的时候就不会</p> 
+ <p>查询前面配置的表，我们需要通过手工进行输入。</p> 
+ <p><img src="../img/2400000000591086.png" title="image.png" alt=""> </p> 
+ <p>1.这个自定义SQL的写法是使用java语法，需要返回一个SQL语句，当然我们可以不使用select *&nbsp;的方式来写，我们可以指定字段名。</p> 
+ <p>这里我们我们需要在返回字段设置那里进行手工设置。</p> 
+ <p>2.在自定SQL中可以使用常量，我们会在后台将常量进行替换。<br></p> 
+ <p>3.上下文传入参数获取方式。<br></p> 
+ <p>我们在处理自定sql查询的时候会将&nbsp;参数封装到一个名称为 “<span style="color: rgb(255, 0, 0);">params</span>”的map中，我们脚本可以这样写。</p> 
+ <p>比如我们定义了一个传入参数 USER_ID<br></p> 
+ <pre class="brush:sql;toolbar:false">String&nbsp;sql=＂select&nbsp;USER_ID_,NAME_&nbsp;FORM&nbsp;OS_USER&nbsp;WHERE&nbsp;1=1&nbsp;＂;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(params.containsKey(＂USER_ID＂)){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sql+=＂&nbsp;and&nbsp;user_id=：＂+USER_ID&nbsp;+＂：＂;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;sql;</pre> 
+ <p>我们可以在条件列那里设置传入参数作为外部参数。</p> 
+ <p><strong><br></strong></p> 
+ <p><strong>2.通过脚本调用自定查询</strong></p> 
+ <p>除了在表单中通过配置使用自定查询外，我们也可以通过在页面中编码的方式调用自定义查询。我们可以在列表中点击帮助按钮。<br></p> 
+ <p><img src="../img/2400000000591079.png" title="image.png" alt=""> </p> 
+ <p>使用方法:</p> 
+ <p>1.我们可以引入&nbsp;scripts/share/customQuery.js&nbsp;文件。</p> 
+ <p>2.编写如下代码：</p> 
+ <table class="table-detail column_1" cellspacing="1" cellpadding="0" width="997"> 
+  <tbody style="color: rgb(102, 102, 102); font-size: 14px !important;"> 
+   <tr class="firstRow"> 
+    <td style="min-height: 35px; border-color: rgb(236, 236, 236); padding-top: 2px; padding-bottom: 2px; padding-left: 4px; background-color: rgb(255, 255, 255); line-height: 16px;" width="821">参数格式：var params =&nbsp;<span id="paramExample">{＂USER_ID_＂:＂＂}</span>;<pre>doQuery(：os_user_list：,&nbsp;params,function(data){
+	//data&nbsp;返回数据格式&nbsp;[{＂FULLNAME_＂:＂＂,＂USER_ID_＂:＂＂,＂USER_NO_＂:＂＂},{＂FULLNAME_＂:＂＂,＂USER_ID_＂:＂＂,＂USER_NO_＂:＂＂},...]});</pre></td> 
+   </tr> 
+  </tbody> 
+ </table> 
+ <p>doQuery的参数为：<br></p> 
+ <p>参数1：自定义查询名称</p> 
+ <p>参数2：传入参数，我们在后端配置了传入参数USER_ID_。</p> 
+ <p>参数3 ：回调函数,data返回的数据。</p> 
+ <p>function(data){</p> 
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;console.info(data);//我们可以通过这种方式查看返回的数据格式。<br></p> 
+ <p>}</p>  
+</body></div>
+</body>
+</html>

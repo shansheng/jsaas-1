@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>节点配置</title>
+<style>
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	margin:0;
+	height:100%;
+}
+
+.title{
+	text-align:center;
+	font-weight:bold;
+}
+
+html body img{
+	width: auto!important;  
+    height: auto!important;  
+    max-width: 100%!important;  
+    max-height: 100%!important;  
+		
+}
+html body table{
+	width: auto!important;
+	max-width: 100%!important; 
+	white-space:normal!important;
+	word-break:break-all!important;
+}
+.table-view{
+	border:1px solid #ececec;
+	border-collapse:collapse;
+	white-space:normal!important; 
+	word-break:break-all!important;
+}
+
+.table-view td{
+	border:1px solid #ececec;
+	padding:5px 5px 5px 5px;
+	word-break:break-all!important;
+	white-space:normal!important; 
+	
+}
+
+.content{
+	padding:10px 10px 10px 10px; 
+	
+}
+
+
+</style>
+</head>
+<body >
+	<div class="content"><body>
+ <h1>功能描述</h1>
+ <h1><span style="font-size: 16px;">流</span><span style="font-size: 16px;">程方案在执行过程中,当我们需要对其一些流程定义节点进行属性的配置,如消息通知,流程变量的配置,抄送消息,催办提醒等,这时我们进入节点属性进行相关属性配置。</span></h1>
+ <h1>操作步骤</h1>
+ <p><img src="../img/2510000000340254.png" title="image.png" alt=""></p>
+ <p><br></p>
+ <p><strong>1.点击节点属性配置,进入弹出的节点属性配置页中。</strong></p>
+ <p><strong>点击某个节点属性配置按钮，例如流程方案发起时需要跳过第一个节点,或者设置其他节点审批人员等,我们在下图弹窗中配置节点属性。</strong><br></p>
+ <p><img src="../img/2510000000340255.png" title="image.png" alt=""><strong>【配置属性说明】</strong></p>
+ <p><strong>1.事项标题规则:</strong>定义流程方案任务标题</p>
+ <p><strong>2.可选人员的节点:</strong>流程方案发起时可设置流程定义节点中审批人员</p>
+ <p><strong>3.必选人员的节点:</strong>流程方案发起是必须设置流程定义节点中审批人员</p>
+ <p><strong>4.启动前置处理器:</strong>配置实现ProcessStartAfterHandler,TaskAfterHandler,ProcessEndHandler三个接口Manager类(可看业务实现接口)</p>
+ <p><strong>5.启动后置处理器:</strong>配置实现ProcessStartAfterHandler,TaskAfterHandler,ProcessEndHandler三个接口Manager类(可看业务实现接口)</p>
+ <p><strong>6.结束处理器:</strong>配置实现ProcessStartAfterHandler,TaskAfterHandler,ProcessEndHandler三个接口Manager类(可看业务实现接口)</p>
+ <p><strong>7.跳过第一个节点:</strong>流程方案发起后跳过流程定义第一个节点</p>
+ <p><strong>8.通知配置:</strong>配置全局通知配置,如配置节点,节点优先,再到全局</p>
+ <p><strong>9.子表权限:</strong>设置全局表单中子表数据权限</p>
+ <p><strong>10.事件脚本配置:</strong>脚本是写Groovy脚本,也就java脚本,通过脚本处理一些业务</p>
+ <p><span style="font-size: 16px;">11.外部表单url:可以配置URL地址（/bpm/core/bpmSolution/mgr.do（随便写的）?solId=solId&amp;actDefId=actdDefId），在流程实例中，用户点击实例，系统会跳转到配置url的页面</span></p>
+ <p><strong><img src="../img/2510000000340256.png" title="image.png" alt=""></strong></p>
+ <p></p>
+ <p style="white-space: normal;">事件和接口配置页面</p>
+ <p style="white-space: normal;"><img src="../img/2510000000340258.png" title="image.png" alt=""></p>
+ <p style="white-space: normal;">流程启动时：在流程启动时审批动作是通过的话会调用事件或者接口，接口类型有Groovy脚本和执行sql语句</p>
+ <p style="white-space: normal;">流程结束时：在流程结束后审批动作是反对的话就会调用事件和接口</p>
+ <p></p>
+ <p>自定义按钮配置页面</p>
+ <p><img src="../img/2510000000340260.png" title="image.png" alt=""><br></p>
+ <p><strong>1.1点击某节点,进入该节点属性配置界面。</strong></p>
+ <p><strong><br></strong></p>
+ <p><img src="../img/2510000000340261.png" title="image.png" alt=""></p>
+ <p><strong><br></strong></p>
+ <h4><strong>【节点配置属性说明】</strong></h4>
+ <p><strong>1.选项配置:</strong>配置该节点属性配置<strong><br></strong></p>
+ <p><strong>1.1.自定义审批按钮:</strong>定义该节点审批按钮</p>
+ <p><strong>1.2.可选择执行路径:</strong>如该节点有多条线往下个节点,可设置指定单一线往指定节点</p>
+ <p><strong>1.3.相同审批人则跳过:</strong>当前节点和下个节点都是相同审批人员,则跳过</p>
+ <p><strong>1.4.在表单展示审批意见:</strong></p>
+ <p><strong>1.5.打印表单:</strong>配置审批节点是否可打印表单</p>
+ <p><strong>1.6.可选择执行人:</strong>设置可选择下个节点执行人</p>
+ <p><strong>1.7.通知配置:</strong>设置到该任务节点发送消息</p>
+ <p><strong>1.8.使用表单意见:</strong>设置表单中是否使用意见控件</p>
+ <p><strong>1.9.子表权限:</strong>设置该任务节点子表权限</p>
+ <p><span style="font-size: 16px;">2.0.外部表单url</span>：可以配置URL地址（/bpm/core/bpmSolution/mgr.do（随便写的）?solId=solId&amp;actDefId=actdDefId），在流程实例中，用户点击实例，系统会跳转到配置url的页面</p>
+ <p><strong><br></strong></p>
+ <p><strong>2.高级选项:</strong>配置实现TaskAfterHandler接口类</p>
+ <p><strong>3.事件脚本:</strong>脚本是写Groovy脚本,也就java脚本,通过脚本处理一些业务</p>
+ <p><strong>4.人员配置:</strong>设置该节点审批人员</p>
+ <p><strong>5.抄送配置:</strong>配置流程任务到该节点抄送一条流程实例信息至其他用户</p>
+ <p><strong>6.节点提醒:</strong>配置到达该节点,审批任务时文字提醒</p>
+ <p><br></p>
+</body></div>
+</body>
+</html>

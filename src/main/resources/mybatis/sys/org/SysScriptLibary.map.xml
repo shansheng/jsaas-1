@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redxun.sys.org.entity.SysScriptLibary">
+	<resultMap id="SysScriptLibary" type="com.redxun.sys.org.entity.SysScriptLibary">
+		<id property="libId" column="LIB_ID_" jdbcType="VARCHAR"/>
+		<result property="treeId" column="TREE_ID_" jdbcType="VARCHAR"/>
+		<result property="fullClassName" column="FULL_CLASS_NAME_" jdbcType="VARCHAR"/>
+		<result property="method" column="METHOD_" jdbcType="VARCHAR"/>
+		<result property="params" column="PARAMS_" jdbcType="VARCHAR"/>
+		<result property="returnType" column="RETURN_TYPE_" jdbcType="VARCHAR"/>
+		<result property="dos" column="DOS_" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="createBy" column="CREATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateBy" column="UPDATE_BY_" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="UPDATE_TIME_" jdbcType="TIMESTAMP"/>
+		<result property="beanName" column="BEAN_NAME_" jdbcType="VARCHAR"/>
+		<result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR"/>
+		<result property="example" column="EXAMPLE_" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.redxun.sys.org.entity.SysScriptLibary">
+		INSERT INTO sys_script_libary
+		(LIB_ID_,TREE_ID_,FULL_CLASS_NAME_,METHOD_,PARAMS_,RETURN_TYPE_,DOS_,CREATE_TIME_,CREATE_BY_,UPDATE_BY_,UPDATE_TIME_,BEAN_NAME_,TENANT_ID_,EXAMPLE_)
+		VALUES 
+		(#{libId,jdbcType=VARCHAR}, #{treeId,jdbcType=VARCHAR}, #{fullClassName,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, #{returnType,jdbcType=VARCHAR}, #{dos,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{beanName,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR},#{example,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="get"   parameterType="java.lang.String" resultMap="SysScriptLibary">
+		SELECT * FROM sys_script_libary
+		WHERE 
+		LIB_ID_=#{libId}
+	</select>
+	
+	<select id="query" parameterType="java.util.Map" resultMap="SysScriptLibary">
+		SELECT * FROM sys_script_libary
+		<where>
+			<if test="@Ognl@isNotEmpty(whereSql)">
+				${whereSql}
+			</if>
+		</where>
+		<if test="@Ognl@isNotEmpty(orderBySql)">
+			ORDER BY ${orderBySql}
+		</if>
+		<if test="@Ognl@isEmpty(orderBySql)">
+			ORDER BY LIB_ID_ DESC
+		</if>
+	</select>
+	
+	<update id="update" parameterType="com.redxun.sys.org.entity.SysScriptLibary">
+		UPDATE sys_script_libary SET
+		TREE_ID_=#{treeId,jdbcType=VARCHAR},
+		FULL_CLASS_NAME_=#{fullClassName,jdbcType=VARCHAR},
+		METHOD_=#{method,jdbcType=VARCHAR},
+		PARAMS_=#{params,jdbcType=VARCHAR},
+		RETURN_TYPE_=#{returnType,jdbcType=VARCHAR},
+		DOS_=#{dos,jdbcType=VARCHAR},
+		CREATE_TIME_=#{createTime,jdbcType=TIMESTAMP},
+		CREATE_BY_=#{createBy,jdbcType=VARCHAR},
+		UPDATE_BY_=#{updateBy,jdbcType=VARCHAR},
+		UPDATE_TIME_=#{updateTime,jdbcType=TIMESTAMP},
+		BEAN_NAME_=#{beanName,jdbcType=VARCHAR},
+		TENANT_ID_=#{tenantId,jdbcType=VARCHAR},
+		EXAMPLE_=#{example,jdbcType=VARCHAR}
+		WHERE
+		LIB_ID_=#{libId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.String">
+		DELETE FROM sys_script_libary
+		WHERE
+		LIB_ID_=#{libId}
+	</delete>
+
+	<select id="getListBytreeId"   parameterType="java.util.Map" resultMap="SysScriptLibary">
+		SELECT *
+		FROM sys_script_libary ssli
+		where ssli.TREE_ID_=#{treeId,jdbcType=VARCHAR}
+		and ssli.TENANT_ID_=#{tenantId,jdbcType=VARCHAR}
+		<if test="fullClassName!=null">
+			and ssli.FULL_CLASS_NAME_ like #{fullClassName}
+		</if>
+		<if test="method!=null">
+			and ssli.METHOD_ like #{method}
+		</if>
+		<if test="beanName!=null">
+			and ssli.BEAN_NAME_ like #{beanName}
+		</if>
+	</select>
+
+
+	<select id="getAllList"   parameterType="java.util.Map" resultMap="SysScriptLibary">
+		SELECT * FROM sys_script_libary
+
+	</select>
+
+</mapper>
